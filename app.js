@@ -200,11 +200,6 @@ app.get("/home", async (req, res) => {
 });
 
 
-app.get('/profile', ensureAuthenticated, (req, res) => {
-  const userId = req.user._id;
-  res.redirect(`/tenant_details/${userId}`);
-});
-
 
 // policies page route
 app.get("/policies", (req, res) => {
