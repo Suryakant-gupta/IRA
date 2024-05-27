@@ -1,0 +1,603 @@
+@media screen and (max-width:830px) {
+    .page1 .filter{
+        bottom: -4vw;
+        font-size: .8rem !important;
+    }
+    .page2 .filter{
+        /* bottom: -4vw; */
+        font-size: .8rem !important;
+    }
+
+    .services{
+        justify-content: flex-start !important;
+    }
+    .services .item p {
+        font-size: .8rem !important;
+    }    
+    .services .item{
+        width: 30%;
+    }
+    nav .cta{
+        font-size: .8rem !important;
+    }
+    nav .cta .explore {
+      
+        padding-inline: 1rem;
+        
+    }
+    .calc-img{
+        flex-direction: column;
+        flex-flow: column;
+    }
+    .calc{
+        order: 2;
+        width: 100%;
+        align-items:center;
+    justify-content: center;
+    }
+    .room-num{
+        width: 100%;
+    }
+    .upload-img{
+        display: none;
+        width: 100%;
+        order: 1;
+    }
+    .circle{
+        display: inline-block;
+    }
+
+    .sr{
+        gap: 2vw;
+    }
+
+    .price-gender .price p span {
+        font-size: 3vw;
+     
+    }
+    .price-gender .price p {
+        font-size: 2vw;
+ 
+    }
+    .price-gender .price a {
+        font-size: 2vw;
+
+    }
+    .si{
+        font-size: 1.5vw;
+    }
+}
+
+
+@media screen and (max-width:768px) {
+
+
+    .cta-img{
+        display: none;
+    }
+    .cta-form{
+        width: 50%;
+    }
+    .cta-text{
+        width: 30%;
+    }
+}
+
+@media screen and (max-width:690px) {
+   
+   
+    .page1 .text{
+        width: 58%;
+    }
+    .page1 .text p{
+        font-size: .7rem !important;
+    }
+    .page1 .text h3{
+        font-size: 1rem !important;
+    }
+    .services .item h3, .service-text h3{
+        font-size: .9rem !important;
+    }
+    .services .item p , .service-text p{
+        font-size: .7rem !important;
+    } 
+
+    nav .cta  a {
+        
+        font-size: .7rem !important;
+    }
+    nav .cta .explore p{
+        font-size: .7rem !important;
+    }
+    nav .cta .explore {
+      
+        padding-inline: .5rem;
+        padding-block: .3rem;
+        
+    }
+
+    .gender img {
+        width: 4vw;
+    }
+    .page2 .filter{
+        /* bottom: -4vw; */
+        font-size: 1rem !important;
+    }
+    .form-filter {
+        
+        width: 60%;
+    }
+    .form-filter form{
+        gap: 4vw !important;
+       
+    }
+   
+    .sr{
+        gap: 5vw;
+    }
+
+    .price-gender .price p span {
+        font-size: 4vw;
+     
+    }
+    .price-gender .price p {
+        font-size: 3vw;
+ 
+    }
+    .price-gender .price a {
+        font-size: 3vw;
+
+    }
+    .si{
+        font-size: 2vw;
+    }
+
+    .sph{
+        font-size: 1rem;
+    }
+   
+    
+    .ab-page1 h2 {
+        font-size: 3.5vw;
+    }
+
+    .contact-bar{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .contact-box{
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .box-text{
+        align-items: center;
+        justify-content: center;
+    }
+    .box-img{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+  
+}
+
+@media screen and (max-width:585px) {
+    nav .cta  {
+        
+        font-size: .5rem !important;
+    }
+    nav .cta .btn a {
+        
+        font-size: .5rem !important;
+    }
+    .room-page-2{
+        display: none;
+    }
+    .room-page-1{
+        width: 100% !important;
+    }
+    .slider-text>h3 {
+        font-size: 1rem !important;
+    }
+    /* .sl-btn a, .starting-from p, .sl-text p, .option-tabs a, .beds p, .option-tabs p, .beds h3, .comb a, .details p, .policy p {
+        font-size: .8rem !important;
+    } */
+    .room-d p, .room-d a, .room-d h3{
+        font-size: .8rem !important;
+    }
+    .room-d h2{
+        font-size: .9rem !important;
+        font-weight: bold;
+    }
+    .room-d h1 {
+        font-size: 1.2rem !important;
+    }
+    .bottom-btn{
+        display: flex !important;
+    }
+    .room-num select{
+        display: none;
+    }
+
+    .rent-sec .room-num, .rent-sec .s-p{
+        width: 50%;
+    }
+    .res-p img, .res-p2 img{
+        width: 50%;
+     }
+
+     .bg{
+        display: none;
+     }
+
+     .help-text{
+        display: none;
+     }
+     .help-form{
+        width: 100%;
+     }
+     .help-form textarea{
+        width: 100%;
+        resize: none;
+     }
+
+     .sec-3 h2, .filter h2{
+        font-size: 1.2rem !important;
+     }
+
+     .sec-3 .c,.sec-3 .filter{
+        display: none;
+     }
+     .res-filter{
+        display: flex;
+     }
+
+   
+    .page4 .main-head img{
+        display: none;
+        width: 10%;
+    }
+}
+@media screen and (max-width:560px) {
+    
+    .cta-form{
+        width: 100%;
+        margin-bottom: 4rem;
+    }
+    .cta-text{
+        display: none;
+    }
+    .page1 .filter{
+        bottom: -7vw;
+        font-size: .5rem !important;
+    }
+    .page2 .filter{
+        
+        font-size: .9rem !important;
+    }
+    .page1 .text p{
+        font-size: .6rem !important;
+    }
+    .page1 .text h3{
+        font-size: .8rem !important;
+    }
+
+    .special{
+        margin-top: 0px;
+    }
+    
+    .services .item h3, .service-text h3{
+        font-size: .8rem !important;
+    }
+    .services .item p , .service-text p{
+        font-size: .6rem !important;
+    } 
+    
+    .cta-form h2{
+        font-size: 1.2rem !important;
+    }
+    
+    footer{
+        display: none;
+    }
+    .res-foot{
+        display: flex;
+    }
+    .second-img{
+        display: none;
+    }
+    .first-img{
+        display: inline-block;
+    }
+    .rules{
+        display: none;
+    }
+    .sheet p, .calc p, .note p, .contact-table p, .dec-p, .opt p{
+        font-size: .8rem !important;
+    }
+    .verify a{
+        font-size: .8rem !important;
+    }
+    .info-form input::placeholder, textarea::placeholder{
+        font-size: .8rem !important;
+     }
+     .f-h{
+        display: none;
+     }
+     .note{
+        margin-top: 1.5rem;
+     }
+
+     .notice{
+        font-size: .8rem !important;
+     }
+
+     .barcode{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+     }
+     .barcode-img, .barcode-text{
+        width: 100%;
+     }
+
+     .ab-page1 p{
+        font-size: 3vw !important ;
+     }
+
+     .sa{
+        font-size: 3.5vw !important ;
+     }
+
+     .sp{
+        font-size: 3vw !important;
+     }
+
+     
+     nav{
+        margin-bottom: 1rem;
+     }
+     .box-arr{
+        display: none;
+     }
+
+     .page1{
+        margin-bottom: -1.5rem;
+     }
+     .sr{
+        gap: 4vw;
+    }
+
+    .price-gender .price p span {
+        font-size: 5.7vw;
+     
+    }
+    .price-gender .price p {
+        font-size: 4.3vw;
+ 
+    }
+    .price-gender .price a {
+        font-size: 4.4vw;
+
+    }
+    .si{
+        font-size: 3vw;
+    }
+
+   
+}
+
+
+@media screen and (max-width:500px) {
+    .page1 .filter {
+        /* bottom: -4vw; */
+        font-size: .4rem !important;
+    }
+    .page2 .filter {
+       
+        font-size: .8rem !important;
+        
+    }
+    .verify .c-b{
+        
+        padding-inline: 1rem;
+      
+    }
+    .info-form input::placeholder, textarea::placeholder{
+        font-size: .7rem !important;
+     }
+     .services .item h3 {
+        font-size: .7rem !important;
+    }
+    
+    .p1 .visit, .p2 .book-now-form{
+        width: 95%;
+    }
+   
+
+    .location-btn select{
+        font-size: .6rem;
+    }
+    .page2 .filter .form-filter {
+       
+        padding-block: 0.6rem;
+    }
+   
+
+    
+}
+
+@media screen and (max-width:450px) {
+    
+    .card-board .card{
+        width: 100%;
+    }
+    .card-text a {
+        font-size: .9rem !important;
+    }
+    .card-text p {
+        font-size: .8rem !important;
+    }
+    .card-text p span{
+        font-size: .9rem !important;
+    }
+    .card-board .card .card-text .cta-btns a:first-child {
+        
+        font-size: .7rem !important;
+    }
+    
+    .card-board .card .card-text .cta-btns a:last-child {
+       
+        font-size: .7rem !important;
+   
+    }
+
+    .filter .form-filter form input[type="checkbox"] {
+        zoom: 0.8;
+    }
+
+    
+    nav .logo{
+        width: 10vw;
+    }
+    nav .cta{
+        width: 68%;
+    }
+    nav .logo  img{
+        width: 100%;
+    }
+    .hide{
+        display: none;
+    }
+
+    
+    .top-head{
+        font-size: 1rem !important;
+    }
+    .emer{
+        font-size: .9rem !important;
+    }
+    .info-form input::placeholder, textarea::placeholder{
+        font-size: .5rem !important;
+     }
+
+     .room-d p, .room-d a, .room-d h3{
+        font-size: .6rem !important;
+    }
+    .room-d h2{
+        font-size: .8rem !important;
+        font-weight: bold;
+    }
+    .room-d h1 {
+        font-size: 1.1rem !important;
+    }
+
+    .login-page{
+        margin: auto;
+        width: 95%;
+        margin-inline: .5rem;
+    }
+
+    .login-method button{
+      
+        font-size: 1rem !important;
+        
+    }
+
+    
+    .form label{
+        font-size: 1rem !important;
+    }
+   
+}
+@media screen and (max-width:400px) {
+
+    .card-board .card .card-text .cta-btns  {
+        font-size: 0.5rem !important;
+    }
+    .page1 .filter {
+        /* bottom: -4vw; */
+        font-size: .3rem !important;
+    }
+    .page2 .filter {
+       
+        font-size: .7rem !important;
+        
+    }
+    .filter .form-filter form input[type="checkbox"] {
+        zoom: 0.6;
+    }
+    .opt{
+        width: 100%;
+    }
+    .sheet p, .calc p, .note p, .contact-table p, .dec-p , .opt p{
+        font-size: .6rem !important;
+    }
+
+    .login-method button{
+      
+        font-size: .9rem !important;
+        
+    }
+
+    
+    .form label{
+        font-size: .9rem !important;
+    }
+
+    .search-btn{
+        font-size: .6rem;
+    }
+}
+
+@media screen and (max-width:380px) {
+    .services .item {
+        width: 29%;
+    }
+    .verify .c-b{
+       
+        padding-inline: .5rem;
+      
+    }
+    .verify a{
+        font-size: .7rem !important;
+    }
+    .res-form-filter{
+        font-size: .5rem !important;
+    }
+}
+
+@media screen and (max-width:350px) {
+    .card-board .card .card-text .cta-btns a:first-child {
+        padding-inline: .5rem; 
+    }
+    
+    .card-board .card .card-text .cta-btns a:last-child {
+       
+        padding-inline: .5rem;
+     
+   
+    }
+    .emer{
+        font-size: .8rem !important;
+    }
+
+    .login-method button{
+      
+        font-size: .8rem !important;
+        
+    }
+
+    
+    .form label{
+        font-size: .8rem !important;
+    }
+}
+
+@media screen and (max-width:310px) {
+    .services .item {
+        width: 29%;
+    }
+}

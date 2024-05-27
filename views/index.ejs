@@ -1,0 +1,466 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="main-page">
+
+    
+    <% if (successMessage) { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <%= successMessage %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true" >&times;</span>
+          </button>
+      </div>
+  <% } %>
+  
+  <% if (errorMessage) { %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <%= errorMessage %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+  <% } %>
+
+    <section class="page1">
+        <div class="text">
+            <h3>welcome to our IRA student living</h3>
+            <h1>STUDENT-<span style="color:#E7991C;">FRIENDLY</span> ACCOMMODATION</h1>
+            <p>Discover comfort and convenience at our well-appointed paying guest accommodation near Karol Bagh metro station. Whether you’re a student or a working professional, our single-room PGs offer a peaceful haven. Enjoy hassle-free living with easy access to the heart of Delhi.</p>
+               
+        </div>
+        <div class="image">
+            <img src="/assets/images/house.png" alt="">
+        </div>
+        
+    </section>
+
+    <div class="call-back-popup p1">
+        <div class="visit">
+            <button class="close-popup">X</button>
+
+            <div class="schedule">
+                <a href="" class="schedule-btn">schedule a visit</a>
+                <!-- <a href="" class="reserve-btn">reserve now</a> -->
+            </div>
+
+            
+
+            <form action="/details" method="post" class="first-f">
+                <input type="text" name="name" id="" placeholder="Rahul">
+                <input type="number" name="mobileNumber" id="" placeholder="+91 | 9876543210">
+            </form>
+
+            <a href="" class="whats">
+                <i class="fa-brands fa-whatsapp"></i>
+                Get updates over whatsapp
+            </a>
+
+            
+            <a href="" type="submit" class="visit-btn">schedule a visit</a>
+
+        </div>
+    </div>
+    <div class="call-back-popup p2">
+        <div class="book-now-form">
+           <button class="close-popup">X</button>
+        <h2 style="font-size: 1.2rem; margin-bottom: 1rem; color: blue; text-align: center;">Connect   <span style="color: #E7991C;  ">With Us</span></h2>
+        <form action="/send-data" method="post">
+            <input type="text" name="name" id="name" placeholder="Name*">
+            <input type="number" name="numer" id="number" placeholder="+91 | Mobile number " class="no-spinner">
+            <input type="email" name="email" id="email" placeholder="Email*">
+            <select name="city" id="city">
+                <option value="Select city">Select city</option>
+                <option value="Noida">Noida</option>
+                <option value="Delhi">Delhi</option>
+            </select>
+            <select name="location" id="location">
+                <option value="Select Location">Select Location (optional)</option>
+                <option value="Noida">Noida</option>
+                <option value="Delhi">Delhi</option>
+            </select>
+            <select name="accommodation" id="accommodation">
+                <option value="Accommodation Type*">Accommodation Type</option>
+                <option value="Noida">AC</option>
+                <option value="Delhi">Non AC</option>
+            </select>
+
+            <input type="submit" value="submit">
+        </form>
+       </div>
+    </div>
+
+
+    
+
+    <section class="page2">
+        <h2 style="text-align: center; margin-bottom: 1rem;" class="sph">AVAILABLE UNITS</h2>
+        <div class="filter">
+            <div class="location-btn">
+                <i  class="fa-solid fa-location-dot"> </i>
+                <select id="location" name="location" value="<%= initialFilters.location %>">
+                    
+                    <option value="Delhi">Delhi</option>
+                    <!-- <option value="Noida">Noida</option> -->
+                </select>
+            </div>
+            <div class="form-filter">
+                <form action="">
+                  
+                    <div class="item choose-item-3">
+                        <input <%= initialFilters.ac ? 'checked' : '' %> type="checkbox" class="checkbox-custom" id="ac-room" name="ac-room">
+                        <label for="ac-room">Ac room</label>
+                    </div>
+                    <div class="item choose-item-4">
+                        <input <%= initialFilters.nonAc ? 'checked' : '' %> type="checkbox" class="checkbox-custom" id="non-ac-room" name="non-ac-room">
+                        <label for="non-ac-room">Non-Ac room</label>
+                    </div>
+                </form>
+            </div>
+            <div class="search-btn">
+                <i class="fa-solid fa-magnifying-glass" ></i>
+            </div>
+        </div>
+
+       
+        <div class="card-board">
+            <% roomListings.forEach((room, index) => { %>
+                <div class="card card<%= index %>">
+                    <div class="card-image">
+                        <img src="<%= room.image %>" alt="">
+                    </div>
+                    <div class="card-text">
+                        <div class="price-gender">
+                            <div class="price">
+                                <a href="/room_details/<%= room.id %>">IRA STUDENT LIVING</a>
+                                <p>From <span>&#8377; <%= room.price %></span>/month </p>
+                            </div>
+                            <div class="gender">
+                                <img src="/assets/images/male-symbol.png" alt="">
+                                <p>Male</p>
+                            </div>
+                        </div>
+
+                        <div class="card-services">
+                            <div class=" sr sr1">
+                                <div class="si1 si">
+                                    <img src="/assets/images/ci1.png" alt="">
+                                    <p>Single Occupancy</p>
+                                </div>
+                                <div class="si2 si">
+                                    <img src="/assets/images/ci2.png" alt="">
+                                    <p>Fully Furnished</p>
+                                </div>
+                            </div>
+                            <div class= "sr sr2">
+                                <div class="si3 si">
+                                    <img src="/assets/images/ci3.png" alt="">
+                                    <% if (room.ac) { %>
+                                        <p>Ventilated/AC</p>
+                                    <% } else { %>
+                                        <p>Ventilated/Non-AC</p>
+                                    <% } %>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="cta-btns">
+                            <a href="" class="open-popup1">SCHEDULE A VISIT</a>
+                            <a href="" class="open-popup2">CONNECT WITH US</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div> 
+    </section>
+
+
+    <section class="page3">
+        <h2 style="text-align: center; text-transform: uppercase;" class="sph">Amenities</h2>
+        <div class="amenities">
+            <div class="services service-row-1">
+                <div class="item service-item-1">
+                    <div class="s-i-im">
+                        <img class="first-img" src="/assets/images/Group 45.png" alt="">
+                        <img class="second-img" src="/assets/images/New/Group 45.png" alt="">
+                    </div>
+                    <h3>Furnished Rooms</h3>
+                    <p class="hide">Typically, rooms come with basic furniture such as a bed, wardrobe, study table, mattress and chair</p>
+                </div>
+                <div class="item service-item-2">
+                    <div class="s-i-im">
+                        <img class="first-img" src="/assets/images/Group 46.png" alt="">
+                        <img class="second-img" src="/assets/images/New/Group 46.png" alt="">
+                    </div>
+                    <h3>Utilities</h3>
+                    <p class="hide">Access to electricity, water, and in some cases, Wi-Fi may be included.</p>
+                </div>
+                <div class="item service-item-3">
+                    <div class="s-i-im">
+                        <img class="first-img" src="/assets/images/Group 47.png" alt="">
+                        <img class="second-img" src="/assets/images/New/Group 47.png" alt="">
+                    </div>
+                    <h3>Cleaning services</h3>
+                    <p class="hide">Regular cleaning of common areas and sometimes room cleaning services..</p>
+                </div>
+                <div class="item service-item-4">
+                    <div class="s-i-im">
+                        <img class="first-img" src="/assets/images/Group.png" alt="">
+                        <img class="second-img" src="/assets/images/New/Group.png" alt="">
+                    </div>
+                    <h3>Laundry facilities</h3>
+                    <p class="hide"> Access to washing machines or laundry services</p>
+                </div>
+                <div class="item service-item-1">
+                    <div class="s-i-im">
+                        <img class="first-img" src="/assets/images/Vector.png" alt="">
+                        <img class="second-img" src="/assets/images/New/Vector.png" alt="">
+                    </div>
+                    <h3>Maintainence services</h3>
+                    <p class="hide"> Quick response to maintenance requests for issues like plumbing or electrical problems.</p>
+                </div>
+                <div class="item service-item-2">
+                    <div class="s-i-im">
+                        <img class="first-img" src="/assets/images/Group-1.png" alt="">
+                        <img class="second-img" src="/assets/images/New/Group-1.png" alt="">
+                    </div>
+                    <h3>Air conditioning</h3>
+                    <p class="hide"> Depending on the climate, air conditioning facilities are available.</p>
+                </div>
+                <div class="item service-item-3">
+                    <div class="s-i-im">
+                        <img class="first-img" src="/assets/images/Group-2.png" alt="">
+                        <img class="second-img" src="/assets/images/New/Group-2.png" alt="">
+                    </div>
+                    <h3 class="special">Paid Meals</h3>
+                    <p class="hide">Meal subscription services, at an additional cost...</p>
+                </div>
+                <div class="item service-item-4">
+                    <div class="s-i-im">
+                        <img class="first-img" src="/assets/images/Group 48.png" alt="">
+                        <img class="second-img" src="/assets/images/New/Group 48.png" alt="">
+                    </div>
+                    <h3>Security</h3>
+                    <p class="hide"> Measures such as CCTV surveillance, security guards, or secure entry systems may be provided for safety.</p>
+                </div>
+            </div>
+            <!-- <div class="services service-row-2">
+               
+            </div> -->
+            
+        </div>
+    </section>
+
+    <section class="page4">
+        <div class="main-head">
+            <img src="/assets/images/Line 2.png" alt="">
+            <h2 style="text-transform: uppercase;" class="sph">why use Ira Student Living</h2>
+            <img src="/assets/images/Line 1.png" alt="">
+        </div>
+
+        <div class="services why-choose-us">
+            <div class="item why-choose-us-1">
+                <div class="s-i-im">
+                    <img class="first-img" src="/assets/images/Group-A.png" alt="">
+                    <img class="second-img" src="/assets/images/New/Group-A.png" alt="">
+                </div>
+                <h3>Avoid Brokers</h3>
+                <p class="hide">Experience hassle-free living, where you can avoid brokers and enjoy direct access to quality accommodations.</p>
+            </div>
+            <div class="item why-choose-us-2">
+                <div class="s-i-im">
+                    <img class="first-img" src="/assets/images/Group-B.png" alt="">
+                    <img class="second-img" src="/assets/images/New/Group-B.png" alt="">
+                </div>
+                <h3>Shortlisted without visit</h3>
+                <p class="hide">Effortlessly shortlist your ideal student accommodation with us, no visit required.</p>
+            </div>
+            <div class="item why-choose-us-3">
+                <div class="s-i-im">
+                    <img class="first-img" src="/assets/images/Group-C.png" alt="">
+                    <img class="second-img" src="/assets/images/New/Group-C.png" alt="">
+                </div>
+                <h3>Rental agreement</h3>
+                <p class="hide">Our rental agreement ensures transparency, security,  offering clear terms and fair conditions tailored to meet your needs.</p>
+            </div>
+           
+        </div>
+
+        <div class="extra-service">
+            <img src="/assets/images/Group 50.png" alt="">
+            <div class="service-text">
+                <h3>Rent recipt generator</h3>
+                <p>Generate rent receipts hassle-free</p>
+            </div>
+            <div class="service-text">
+                <h3>Rent Calculator</h3>
+                <p>Calculate your monthly rent and desposite</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="page5">
+        <div class="cta-section">
+            <div class="cta-img">
+                <img src="/assets/images/home-vector.png" alt="">
+            </div>
+            <div class="cta-text">
+                <h2>GET IN TOUCH</h2>
+                <p>Our top-tier homes are renting rapidly. Connect with us personally to secure yours.</p>
+                <img src="/assets/images/Arrow 2.png" alt="">
+            </div>
+            <div class="cta-form">
+                <h2>Get personally <span style="color: #E7991C;">connected with us</span></h2>
+                <form action="/send-data" method="post">
+                    <input type="text" name="name" id="name" placeholder="Name*">
+                    <input type="number" name="numer" id="number" placeholder="+91 | Mobile number " class="no-spinner">
+                    <input type="email" name="email" id="email" placeholder="Email*">
+                    <select name="city" id="city">
+                        <option value="Select city">Select city</option>
+                        <option value="Noida">Noida</option>
+                        <option value="Delhi">Delhi</option>
+                    </select>
+                    <select name="location" id="location">
+                        <option value="Select Location">Select Location (optional)</option>
+                        <option value="Noida">Noida</option>
+                        <option value="Delhi">Delhi</option>
+                    </select>
+                    <select name="accommodation" id="accommodation">
+                        <option value="Accommodation Type*">Accommodation Type</option>
+                        <option value="Noida">AC</option>
+                        <option value="Delhi">Non AC</option>
+                    </select>
+
+                    <input type="submit" value="submit">
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+</div>
+
+
+
+<script>
+    // Get all the popup elements
+const callBackPopups = document.querySelectorAll('.call-back-popup');
+
+// Get all the close buttons
+const closePopupBtns = document.querySelectorAll('.close-popup');
+
+// Get all the "open-popup" links
+const openPopups1 = document.querySelectorAll('.open-popup1');
+const openPopups2 = document.querySelectorAll('.open-popup2');
+
+// Add click event listeners to all "open-popup1" links
+openPopups1.forEach((openPopup1, index) => {
+  openPopup1.addEventListener('click', (event) => {
+    event.preventDefault(); // Prevent the default link behavior
+    const popup1 = document.querySelector('.p1'); // Get the popup1 with class p1
+    popup1.style.display = 'flex'; // Show the popup1
+    scrollToPopup(popup1);
+  });
+});
+
+// Add click event listeners to all "open-popup2" links
+openPopups2.forEach((openPopup2, index) => {
+  openPopup2.addEventListener('click', (event) => {
+    event.preventDefault(); // Prevent the default link behavior
+    const popup2 = document.querySelector('.p2'); // Get the popup2 with class p2
+    popup2.style.display = 'flex'; // Show the popup2
+    scrollToPopup(popup2);
+  });
+});
+
+// Add click event listener to all close buttons
+closePopupBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const popup = btn.closest('.call-back-popup');
+    popup.style.display = 'none'; // Hide the corresponding popup
+  });
+});
+
+// Add event listener to close the popup when clicked outside the popup area
+window.addEventListener('click', (event) => {
+  callBackPopups.forEach((popup) => {
+    if (event.target === popup) {
+      popup.style.display = 'none';
+    }
+  });
+});
+
+function scrollToPopup(popup) {
+  popup.scrollTop = 0;
+}
+
+
+// Get the form element
+const ctaForm = document.querySelector('form[action="/send-data"]');
+
+// Add event listener to the form submission
+ctaForm.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Fetch the form data
+    const formData = new FormData(ctaForm);
+
+    try {
+        // Send the form data to the server using fetch
+        const response = await fetch('/send-data', {
+            method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(Object.fromEntries(formData))
+
+        });
+
+        // Check if the response is successful
+        if (response.ok) {
+            // Alert the user about successful submission (you can customize this)
+            alert('Form submitted successfully!');
+        } else {
+            // Alert the user about an error in submission (you can customize this)
+            alert('Error in form submission. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+        const visitBtn = document.querySelector('.visit-btn');
+        const form = document.querySelector('.first-f');
+
+        visitBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+            fetch('/send-whastapp', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Form submitted successfully!');
+                } else {
+                    alert('Error in form submission. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+
+
+
+
+
+</script>

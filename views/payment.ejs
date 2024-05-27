@@ -1,0 +1,44 @@
+<% layout("/layouts/boilerplate") %>
+<form id="payment-form" action="/details" method="post" >
+  <input type="number" name="UTR" placeholder="UTR" id="">
+  <button type="submit" id="see" >Submit</button>
+</form>
+
+
+
+<!-- <script>
+    const see = document.querySelector("#see");
+
+see.addEventListener("click", ()=>{
+  console.log("hello");
+})
+</script> -->
+
+<!-- <div id="response-container"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('payment-form');
+    const responseContainer = document.getElementById('response-container');
+
+    form.addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+
+      try {
+        const response = await fetch('/payment_submit', {
+          method: 'POST',
+          body: formData,
+      
+        });
+
+        const data = await response.text();
+        responseContainer.textContent = data;
+      } catch (error) {
+        console.error('Error submitting payment:', error);
+        responseContainer.textContent = 'An error occurred while submitting the payment.';
+      }
+    });
+  });
+</script> -->

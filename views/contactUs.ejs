@@ -1,0 +1,82 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="main-page">
+    <div class="ab-page1">
+        <h2>CONTACT</h2>
+        <h2>IRA STUDENT LIVING</h2>
+    </div>
+
+
+
+    <h2 class="only-head">CONTACT US</h2>
+    <div class="contact-bar">
+        <div class="email-box contact-box">
+            <div class="box-img">
+                <img src="/assets/images/email.png" loading="lazy" alt="">
+            </div>
+            <div class="box-text">
+                <h4>Email us</h4>
+                <p><a href="mailto:irastudentliving@gmail.com">irastudentliving@gmail.com</a></p>
+            </div>
+        </div>
+        <div class="location-box contact-box">
+            <div class="box-img">
+                <img src="/assets/images/location.png" loading="lazy" alt="">
+            </div>
+            <div class="box-text">
+                <h4>Location</h4>
+                <p>4079, Street No. 37, Reghar Pura, Block 33, Beadonpura, Karol Bagh, New Delhi, Delhi, 110005</p>
+            </div>
+        </div>
+        <div class="call-box contact-box">
+            <div class="box-img">
+                <img src="/assets/images/call.png" loading="lazy" alt="">
+            </div>
+            <div class="box-text">
+                <h4>Call Us</h4>
+                <p><a href="tel:9911572724">+91-9911572724</a></p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <section class="page5">
+        <div class="cta-section">
+            <div class="cta-img">
+                <img src="/assets/images/home-vector.png" alt="">
+            </div>
+            <div class="cta-text">
+                <h2>GET IN TOUCH</h2>
+                <p>Our top-tier homes are renting rapidly. Connect with us personally to secure yours.</p>
+                <img src="/assets/images/Arrow 2.png" alt="">
+            </div>
+            <div class="cta-form">
+                <h2>Get personally <span style="color: #E7991C;">connected with us</span></h2>
+                <form action="/send-contact-data" method="post">
+                    <input type="text" name="name" id="name" placeholder="Name*">
+                    <input type="number" name="numer" id="number" placeholder="+91 | Mobile number " class="no-spinner">
+                    <input type="email" name="email" id="email" placeholder="Email*">
+                    <select name="city" id="city">
+                        <option value="Select city">Select city</option>
+                        <option value="Noida">Noida</option>
+                        <option value="Delhi">Delhi</option>
+                    </select>
+                    <select name="location" id="location">
+                        <option value="Select Location">Select Location (optional)</option>
+                        <option value="Noida">Noida</option>
+                        <option value="Delhi">Delhi</option>
+                    </select>
+                    <select name="accommodation" id="accommodation">
+                        <option value="Accommodation Type*">Accommodation Type</option>
+                        <option value="Noida">AC</option>
+                        <option value="Delhi">Non AC</option>
+                    </select>
+
+                    <input type="submit" value="submit">
+                </form>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,257 @@
+<% layout("/layouts/boilerplate") %>
+
+    <div class="main-page info">
+        <h2 class="top-head">TENANT INFORMATION FORM</h2>
+
+
+       
+            <div class=" payment-popup   <% if (showPaymentPopup) { %>show-popup<% } %>">
+                <h2>Payment -</h2>
+                <div class="barcode">
+                    <div class="barcode-img">
+                        <img src="/assets/images/barcode.png" alt="">
+                    </div>
+                    <div class="barcode-text">
+                        <h3>PAY NOW</h3>
+                        <form id="paymentPopupForm" action="/submit-payment" method="post">
+                            <input type="text" name="UTR" id="" placeholder="Enter your UTR no.">
+                            <button type="submit">Save & Continue</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+          
+
+
+                <form action="/tenant_info" method="post" class="info-pad">
+
+
+
+
+
+                    <div class="opt build-num">
+                        <p>Building Number</p>
+                        <div>
+                            <input type="text" name="buildingNumber" value="<%= roomDetails.buildingNumber %>" readonly>
+                          </div>
+                    </div>
+                    <hr class="f-h">
+
+
+                    <div class="calc-img">
+                        <div class="calc">
+                            <div class="opt room-num rm-1">
+                                <p>Room Number</p>
+                                <div>
+                                    <input type="text" name="roomNumber" value="<%= roomDetails.roomNumber %>" readonly>
+                                  </div>
+                            </div>
+                            <div class="rent-calc">
+                                <p class="f-c">Rent per dat X days</p>
+                                
+                                    <div class="sel">
+                                        <p><%= roomDetails.rentPerDay %></p>
+                                      </div>
+                                
+
+                                      <p class="l-c">X &nbsp;&nbsp; <span style="width: 25px;" id="daysRemainingInMonth"></span> &nbsp;&nbsp; = &nbsp;&nbsp; <span id="rentForRemainingDays"></span>                                </p>
+                            </div>
+
+                            <div class="rent-sec">
+                                <div class="opt room-num">
+                                    <p>Rent per month</p>
+                                    <div>
+                                        <input type="text" name="rentPerMonth" value="<%= roomDetails.price %>" readonly>
+                                      </div>
+                                </div>
+                                <p class="s-p">Security</p>
+                            </div>
+
+                            <div class="agree">
+                                <p class="s-p">-*Agreement <span>-Rs. 500</span></p>
+                                <p class="s-p">Total</p>
+                            </div>
+                        </div>
+
+                        <div class="upload-img">
+                            <div class="circle"></div>
+                            <div class="upload">
+                                <img src="/assets/images/upload.png" alt="">
+                                <a href="">Upload picture</a>
+                            </div>
+                            <div class="upload">
+                                <img src="/assets/images/take.png" alt="">
+                                <a href="">Take picture</a>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <hr class="s-h">
+
+                    <div class="agree-sheet">
+                        <div class="sheet sheet1">
+                            <p id="inDate"></p>
+                            <p id="agreementStartDate"></p>
+                            <p id="agreementEndDate"></p>
+                        </div>
+                        <div class="sheet sheet2">
+                            <p id="lockInDate"></p>
+                            <div class="opt room-unit">
+                                <p class="bb-n" style="border-bottom: none !important;">Room unit</p>
+                                <div>
+                                    <input type="text" name="roomUnit" value="<%= roomDetails.roomNumber %>" readonly>
+                                  </div>
+                            </div>
+                            <p>Bathroom unit</p>
+                        </div>
+                    </div>
+
+                    <hr class="f-h">
+
+                    <div class="rules">
+                        <p>
+                            1. Please refer to the annexure at the back of this page for monthly rent of the rooms and
+                            per day
+                            rent.
+
+                        </p>
+                        <p>
+                            2. Per day rent is calculated only in case the tenant occupies the room before the start of
+                            the
+                            month.
+                        </p>
+                    </div>
+
+                    <div class="note">
+                        <p><span>Note- </span>SECURITY AMOUNT WILL NOT BE REFUNDED IF THE STAY IS LESS THAN 3 MONTH + 1
+                            MONTH
+                            NOTICE RENT ONCE PAID WILL NOT BE REFUNDED UNDER ANY CIRCUMSTANCES</p>
+                        <!-- <a href="">Tenant Signature</a> -->
+                    </div>
+
+                    <div class="info-form">
+                        <div class="form1">
+                            <input type="text" name="name" placeholder="Name" id="">
+                            <input type="text" name="dob" placeholder="Date of Birth" id="">
+                            <input type="text" placeholder="age" name="age">
+
+                        </div>
+
+                        <div class="form2">
+                            <input type="text" name="mobileNumber" placeholder="Mobile number" id="">
+                            <input type="text" name="what-num" placeholder="Whatsapp number" id="">
+
+                            <input type="text" name="aadhar" placeholder="Aadhar card number" id="">
+                            <input type="text" name="email" placeholder="Email id" id="">
+
+                        </div>
+                        <div action="/submit-from" method="post" class="textarea-form">
+                            <textarea name="address" placeholder="Residential Address" id=""></textarea>
+
+                        </div>
+
+                        <div class="form3">
+                            <input type="text" name="f-name" placeholder="Father's name" id="">
+                            <input type="text" name="f-work" placeholder="Father's Occupation" id="">
+                            <input type="number" name="f-num" placeholder="Father's contact number" id="">
+                            <input type="number" name="H-num" placeholder="Home Phone" id="">
+                            <input type="text" name="m-name" placeholder="Mother's name" id="">
+                            <input type="text" name="b-name" placeholder="Brother's/sister's name" id="">
+                            <input type="text" name="property-d" placeholder="Property Dealer" id="">
+                            <input type="text" name="stay-d" placeholder="Duration of stay" id="">
+                            <input type="number" name="d-num" placeholder="Dealer's Contact number" id="">
+                            <input type="text" name="p-home" placeholder="Police station home town" id="">
+
+                        </div>
+                    </div>
+
+                    <h3 class="emer">People to Contact In Case of Emergency</h3>
+
+                    <div action="" id="contactTableForm">
+                        <div class="contact-table">
+                            <div class="row r-1">
+                                <p class="col c-1"></p>
+                                <p class="col c-2">NAME</p>
+                                <p class="col c-3">CONTACT NUMBER</p>
+                                <p class="col c-4">RELATION</p>
+                            </div>
+                            <div class="row r-2">
+                                <p class="col c-1">LOCAL</p>
+                                <p class="col c-2"><input type="text" name="local1Name" id=""></p>
+                                <p class="col c-3"><input type="text" name="local1Contact" id=""></p>
+                                <p class="col c-4"><input type="text" name="local1Relation" id=""></p>
+                            </div>
+                            <div class="row r-3">
+                                <p class="col c-1">LOCAL</p>
+                                <p class="col c-2"><input type="text" name="local2Name" id=""></p>
+                                <p class="col c-3"><input type="text" name="local2Contact" id=""></p>
+                                <p class="col c-4"><input type="text" name="local2Relation" id=""></p>
+                            </div>
+                            <div class="row r-4">
+                                <p class="col c-1">HOME TOWN</p>
+                                <p class="col c-2"><input type="text" name="homeTown1Name" id=""></p>
+                                <p class="col c-3"><input type="text" name="homeTown1Contact" id=""></p>
+                                <p class="col c-4"><input type="text" name="homeTown1Relation" id=""></p>
+                            </div>
+                            <div class="row r-5">
+                                <p class="col c-1">HOME TOWN</p>
+                                <p class="col c-2"><input type="text" name="homeTown2Name" id=""></p>
+                                <p class="col c-3"><input type="text" name="homeTown2Contact" id=""></p>
+                                <p class="col c-4"><input type="text" name="homeTown2Relation" id=""></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="dec">DECLARATION-</h3>
+
+                    <p class="dec-p">i hereby declare that above particulars of information and facts started are true ,
+                        correct
+                        and complete to the best of my knowledge and belief.</p>
+
+                    <div class="verify">
+                        <input type="submit" value="save & continue" id="saveAndContinue" class="c-b">
+                    </div>
+                </form>
+
+
+               
+    </div>
+    
+    <script>
+         const today = new Date();
+    const daysInCurrentMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+    const daysRemainingInMonth = daysInCurrentMonth - today.getDate() + 1;
+    console.log(daysRemainingInMonth);
+
+    // Get the rent per day from the form
+    const rentPerDay = parseFloat(document.querySelector('.sel p').innerHTML);
+    console.log(rentPerDay);
+
+
+    // Calculate the rent for the remaining days
+    const rentForRemainingDays = rentPerDay * daysRemainingInMonth;
+
+    console.log(rentForRemainingDays);
+
+    // Update the rent for remaining days on the form
+    document.getElementById('daysRemainingInMonth').innerHTML = daysRemainingInMonth;
+    document.getElementById('rentForRemainingDays').innerHTML = rentForRemainingDays.toFixed(2);
+
+
+
+
+    const inDate = today.toLocaleDateString();
+    const agreementStartDate = inDate;
+    const agreementEndDate = new Date(today.getFullYear(), today.getMonth() + 11, today.getDate()).toLocaleDateString();
+    const lockInDate = new Date(today.getFullYear(), today.getMonth() + 6, today.getDate()).toLocaleDateString();
+
+    document.getElementById('inDate').innerHTML = inDate;
+    document.getElementById('agreementStartDate').innerHTML = agreementStartDate;
+    document.getElementById('agreementEndDate').innerHTML = agreementEndDate;
+    document.getElementById('lockInDate').innerHTML = lockInDate;
+    </script>
+
+  

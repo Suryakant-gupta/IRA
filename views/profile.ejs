@@ -1,0 +1,190 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="main-page info">
+    <h2 class="top-head">Your Profile</h2>
+
+   
+    
+    <section class="info-pad">
+       
+        
+
+       
+
+
+      
+
+        
+
+        <div class="note">
+            <p><span>Note- </span>SECURITY AMOUNT WILL NOT BE REFUNDED IF THE STAY IS LESS THAN 3 MONTH + 1 MONTH NOTICE  RENT ONCE PAID WILL NOT BE REFUNDED UNDER ANY CIRCUMSTANCES</p>
+            <!-- <a href="">Tenant Signature</a> -->
+        </div>
+
+        <div class="info-form">
+            <form action="/profile" method="post" class="form1">
+                <input type="text" name="name" placeholder="Name" id="" value="<%= formData.name %>">
+                <input type="text" name="dob" placeholder="Date of Birth" id="" value="<%= formData.dob %>">
+                <input type="text" placeholder="age" name="age" value="<%= formData.age %>">
+              </form>
+              
+              <form action="/profile" method="post" class="form2">
+                <input type="text" name="mob-num" placeholder="Mobile number" id="" value="<%= formData.mobileNumber %>">
+                <input type="text" name="what-num" placeholder="Whatsapp number" id="" value="<%= formData.whatsappNumber %>">
+                <input type="text" name="aadhar" placeholder="Aadhar card number" id="" value="<%= formData.aadharNumber %>">
+                <input type="text" name="email" placeholder="Email id" id="" value="<%= formData.email %>">
+              </form>
+              
+              <form action="/profile" method="post" class="textarea-form">
+                <textarea name="address" placeholder="Residential Address" id=""><%= formData.address %></textarea>
+              </form>
+              
+              <form action="/profile" method="post" class="form3">
+                <input type="text" name="f-name" placeholder="Father's name" id="" value="<%= formData.fathersName %>">
+                <input type="text" name="f-work" placeholder="Father's Occupation" id="" value="<%= formData.fathersOccupation %>">
+                <input type="number" name="f-num" placeholder="Father's contact number" id="" value="<%= formData.fathersContactNumber %>">
+                <input type="number" name="H-num" placeholder="Home Phone" id="" value="<%= formData.homePhone %>">
+                <input type="text" name="m-name" placeholder="Mother's name" id="" value="<%= formData.mothersName %>">
+                <input type="text" name="b-name" placeholder="Brother's/sister's name" id="" value="<%= formData.siblingName %>">
+                <input type="text" name="property-d" placeholder="Property Dealer" id="" value="<%= formData.propertyDealer %>">
+                <input type="text" name="stay-d" placeholder="Duration of stay" id="" value="<%= formData.durationOfStay %>">
+                <input type="number" name="d-num" placeholder="Dealer's Contact number" id="" value="<%= formData.dealersContactNumber %>">
+                <input type="text" name="p-home" placeholder="Police station home town" id="" value="<%= formData.policeStationHomeTown %>">
+              </form>
+        </div>
+
+        <h3 class="emer">People to Contact In Case of Emergency</h3>
+
+       <form action="" id="contactTableForm">
+        <div class="contact-table">
+            <div class="row r-1">
+              <p class="col c-1">d</p>
+              <p class="col c-2">NAME</p>
+              <p class="col c-3">CONTACT NUMBER</p>
+              <p class="col c-4">RELATION</p>
+            </div>
+            <div class="row r-2">
+              <p class="col c-1">LOCAL</p>
+              <p class="col c-2"><input type="text" name="local1Name" id=""></p>
+              <p class="col c-3"><input type="text" name="local1Contact" id=""></p>
+              <p class="col c-4"><input type="text" name="local1Relation" id=""></p>
+            </div>
+            <div class="row r-3">
+              <p class="col c-1">LOCAL</p>
+              <p class="col c-2"><input type="text" name="local2Name" id=""></p>
+              <p class="col c-3"><input type="text" name="local2Contact" id=""></p>
+              <p class="col c-4"><input type="text" name="local2Relation" id=""></p>
+            </div>
+            <div class="row r-4">
+              <p class="col c-1">HOME TOWN</p>
+              <p class="col c-2"><input type="text" name="homeTown1Name" id=""></p>
+              <p class="col c-3"><input type="text" name="homeTown1Contact" id=""></p>
+              <p class="col c-4"><input type="text" name="homeTown1Relation" id=""></p>
+            </div>
+            <div class="row r-5">
+              <p class="col c-1">HOME TOWN</p>
+              <p class="col c-2"><input type="text" name="homeTown2Name" id=""></p>
+              <p class="col c-3"><input type="text" name="homeTown2Contact" id=""></p>
+              <p class="col c-4"><input type="text" name="homeTown2Relation" id=""></p>
+            </div>
+          </div>
+       </form>
+
+        <h3 class="dec">DECLARATION-</h3>
+
+        <p class="dec-p">i hereby declare that above particulars of information and facts started are true  , correct and complete to the best of my knowledge and belief.</p>
+
+        <div class="verify">
+            <button id="saveAndContinue" class="c-b">save & continue</button>
+
+            <!-- <div class="sign">
+                <a class="c-b" href="">tenant signature</a>
+                <a href="">E-signature | upload file</a>
+            </div> -->
+        </div>
+    </section>
+
+
+   
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#saveAndContinue').on('click', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+    
+            // Create an object to store all form data
+            const formData = {};
+    
+            // Iterate over all forms except the contact table form
+            $('form:not("#contactTableForm")').each(function() {
+                const formFields = $(this).serializeArray();
+                $.each(formFields, function(i, field) {
+                    formData[field.name] = field.value;
+                });
+            });
+    
+            // Collect the contact table form data separately
+            const contactTableFormFields = $('#contactTableForm').serializeArray();
+            const contactTable = [];
+    
+            $.each(contactTableFormFields, function(i, field) {
+                const [name, index] = field.name.split(/(\d+)/);
+                if (field.value !== '') { // Check if the field value is not an empty string
+                    if (!contactTable[index]) {
+                        contactTable[index] = {};
+                    }
+                    contactTable[index][name] = field.value;
+                }
+            });
+    
+            // Add the contactTable array to the formData object
+            formData['contactTable'] = contactTable.filter(item => Object.keys(item).length !== 0); // Filter out empty objects
+    
+            // Submit the main form data to the server
+            $.ajax({
+                type: 'POST',
+                url: '/submit-form',
+                data: formData,
+                success: function(response) {
+                    console.log('Main form submitted successfully:', response);
+                    // Show the payment-popup
+                    $('.payment-popup').show();
+                    window.scrollTo(0, 0);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error submitting main form:', error);
+                    console.log('Status:', status);
+                    console.log('Response:', xhr.responseText);
+                },
+            });
+        });
+    
+        $('#paymentPopupForm').on('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+    
+            // Get the form data from the payment popup form
+            const paymentPopupFormData = $(this).serialize();
+    
+            // Submit the payment popup form data to the server
+            $.ajax({
+                type: 'POST',
+                url: '/test',
+                data: paymentPopupFormData,
+                success: function(response) {
+                    console.log('Payment popup form submitted successfully:', response);
+                    window.location.href = '/tenant_details';
+                    // You can add additional logic here, e.g., show a success message
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error submitting payment popup form:', error);
+                    console.log('Status:', status);
+                    console.log('Response:', xhr.responseText);
+                },
+            });
+    
+            // Close the payment-popup
+            $('.payment-popup').hide();
+        });
+    });
+    </script>

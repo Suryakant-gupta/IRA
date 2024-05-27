@@ -1,0 +1,90 @@
+.og{
+    background-color: #fdfafe;
+}
+.login-page{
+    width: 450px;
+    height: 100vh;
+    margin: auto;
+    background-color: #fdfafe;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 3rem;
+   
+}
+
+.login-method{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-method button{
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.ch-col{
+    color: #E7991C; 
+   text-decoration: underline;
+   text-decoration-thickness: 2px;
+   text-underline-offset: 7px;
+ }
+
+ .form{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: .3rem;
+ }
+
+ .form input{
+    width: 100%;
+    padding: .5rem;
+    border: 2px solid #b3b0b0;
+    border-radius: 4px;
+ }
+
+ .form label{
+    font-size: 1.17rem;
+    font-weight: bold;
+ }
+ .login-otp{
+    margin-top: .8rem;
+    color: blue;
+    cursor: pointer;
+ }
+
+ .form button{
+    background-color: #E7991C;
+    padding-inline: 4rem;
+    padding-block: .7rem;
+    border-radius: 5px;
+    border: none;
+    margin-top: 1.5rem;
+ }
+
+.phone-form{
+    display: none;
+}
+.email-form{
+    display: none;
+}
+
+.otp-email-form{
+    display: none;
+}
+
+
+
+@media screen and (max-width : 650px) {
+    .login-page{
+        padding-top: 8rem;
+    }
+}

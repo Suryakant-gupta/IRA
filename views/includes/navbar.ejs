@@ -1,0 +1,52 @@
+<header>
+    <nav>
+        <div class="logo">
+            <a href="/home"><img src="/assets/images/Logo.png" alt="Logo"></a>
+        </div>
+        <div class="cta">
+            <% if(!authenticated) {%>
+                <a href="/login"><img class="user-profile" src="/assets/images/contact-icon.png" alt=""></a>
+                <a href="/login">Login</a>
+                <% }%>
+                <% if(authenticated) {%>
+                    <a href="/profile" id="userProfileLink"><img class="user-profile" src="/assets/images/contact-icon.png" alt=""></a>
+                    <a href="/logout">logout</a>
+                  <% }%>
+                            <div class="explore">
+                               <p> Know more</p>
+
+                                <div class="know-more-menu">
+                                    <a href="/about-us">
+                                        <option value="About Us">About Us</option>
+                                    </a>
+                                    <a >
+                                        <option value="FAQs">FAQs</option>
+                                    </a>
+                                    <a href="/policies">
+                                        <option value="House Rules">House Rules</option>
+                                    </a>
+                                    <a href="/contact-us">
+                                        <option value="Contact us">Contact us</option>
+                                    </a>
+                                </div>
+                            </div>
+                            
+        </div>
+    </nav>
+
+    
+</header>
+
+
+<script>
+    document.querySelector(".explore").addEventListener("mouseover", ()=>{
+        document.querySelector(".know-more-menu").style.display = "flex";
+    })
+    document.querySelector(".explore").addEventListener("mouseleave", ()=>{
+        document.querySelector(".know-more-menu").style.display = "none";
+    })
+
+ 
+  
+
+</script>

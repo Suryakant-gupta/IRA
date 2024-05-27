@@ -1,0 +1,82 @@
+<%- layout("/layouts/boilerplate") %>
+<div class="main-page">
+  <div class="login-page">
+    <h2 style="color: #E7991C;">LOG IN</h2>
+    <div class="login-method">
+      <button class="ch-col">Login with phone</button>
+      <button>Login with email</button>
+    </div>
+    <form action="/login/phone" method="post" class="phone-form form">
+      <label for="phone">Enter Phone Number</label>
+      <input type="number" name="username" id="phone" />
+      <label for="pass">Enter Password</label>
+      <input type="password" name="password" id="pass" />
+      <button type="submit">Login</button>
+    </form>
+    <form action="/login/email" method="post" class="email-form form">
+      <label for="email">Enter Email</label>
+      <input type="email" name="username" id="email" />
+      <label for="pass">Enter Password</label>
+      <input type="password" name="password" id="pass" />
+      <button type="submit">Login</button>
+    </form>
+    <form action="/login/otp/phone" method="post" class="otp-phone-form form">
+      <label for="phone">Enter Phone Number</label>
+      <input type="number" name="username" id="phone" />
+      <label for="pass">Enter OTP</label>
+      <input type="number" name="otp" id="otp" class="o" />
+      <button type="submit">Login with OTP</button>
+    </form>
+    <form action="/login/otp/email" method="post" class="otp-email-form form">
+      <label for="email">Enter Email</label>
+      <input type="email" name="username" id="email" />
+      <label for="pass">Enter OTP</label>
+      <input type="number" name="otp" id="otp" class="o" />
+      <button type="submit">Login with OTP</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get all form elements
+    const phoneForm = document.querySelector('.phone-form');
+    const emailForm = document.querySelector('.email-form');
+    const otpPhoneForm = document.querySelector('.otp-phone-form');
+    const otpEmailForm = document.querySelector('.otp-email-form');
+
+    // Get all button elements
+    const phoneButton = document.querySelector('.login-method button.ch-col');
+    const emailButton = document.querySelector('.login-method button:not(.ch-col)');
+
+    // Show phone form by default
+    showForm(phoneForm);
+    phoneButton.classList.add('ch-col');
+
+    // Add event listeners to buttons
+    phoneButton.addEventListener('click', () => {
+      showForm(phoneForm);
+      phoneButton.classList.add('ch-col');
+      emailButton.classList.remove('ch-col');
+    });
+    emailButton.addEventListener('click', () => {
+      showForm(emailForm);
+      emailButton.classList.add('ch-col');
+      phoneButton.classList.remove('ch-col');
+    });
+
+    // Function to show a form and hide others
+    function showForm(form) {
+      hideAllForms();
+      form.style.display = 'block';
+    }
+
+    // Function to hide all forms
+    function hideAllForms() {
+      phoneForm.style.display = 'none';
+      emailForm.style.display = 'none';
+      otpPhoneForm.style.display = 'none';
+      otpEmailForm.style.display = 'none';
+    }
+  });
+</script>
