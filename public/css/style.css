@@ -813,20 +813,7 @@ footer a {
     width: 50%;
 }
 
-.footer-top .logo-text .social-icons {
-    width: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    gap: 3rem;
-    font-size: 2rem;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-}
+
 
 .footer-top .menu {
     width: 18%;
@@ -852,23 +839,39 @@ footer a {
 }
 
 .footer-bottom{
-    padding-left: 5.5rem;
+    padding-left: 6rem;
 }
 
-.footer-bottom .copyright,
-.footer-bottom .rights {
-    width: 35%;
+.social-icons{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.footer-bottom p {
-    font-size: .9rem;
+.icons {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    gap: 3rem;
+    font-size: 2rem;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: flex-start;
 }
+
+
+
 
 
 
 .res-foot{
     width: 100%;
-    padding-inline: 1vw;
+    padding-inline: 2vw;
     padding-block: .3rem;
     display: none;
     -webkit-box-align: center;

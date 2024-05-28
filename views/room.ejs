@@ -94,11 +94,15 @@
                     <div class="ac-wash">
                         <div class="comb">
                             <img src="/assets/images/washroom.png" alt="">
-                            <a >Shared Washroomo</a>
+                            <a >Shared Washrooms</a>
                         </div>
                         <div class="comb">
                             <img src="/assets/images/AC.png" alt="">
-                            <a > Air Condition</a>
+                            <% if (roomDetails.ac) { %>
+                                <a>Air Condition</a>
+                            <% } else { %>
+                                <a>Non-AC</a>
+                            <% } %>
                         </div>
                     </div>
                 </div>
@@ -108,7 +112,7 @@
                     <div class="wi-meal">
                         <div class="comb">
                             <img src="/assets/images/meals.png" alt="">
-                            <a > Delicious Meals</a>
+                            <a > Drinking Water</a>
                         </div>
                         <div class="comb">
                             <img src="/assets/images/wifi.png" alt="">
@@ -123,20 +127,11 @@
 
                 <div class="details">
                     <h2>Details</h2>
-                    <p>A <span>PG in South Camus</span> will never be more than a PG. But bhavan House by ira Living
-                        will
-                        never be less than a second home.
-                        To begin with, all the home-like comforts you're used to are waiting for you in this
-                        fully-furnished
-                        residence for girls.
+                    <p>Our facility has 50 independent furnished AC and Non-AC rooms, each equipped with a bed and mattress, study table, chair, bookshelf, and wardrobe. On each floor, there are four independent rooms and two bathrooms, with two residents sharing one bathroom. The bathrooms are well-equipped with geysers and other basic amenities.
+                        
                     </p>
                     <div class="more-content">
-                        <p>Bhavan House by Ira Living offers more than just accommodation; it provides a nurturing
-                            environment that feels like a second home. Step into a fully-furnished residence designed
-                            specifically for girls, where all the comforts of home await you. From cozy living spaces to
-                            well-equipped amenities, Bhavan House ensures a comfortable and welcoming atmosphere for
-                            residents. Discover a place where you can thrive academically and socially, surrounded by
-                            like-minded individuals who become more than just housemates—they become family.</p>
+                        <p>At Ira Student Living, we offer more than just accommodation; we provide a nurturing environment that truly feels like a second home. Step into our fully-furnished residence designed specifically for girls, where all the comforts of home await you. From cozy living spaces to well-equipped amenities, Ira Student Living ensures a comfortable and welcoming atmosphere for residents. Discover a place where you can thrive academically and socially, surrounded by like-minded individuals who become more than just housemates—they become family.</p>
                     </div>
                     <a href="#" id="read-more-link" class="show-more">Read more</a>
                     <a href="#" id="read-less-link" class="show-less">Read less</a>
@@ -216,8 +211,12 @@
                         <div class="card-text">
                             <div class="price-gender">
                                 <div class="price">
-                                    <a href="">IRA STUDENT LIVING</a>
-                                    <p>From <span>&#8377; <%= room.price %></span>/month </p>
+                                    <a href="/room_details/<%= room.id %>">IRA STUDENT LIVING</a>
+                                    <p>From &#8377; <% if (room.ac) { %>
+                                        <span>10,500</span>
+                                    <% } else { %>
+                                        <span>8500</span>
+                                    <% } %>/month </p>
                                 </div>
                                 <div class="gender">
                                     <img src="/assets/images/male-symbol.png" alt="">
@@ -239,7 +238,11 @@
                                 <div class= "sr sr2">
                                     <div class="si3 si">
                                         <img src="/assets/images/ci3.png" alt="">
-                                        <p>Ventilated/Non-Ac</p>
+                                        <% if (room.ac) { %>
+                                            <p>Ventilated/AC</p>
+                                        <% } else { %>
+                                            <p>Ventilated/Non-AC</p>
+                                        <% } %>
                                     </div>
     
                                 </div>

@@ -12,12 +12,13 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const sendEmail = require('./utils/mailsender');
-const sendWhatsappMessage = require('./utils/whatsappSender');
+// const sendWhatsappMessage = require('./utils/whatsappSender');
 const { ensureAuthenticated } = require('./middleware/auth');
 const flash = require('connect-flash');
 const puppeteer = require('puppeteer');
 
 const nodemailer = require("nodemailer");
+const { getMaxListeners } = require("events");
 // const axios = require('axios');
 
 
@@ -274,16 +275,30 @@ app.put('/update-profile', ensureAuthenticated, async (req, res) => {
     // Save the updated form data
     await formData.save();
 
+    // Find the user by ID
+    const user = await User.findById(userId);
+
+    // Update the user information with the relevant fields from the form data
+    user.name = updatedFormData.name || user.name;
+    user.email = updatedFormData.email || user.email;
+    user.mobileNumber = updatedFormData.mobileNumber || user.mobileNumber;
+    // Update any other user fields as needed
+
+    // Save the updated user
+    await user.save();
+
     // Optionally, you can set a success message
     req.flash('success', 'Profile updated successfully!');
 
-    // Redirect to the profile page
+    // Render the tenant_details view with the updated formData and user
+    // res.render('tenant', { user, userId, formData, successMessage: req.flash('success'), errorMessage: req.flash('error') });
     res.redirect(`/tenant_details/${userId}`);
   } catch (err) {
     console.error('Error updating profile:', err);
     res.status(500).send('Error updating profile');
   }
 });
+
 
 app.get("/room_details/:id", async (req, res) => {
   try {
@@ -639,10 +654,159 @@ app.post('/sendd-data', async (req, res) => {
 
 
 
+
+
+
+// rent receipt generator
+
+function generateRentReceiptHTML(userData, startDate, endDate) {
+  // Replace the placeholders with actual user data
+  const rentReceiptHTML = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>House Rent Receipt</title>
+      <style>
+      
+        h1{
+          text-align:center;
+          margin-block:1.5rem;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>House Rent Receipt</h1>
+      <p>Date Range: ${startDate} - ${endDate}</p>
+      <p>This is to acknowledge the receipt from ${userData.name} the sum of rupees ${userData.rentAmount}/- (Rs. ${userData.rentAmountInWords}) in lieu of rent payment for the specified date range, towards the property bearing the address: "${userData.propertyAddress}".</p>
+      <p>Owner's Name and Address:</p>
+      <p>${userData.ownerName}</p>
+      <p>${userData.ownerAddress}</p>
+      <div class="signature">Signature</div>
+      <div class="signature">(${userData.ownerName})</div>
+    </body>
+    </html>
+  `;
+
+  return rentReceiptHTML;
+}
+
+
+
+function convertNumberToWords(number) {
+  const ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  const teens = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+
+  function convert_millions(num) {
+    if (num >= 1000000) {
+      return convert_millions(Math.floor(num / 1000000)) + " million " + convert_thousands(num % 1000000);
+    } else {
+      return convert_thousands(num);
+    }
+  }
+
+  function convert_thousands(num) {
+    if (num >= 1000) {
+      return convert_hundreds(Math.floor(num / 1000)) + " thousand " + convert_hundreds(num % 1000);
+    } else {
+      return convert_hundreds(num);
+    }
+  }
+
+  function convert_hundreds(num) {
+    if (num > 99) {
+      return ones[Math.floor(num / 100)] + " hundred " + convert_tens(num % 100);
+    } else {
+      return convert_tens(num);
+    }
+  }
+
+  function convert_tens(num) {
+    if (num < 10) return ones[num];
+    else if (num >= 10 && num < 20) return teens[num - 10];
+    else {
+      return tens[Math.floor(num / 10)] + " " + ones[num % 10];
+    }
+  }
+
+  return convert_millions(number) + " rupees";
+}
+
+
+
+
+app.post('/generate-rent-receipt', ensureAuthenticated, async (req, res) => {
+  const user = req.user;
+  try {
+    const { startDate, endDate } = req.body;
+    const formData = await FormData.findOne({ user: user._id });
+    if (!formData) {
+      req.flash('error', 'Form data not found');
+      return res.redirect(`/tenant_details/${user._id}`);
+    }
+
+    // Fetch room data based on room number and building number
+    const roomNumber = formData.roomNumber;
+    const buildingNumber = formData.buildingNumber;
+    const roomData = await RoomListing.findOne({ roomNumber, buildingNumber });
+    if (!roomData) {
+      req.flash('error', 'Room data not found');
+      return res.redirect(`/tenant_details/${user._id}`);
+    }
+
+    // Calculate the number of months between startDate and endDate
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth()) + 1;
+    // const amount = roomData.price * months;
+    // Fetch user data and property details from the user and formData
+    const userData = {
+      name: user.name,
+      email: user.email,
+      mobileNumber: user.mobileNumber,
+      propertyAddress: roomData.location,
+      ownerName: "IRA Student Living",
+      ownerAddress: "owner address",
+      rentAmount: roomData.price,
+      rentAmountInWords: convertNumberToWords(roomData.price),
+    };
+
+    const rentReceiptHTML = generateRentReceiptHTML(userData, startDate, endDate);
+    generatePDF(rentReceiptHTML, (err, pdfBuffer) => {
+      if (err) {
+        console.error('Error generating PDF:', err);
+        req.flash('error', 'Error generating PDF');
+        return res.redirect(`/tenant_details/${user._id}`);
+      }
+
+      // Send the PDF as an email attachment
+      const recipient = "bgmilelomujhse@gmail.com";
+      sendPDFEmail(pdfBuffer, recipient);
+
+      // Set a flash message
+      req.flash('success', 'Rent receipt sent successfully!');
+      res.redirect(`/tenant_details/${user._id}`);
+    });
+  } catch (error) {
+    console.error('Error generating rent receipt:', error);
+    req.flash('error', 'Rent receipt not generated');
+    res.redirect(`/tenant_details/${user._id}`);
+  }
+});
+
+
+
+
+
+
+
+
 app.all("*", (req, res) => {
-  res.send("error");
+  res.render("error");
 });
 
 app.listen(3100, () => {
-  console.log("Listening on port 3000");
+  console.log("Listening on port 3100");
 })

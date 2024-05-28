@@ -132,7 +132,11 @@
                         <div class="price-gender">
                             <div class="price">
                                 <a href="/room_details/<%= room.id %>">IRA STUDENT LIVING</a>
-                                <p>From <span>&#8377; <%= room.price %></span>/month </p>
+                                <p>From &#8377; <% if (room.ac) { %>
+                                    <span>10,500</span>
+                                <% } else { %>
+                                    <span>8500</span>
+                                <% } %>/month </p>
                             </div>
                             <div class="gender">
                                 <img src="/assets/images/male-symbol.png" alt="">
@@ -185,7 +189,7 @@
                         <img class="second-img" src="/assets/images/New/Group 45.png" alt="">
                     </div>
                     <h3>Furnished Rooms</h3>
-                    <p class="hide">Typically, rooms come with basic furniture such as a bed, wardrobe, study table, mattress and chair</p>
+                    <p class="hide">Typically, rooms come with basic furniture such as a bed, wardrobe, study table, mattress, bookshelf and chair.</p>
                 </div>
                 <div class="item service-item-2">
                     <div class="s-i-im">
@@ -200,23 +204,23 @@
                         <img class="first-img" src="/assets/images/Group 47.png" alt="">
                         <img class="second-img" src="/assets/images/New/Group 47.png" alt="">
                     </div>
-                    <h3>Cleaning services</h3>
-                    <p class="hide">Regular cleaning of common areas and sometimes room cleaning services..</p>
+                    <h3>Cleaning Services</h3>
+                    <p class="hide">Managed Cleaning of common areas and bathrooms. Tenant has to request cleaning once every week.</p>
                 </div>
                 <div class="item service-item-4">
                     <div class="s-i-im">
                         <img class="first-img" src="/assets/images/Group.png" alt="">
                         <img class="second-img" src="/assets/images/New/Group.png" alt="">
                     </div>
-                    <h3>Laundry facilities</h3>
-                    <p class="hide"> Access to washing machines or laundry services</p>
+                    <h3>No Curfew Timings</h3>
+                    <p class="hide">Each resident has a separate key to the main gate and their rooms.</p>
                 </div>
                 <div class="item service-item-1">
                     <div class="s-i-im">
                         <img class="first-img" src="/assets/images/Vector.png" alt="">
                         <img class="second-img" src="/assets/images/New/Vector.png" alt="">
                     </div>
-                    <h3>Maintainence services</h3>
+                    <h3>Maintainence Services</h3>
                     <p class="hide"> Quick response to maintenance requests for issues like plumbing or electrical problems.</p>
                 </div>
                 <div class="item service-item-2">
@@ -232,8 +236,8 @@
                         <img class="first-img" src="/assets/images/Group-2.png" alt="">
                         <img class="second-img" src="/assets/images/New/Group-2.png" alt="">
                     </div>
-                    <h3 class="special">Paid Meals</h3>
-                    <p class="hide">Meal subscription services, at an additional cost...</p>
+                    <h3 class="special">Kitchen</h3>
+                    <p class="hide">Complimentary usage of Kitchen equipped with an Induction, Fridge, Microwave oven and filtered Water.</p>
                 </div>
                 <div class="item service-item-4">
                     <div class="s-i-im">
@@ -241,7 +245,7 @@
                         <img class="second-img" src="/assets/images/New/Group 48.png" alt="">
                     </div>
                     <h3>Security</h3>
-                    <p class="hide"> Measures such as CCTV surveillance, security guards, or secure entry systems may be provided for safety.</p>
+                    <p class="hide"> 24x7 CCTV surveillance, Fire Extinguishers on all Floors, Secured Entry and Exit.</p>
                 </div>
             </div>
             <!-- <div class="services service-row-2">
@@ -289,7 +293,7 @@
         <div class="extra-service">
             <img src="/assets/images/Group 50.png" alt="">
             <div class="service-text">
-                <h3>Rent recipt generator</h3>
+                <h3>Rent Receipt Generator</h3>
                 <p>Generate rent receipts hassle-free</p>
             </div>
             <div class="service-text">

@@ -118,6 +118,7 @@
             <div class="popup">
               <h2>RENT RECEIPT ONLINE</h2>
               <!-- <button class="close-popup cp">X</button> -->
+              <form action="/generate-rent-receipt" method="POST">
               <div class="date-input">
                 <label for="start-date">Receipt Start Date</label>
                 <input type="text" id="start-date" placeholder="mm/dd/yy">
@@ -129,6 +130,9 @@
                 <span class="date-icon">&#128197;</span>
               </div>
               <button class="generate-btn">GENERATE</button>
+               <form action="/generate-rent-receipt" method="POST">
+                
+               </form>
             </div>
           </div>
 
@@ -341,26 +345,46 @@ function getRequestNumber() {
     });
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-  const startDateInput = document.getElementById('start-date');
-  const endDateInput = document.getElementById('end-date');
+//     document.addEventListener('DOMContentLoaded', function() {
+//   const startDateInput = document.getElementById('start-date');
+//   const endDateInput = document.getElementById('end-date');
 
-  const startDatePicker = flatpickr(startDateInput, {
-    dateFormat: "m/d/Y",
-    allowInput: true
-  });
+//   const startDatePicker = flatpickr(startDateInput, {
+//     dateFormat: "m/d/Y",
+//     allowInput: true
+//   });
 
-  const endDatePicker = flatpickr(endDateInput, {
-    dateFormat: "m/d/Y",
-    allowInput: true
-  });
+//   const endDatePicker = flatpickr(endDateInput, {
+//     dateFormat: "m/d/Y",
+//     allowInput: true
+//   });
 
 
-  document.querySelector(".service-item-3").addEventListener("click" , ()=>{
-    alert("you can't make vacation request before 3 months of onboarding");
-  })
-});
+// });
+document.querySelector(".service-item-3").addEventListener("click" , ()=>{
+  alert("you can't make vacation request before 3 months of onboarding");
+})
   </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const startDateInput = document.getElementById('start-date');
+    const endDateInput = document.getElementById('end-date');
+    const generateBtn = document.querySelector('.generate-btn');
+
+    const startDatePicker = flatpickr(startDateInput, {
+      dateFormat: "m/d/Y",
+      allowInput: true
+    });
+
+    const endDatePicker = flatpickr(endDateInput, {
+      dateFormat: "m/d/Y",
+      allowInput: true
+    });
+
+    
+  });
+</script>
 
 
 
