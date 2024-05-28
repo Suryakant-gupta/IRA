@@ -5,13 +5,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":8000,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room1.png",
         "buildingNumber" : 4077,
         "roomNumber" : "G01",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 266.6
 
     },
     {
@@ -20,13 +20,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room2.png",
         "buildingNumber" : 4077,
         "roomNumber" : "101",
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 2,
@@ -34,13 +34,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":7000,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room2.png",
         "buildingNumber" : 4077,
         "roomNumber" : "G02",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 233.3
 
     },
     {
@@ -49,13 +49,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room3.png",
         "buildingNumber" : 4077,
         "roomNumber" : "102",
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 3,
@@ -63,13 +63,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":7000,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room3.png",
         "buildingNumber" : 4077,
         "roomNumber" : "G03",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 233.3
 
     },
     {
@@ -78,13 +78,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room1.png",
         "buildingNumber" : 4077,
         "roomNumber" : "103",
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
        {
         "id": 4,
@@ -92,13 +92,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":10500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room1.png",
         "buildingNumber" : 4077,
         "roomNumber" : "301",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 350
 
     },
     {
@@ -107,13 +107,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room2.png",
         "buildingNumber" : 4077,
         "roomNumber" : "104",
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 5,
@@ -121,13 +121,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":10500,
         "availability": "available",
         "amenities": ["furnished", "shared bathroom"],
         "image": "/assets/images/room2.png",
         "buildingNumber" : 4077,
         "roomNumber" : "302",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 350
 
 
     },
@@ -137,13 +137,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room3.png",
         "buildingNumber" : 4077,
         "roomNumber" : "201",
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 6,
@@ -151,13 +151,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":10500,
         "availability": "available",
         "amenities": ["furnished", "shared bathroom"],
         "image": "/assets/images/room3.png",
         "buildingNumber" : 4077,
         "roomNumber" : "303",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 350
 
 
     },
@@ -167,13 +167,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room1.png",
         "buildingNumber" : 4077,
         "roomNumber" : "202",
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 7,
@@ -197,13 +197,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room2.png",
         "buildingNumber" : 4077,
         "roomNumber" : "203",
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 8,
@@ -228,13 +228,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room3.png",
         "buildingNumber" : 4077,
         "roomNumber" : "204",
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 9,
@@ -258,13 +258,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room1.png",
         "buildingNumber" : 4077,
         "roomNumber" : "304",
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 10,
@@ -289,13 +289,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room2.png",
         "buildingNumber" : 4077,
         "roomNumber" : "401",
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 11,
@@ -303,13 +303,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":9500,
         "availability": "available",
         "amenities": ["furnished", "shared bathroom"],
         "image": "/assets/images/room2.png",
         "buildingNumber" : 4079,
         "roomNumber" : "101",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 316.6
 
 
     },
@@ -319,13 +319,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room3.png",
         "buildingNumber" : 4077,
         "roomNumber" : "402",
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 12,
@@ -333,13 +333,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":9500,
         "availability": "available",
         "amenities": ["furnished", "shared bathroom"],
         "image": "/assets/images/room3.png",
         "buildingNumber" : 4079,
         "roomNumber" : "102",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 316.6
 
 
     },
@@ -349,13 +349,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room1.png",
         "buildingNumber" : 4077,
         "roomNumber" :"403" ,
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 13,
@@ -363,13 +363,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":9500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room1.png",
         "buildingNumber" : 4079,
         "roomNumber" : "103",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 316.6
 
 
     },
@@ -379,13 +379,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": true,
-        "price": 10500,
+        "price": 11500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room2.png",
         "buildingNumber" : 4077,
         "roomNumber" :"404" ,
-        "rentPerDay" : 350
+        "rentPerDay" : 383.3
     },
     {
         "id": 14,
@@ -393,13 +393,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":9500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room2.png",
         "buildingNumber" : 4079,
         "roomNumber" : "104",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 316.6
 
 
     },
@@ -641,13 +641,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":9500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room1.png",
         "buildingNumber" : 4079,
         "roomNumber" : "402",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 316.6
 
 
     },
@@ -658,13 +658,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":9500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room2.png",
         "buildingNumber" : 4079,
         "roomNumber" : "403",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 316.6
 
 
     },
@@ -674,13 +674,13 @@ const roomListings = [
         "type": "single-room",
         "location": "Delhi",
         "ac": false,
-        "price":8500,
+        "price":9500,
         "availability": "available",
         "amenities": ["fully furnished", "private bathroom"],
         "image": "/assets/images/room3.png",
         "buildingNumber" : 4079,
         "roomNumber" : "404",
-        "rentPerDay" : 283.3
+        "rentPerDay" : 316.6
 
 
     },
