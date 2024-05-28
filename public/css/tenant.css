@@ -237,6 +237,7 @@
   }
   
   .popup {
+    position: relative;
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;

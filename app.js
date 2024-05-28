@@ -200,6 +200,11 @@ app.get("/home", async (req, res) => {
 });
 
 
+app.get('/profile', ensureAuthenticated, (req, res) => {
+  const userId = req.user._id;
+  res.redirect(`/tenant_details/${userId}`);
+});
+
 
 // policies page route
 app.get("/policies", (req, res) => {
@@ -234,7 +239,7 @@ app.get("/contact-us" , (req, res)=>{
 
 
 // profile page route
-app.get("/profile", ensureAuthenticated, async (req, res) => {
+app.get("/profile/:id", ensureAuthenticated, async (req, res) => {
   try {
     // Find the user's form data from the database
     const formData = await FormData.findOne({ user: req.user._id }) || {};
@@ -248,6 +253,37 @@ app.get("/profile", ensureAuthenticated, async (req, res) => {
   }
 });
 
+
+
+app.put('/update-profile', ensureAuthenticated, async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const updatedFormData = req.body;
+
+    // Find the existing form data for the user
+    let formData = await FormData.findOne({ user: userId });
+
+    if (!formData) {
+      // If no form data exists, create a new one
+      formData = new FormData({ user: userId, ...updatedFormData });
+    } else {
+      // If form data exists, update the fields
+      Object.assign(formData, updatedFormData);
+    }
+
+    // Save the updated form data
+    await formData.save();
+
+    // Optionally, you can set a success message
+    req.flash('success', 'Profile updated successfully!');
+
+    // Redirect to the profile page
+    res.redirect(`/tenant_details/${userId}`);
+  } catch (err) {
+    console.error('Error updating profile:', err);
+    res.status(500).send('Error updating profile');
+  }
+});
 
 app.get("/room_details/:id", async (req, res) => {
   try {

@@ -90,7 +90,7 @@
             <h3>Air Condition</h3>
 
           </div>
-          <a href="/profile?userId=<%= user._id %>" class="item service-item-1">
+          <a href="/profile/<%= userId %>" class="item service-item-1">
             <div class="res-p2">
               <img src="/assets/images/req-5.png" alt="">
             </div>
@@ -117,6 +117,7 @@
           <div class="popup-container">
             <div class="popup">
               <h2>RENT RECEIPT ONLINE</h2>
+              <!-- <button class="close-popup cp">X</button> -->
               <div class="date-input">
                 <label for="start-date">Receipt Start Date</label>
                 <input type="text" id="start-date" placeholder="mm/dd/yy">
@@ -263,6 +264,8 @@ function getRequestNumber() {
       const requestTypeInput = document.getElementById('requestType-input');
       const roomNumberInput = document.getElementById('roomNumber-input');
       const requestNumberInput = document.getElementById('requestNumber-input');
+      const popupContainer = document.querySelector('.popup-container');
+  const rentReceiptButton = document.querySelector('.service-item-4');
   
       // Function to get request type based on button index
       function getRequestType(index) {
@@ -312,13 +315,54 @@ function getRequestNumber() {
         popupSection.style.display = 'none';
       });
   
+     
+  
       // Add event listener to close the popup when clicked outside the popup area
       window.addEventListener('click', (event) => {
         if (event.target === popupSection) {
           popupSection.style.display = 'none';
+          
         }
       });
+
+      // Add event listener to the rent receipt button
+  rentReceiptButton.addEventListener('click', () => {
+    popupContainer.style.display = 'block';
+  });
+
+  // Add event listener to close the popup when clicked outside the popup area
+  window.addEventListener('click', (event) => {
+    if (event.target === popupSection || event.target === popupContainer) {
+      popupSection.style.display = 'none';
+      popupContainer.style.display = 'none';
+    }
+  })
+
     });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+  const startDateInput = document.getElementById('start-date');
+  const endDateInput = document.getElementById('end-date');
+
+  const startDatePicker = flatpickr(startDateInput, {
+    dateFormat: "m/d/Y",
+    allowInput: true
+  });
+
+  const endDatePicker = flatpickr(endDateInput, {
+    dateFormat: "m/d/Y",
+    allowInput: true
+  });
+
+
+  document.querySelector(".service-item-3").addEventListener("click" , ()=>{
+    alert("you can't make vacation request before 3 months of onboarding");
+  })
+});
   </script>
+
+
+
 
 
