@@ -10,14 +10,12 @@ const transporter = nodemailer.createTransport({
 });
 
 // Function to send email notification
-const sendEmail = (formData, recipient) => {
+const sendEmail = (recipient, htmlTemplate) => {
   const mailOptions = {
     from: 'irastudentliving@gmail.com', // Replace with your Gmail email
     to: recipient,
     subject: 'New Form Submission',
-    text: `Form Data: ${JSON.stringify(formData)}`,
-    
-    
+    html: htmlTemplate,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

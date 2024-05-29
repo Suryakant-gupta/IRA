@@ -5,200 +5,232 @@
 
     <% if (successMessage) { %>
       <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <%= successMessage %>
+        <%= successMessage %>
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true" >&times;</span>
+            <span aria-hidden="true">&times;</span>
           </button>
       </div>
-  <% } %>
-  
-  <% if (errorMessage) { %>
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <%= errorMessage %>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
-  <% } %>
+      <% } %>
 
-
-
-
-    <section class="sec-1">
-      <div class="text-sec">
-        <h2>Welcome</h2>
-        <h2>
-          <%= user.name %>
-        </h2>
-        <p>Raise A Service Request-</p>
-      </div>
-      <div class="image-sec">
-        <img src="/assets/images/house.png" alt="">
-      </div>
-    </section>
-
-    <div class="req-pop">
-      <section class="popup-3">
-        <button class="close-popup cp">X</button>
-        <form action="/sendd-data" method="POST">
-          <h3>Request TYPE - <b id="request-type"></b></h3>
-          <div class="room">
-            <p>Room No. - <span id="room-number"></span></p>
-            <p>Request No. - <span id="request-number"></span></p>
+        <% if (errorMessage) { %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= errorMessage %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
-          <input type="hidden" name="requestType" id="requestType-input">
-          <input type="hidden" name="roomNumber" id="roomNumber-input">
-          <input type="hidden" name="requestNumber" id="requestNumber-input">
-          <div class="save">
-            <button type="submit">SUBMIT</button>
-          </div>
-        </form>
-      </section>
-    </div>
+          <% } %>
 
 
 
 
-    <section class="sec-2">
-      <div class="amenities tenant-serv">
-        <div class="services service-row-1">
-          <div class="item service-item-1">
-            <div class="res-p">
-              <img src="/assets/images/req-3.png" alt="">
-            </div>
-            <h3>House cleaning</h3>
-
-          </div>
-          <div class="item service-item-2">
-            <div class="res-p">
-              <img src="/assets/images/req-4.png" alt="">
-            </div>
-            <h3>Electrical issue</h3>
-
-          </div>
-          <div class="item service-item-33">
-            <div class="res-p">
-              <img src="/assets/images/req-1.png" alt="">
-            </div>
-            <h3>Carpentry</h3>
-
-          </div>
-          <div class="item service-item-44">
-            <div class="res-p">
-              <img src="/assets/images/req-8.png" alt="">
-            </div>
-            <h3>Air Condition</h3>
-
-          </div>
-          <a href="/profile/<%= userId %>" class="item service-item-1">
-            <div class="res-p2">
-              <img src="/assets/images/req-5.png" alt="">
-            </div>
-            <h3>View Profile</h3>
-          </a>
-
-
-          <a class="item service-item-2">
-            <div class="res-p2">
-              <img src="/assets/images/req-2.png" alt="">
-            </div>
-            <h3>Download Agreement</h3>
-
-          </a>
-          <a class="item service-item-3">
-            <div class="res-p2">
-              <img src="/assets/images/vacate.png" alt="">
-            </div>
-            <h3>Req. to vacate</h3>
-
-          </a>
-
-
-          <div class="popup-container">
-            <div class="popup">
-              <h2>RENT RECEIPT ONLINE</h2>
-              <!-- <button class="close-popup cp">X</button> -->
-              <form action="/generate-rent-receipt" method="POST">
-              <div class="date-input">
-                <label for="start-date">Receipt Start Date</label>
-                <input type="text" id="start-date" placeholder="mm/dd/yy">
-                <span class="date-icon">&#128197;</span>
+            <section class="sec-1">
+              <div class="text-sec">
+                <h2>Welcome</h2>
+                <h2>
+                  <%= user.name %>
+                </h2>
+                <p>Raise A Service Request-</p>
               </div>
-              <div class="date-input">
-                <label for="end-date">Receipt End Date</label>
-                <input type="text" id="end-date" placeholder="mm/dd/yy">
-                <span class="date-icon">&#128197;</span>
+              <div class="image-sec">
+                <img src="/assets/images/house.png" alt="">
               </div>
-              <button class="generate-btn">GENERATE</button>
-               <form action="/generate-rent-receipt" method="POST">
-                
-               </form>
+            </section>
+
+            <div class="req-pop">
+              <section class="popup-3">
+                <button class="close-popup cp">X</button>
+                <form action="/sendd-data" method="POST">
+                  <h3>Request TYPE - <b id="request-type"></b></h3>
+                  <div class="room">
+                    <p>Room No. - <span id="room-number"></span></p>
+                    <p>Request No. - <span id="request-number"></span></p>
+                  </div>
+                  <input type="hidden" name="requestType" id="requestType-input">
+                  <input type="hidden" name="roomNumber" id="roomNumber-input">
+                  <input type="hidden" name="requestNumber" id="requestNumber-input">
+                  <div class="save">
+                    <button type="submit">SUBMIT</button>
+                  </div>
+                </form>
+              </section>
             </div>
-          </div>
-
-          <a class="item service-item-4">
-            <div class="res-p2">
-              <img src="/assets/images/req-7.png" alt="">
-            </div>
-            <h3>Rent recipt generate</h3>
-
-          </a>
-        </div>
-
-
-      </div>
-    </section>
-
-    <section class="sec-3">
-      <h2 class="c">RENT PAY</h2>
-      <div class="filter">
-        <div class="lb">
-          <p>Mothly</p>
-
-        </div>
-        <div class="ff">
-          <table>
-            <tr>
-              <th>Total</th>
-              <th>Electricit Bill</td>
-              <th>Room Rent</td>
-              <th>Water Bill</th>
-            </tr>
-            <tr>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
-          </table>
-
-
-        </div>
-        <div class="search-btn">
-          <p>Pay now</p>
-        </div>
-      </div>
 
 
 
 
-      <div class="res-filter">
-        <div class="res-btn">
-          <h2>RENT PAY</h2>
-          <h2>MONTHLY</h2>
+            <section class="sec-2">
+              <div class="amenities tenant-serv">
+                <div class="services service-row-1">
+                  <div class="item service-item-1">
+                    <div class="res-p">
+                      <img src="/assets/images/req-3.png" alt="">
+                    </div>
+                    <h3>House cleaning</h3>
 
-        </div>
-        <div class="res-form-filter">
-          <a href="">Total |</a>
-          <a href="">Electricity Bill |</a>
-          <a href="">Water Bill |</a>
-          <a href="">Payment History </a>
+                  </div>
+                  <div class="item service-item-2">
+                    <div class="res-p">
+                      <img src="/assets/images/req-4.png" alt="">
+                    </div>
+                    <h3>Electrical issue</h3>
 
-        </div>
-        <div class="ressearch-btn">
-          <p>Pay now</p>
-        </div>
-      </div>
+                  </div>
+                  <div class="item service-item-33">
+                    <div class="res-p">
+                      <img src="/assets/images/req-1.png" alt="">
+                    </div>
+                    <h3>Carpentry</h3>
+
+                  </div>
+                  <div class="item service-item-44">
+                    <div class="res-p">
+                      <img src="/assets/images/req-8.png" alt="">
+                    </div>
+                    <h3>Air Condition</h3>
+
+                  </div>
+                  <a href="/profile/<%= userId %>" class="item service-item-1">
+                    <div class="res-p2">
+                      <img src="/assets/images/req-5.png" alt="">
+                    </div>
+                    <h3>View Profile</h3>
+                  </a>
+
+
+                  <a class="item service-item-2">
+                    <div class="res-p2">
+                      <img src="/assets/images/req-2.png" alt="">
+                    </div>
+                    <h3>Download Agreement</h3>
+
+                  </a>
+                  <a class="item service-item-3">
+                    <div class="res-p2">
+                      <img src="/assets/images/vacate.png" alt="">
+                    </div>
+                    <h3>Req. to vacate</h3>
+
+                  </a>
+
+
+                  <div class="popup-container">
+                    <div class="popup">
+                      <h2>RENT RECEIPT ONLINE</h2>
+                      <!-- <button class="close-popup cp">X</button> -->
+                      <form action="/generate-rent-receipt" method="POST">
+                        <div class="date-input">
+                          <label for="start-date">Receipt Start Date</label>
+                          <input type="text" id="start-date" placeholder="mm/dd/yy">
+                          <span class="date-icon">&#128197;</span>
+                        </div>
+                        <div class="date-input">
+                          <label for="end-date">Receipt End Date</label>
+                          <input type="text" id="end-date" placeholder="mm/dd/yy">
+                          <span class="date-icon">&#128197;</span>
+                        </div>
+                        <button class="generate-btn">GENERATE</button>
+                        <form action="/generate-rent-receipt" method="POST">
+
+                        </form>
+                    </div>
+                  </div>
+
+                  <a class="item service-item-4">
+                    <div class="res-p2">
+                      <img src="/assets/images/req-7.png" alt="">
+                    </div>
+                    <h3>Rent recipt generate</h3>
+
+                  </a>
+                </div>
+
+
+              </div>
+            </section>
+
+
+            <!-- open requests section -->
+
+            <h2 class="cc">Open Service Requests</h2>
+
+            <% if (openServiceRequests.length > 0) { %>
+              <div class="open-requests">
+                <div class="req-headings">
+                  <h3>req type</h3>
+                  <h3>room number</h3>
+                  <h3>req number</h3>
+                  <h3>close req</h3>
+                </div>
+            
+                <% openServiceRequests.forEach(function(request) { %>
+                  <% console.log('Rendering service request:', request); %>
+                  <div class="open-req-detail">
+                    <p><%= request.requestType %></p>
+                    <p><%= request.roomNumber %></p>
+                    <p><%= request.requestNumber %></p>
+                    <form action="/close-request/<%= request._id %>" method="POST">
+                      <button type="submit">Close</button>
+                    </form>
+                  </div>
+                <% }); %>
+              </div>
+            <% } else { %>
+              <p>No open service requests</p>
+            <% } %>
+
+
+
+            <section class="sec-3">
+              <h2 class="c">RENT PAY</h2>
+              <div class="filter">
+                <div class="lb">
+                  <p>Mothly</p>
+
+                </div>
+                <div class="ff">
+                  <table>
+                    <tr>
+                      <th>Total</th>
+                      <th>Electricit Bill</td>
+                      <th>Room Rent</td>
+                      <th>Water Bill</th>
+                    </tr>
+                    <tr>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>0</td>
+                    </tr>
+                  </table>
+
+
+                </div>
+                <div class="search-btn">
+                  <p>Pay now</p>
+                </div>
+              </div>
+
+
+
+
+              <div class="res-filter">
+                <div class="res-btn">
+                  <h2>RENT PAY</h2>
+                  <h2>MONTHLY</h2>
+
+                </div>
+                <div class="res-form-filter">
+                  <a href="">Total |</a>
+                  <a href="">Electricity Bill |</a>
+                  <a href="">Water Bill |</a>
+                  <a href="">Payment History </a>
+
+                </div>
+                <div class="ressearch-btn">
+                  <p>Pay now</p>
+                </div>
+              </div>
 
 
 
@@ -206,26 +238,26 @@
 
 
 
-      <h2>Notice</h2>
-      <p class="notice">As your landlord, it is my responsibility to ensure a safe and comfortable living
-        environment for all tenants.</p>
-    </section>
+              <h2>Notice</h2>
+              <p class="notice">As your landlord, it is my responsibility to ensure a safe and comfortable living
+                environment for all tenants.</p>
+            </section>
 
 
-    <section class="sec-4">
-      <img class="bg" src="/assets/images/banner.jpg" alt="">
+            <section class="sec-4">
+              <img class="bg" src="/assets/images/banner.jpg" alt="">
 
-      <div class="help-text">
-        <h1>Help and Support</h1>
-        <p>For any assistance or support you may need, whether regarding property maintenance, rental inquiries,
-          or urgent concerns, please feel free to reach out to us.</p>
-      </div>
-      <div class="help-form">
-        <h2>HELP ? </h2>
-        <textarea name="" id="" rows="8" placeholder="Describe*"></textarea>
-        <input type="submit" value="Submit">
-      </div>
-    </section>
+              <div class="help-text">
+                <h1>Help and Support</h1>
+                <p>For any assistance or support you may need, whether regarding property maintenance, rental inquiries,
+                  or urgent concerns, please feel free to reach out to us.</p>
+              </div>
+              <div class="help-form">
+                <h2>HELP ? </h2>
+                <textarea name="" id="" rows="8" placeholder="Describe*"></textarea>
+                <input type="submit" value="Submit">
+              </div>
+            </section>
 
 
 
@@ -235,30 +267,30 @@
 
 
   <script>
-   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-function generateRequestNumber() {
-  let result = '';
-  for (let i = 0; i < 4; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-}
+    function generateRequestNumber() {
+      let result = '';
+      for (let i = 0; i < 4; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return result;
+    }
 
-const usedRequestNumbers = new Set();
+    const usedRequestNumbers = new Set();
 
-function getRequestNumber() {
-  let requestNumber;
-  do {
-    requestNumber = generateRequestNumber();
-  } while (usedRequestNumbers.has(requestNumber));
-  usedRequestNumbers.add(requestNumber);
-  return requestNumber;
-}
+    function getRequestNumber() {
+      let requestNumber;
+      do {
+        requestNumber = generateRequestNumber();
+      } while (usedRequestNumbers.has(requestNumber));
+      usedRequestNumbers.add(requestNumber);
+      return requestNumber;
+    }
 
 
-  
-    document.addEventListener('DOMContentLoaded', async function() {
+
+    document.addEventListener('DOMContentLoaded', async function () {
       const respButtons = document.querySelectorAll('.res-p');
       const popupSection = document.querySelector('.req-pop');
       const closePopupBtn = document.querySelector('.cp');
@@ -269,8 +301,8 @@ function getRequestNumber() {
       const roomNumberInput = document.getElementById('roomNumber-input');
       const requestNumberInput = document.getElementById('requestNumber-input');
       const popupContainer = document.querySelector('.popup-container');
-  const rentReceiptButton = document.querySelector('.service-item-4');
-  
+      const rentReceiptButton = document.querySelector('.service-item-4');
+
       // Function to get request type based on button index
       function getRequestType(index) {
         const requestTypes = [
@@ -282,7 +314,7 @@ function getRequestNumber() {
         ];
         return requestTypes[index];
       }
-  
+
       // Function to get room number from FormData
       async function getRoomNumber() {
         try {
@@ -294,99 +326,117 @@ function getRequestNumber() {
           return null;
         }
       }
-  
+
       // Add event listeners to each res-p button
       respButtons.forEach((button, index) => {
         button.addEventListener('click', async () => {
           const requestType = getRequestType(index);
           const roomNumber = await getRoomNumber();
           const requestNumber = getRequestNumber();
-  
+
           requestTypeElement.textContent = requestType;
           roomNumberElement.textContent = roomNumber;
           requestNumberElement.textContent = getRequestNumber();
-  
+
           requestTypeInput.value = requestType;
           roomNumberInput.value = roomNumber;
           requestNumberInput.value = getRequestNumber();
-  
+
           popupSection.style.display = 'flex';
         });
       });
-  
+
       // Add click event listener to the close button
       closePopupBtn.addEventListener('click', () => {
         popupSection.style.display = 'none';
       });
-  
-     
-  
+
+
+
       // Add event listener to close the popup when clicked outside the popup area
       window.addEventListener('click', (event) => {
         if (event.target === popupSection) {
           popupSection.style.display = 'none';
-          
+
         }
       });
 
       // Add event listener to the rent receipt button
-  rentReceiptButton.addEventListener('click', () => {
-    popupContainer.style.display = 'block';
-  });
+      rentReceiptButton.addEventListener('click', () => {
+        popupContainer.style.display = 'block';
+      });
 
-  // Add event listener to close the popup when clicked outside the popup area
-  window.addEventListener('click', (event) => {
-    if (event.target === popupSection || event.target === popupContainer) {
-      popupSection.style.display = 'none';
-      popupContainer.style.display = 'none';
-    }
-  })
+      // Add event listener to close the popup when clicked outside the popup area
+      window.addEventListener('click', (event) => {
+        if (event.target === popupSection || event.target === popupContainer) {
+          popupSection.style.display = 'none';
+          popupContainer.style.display = 'none';
+        }
+      })
 
     });
 
 
-//     document.addEventListener('DOMContentLoaded', function() {
-//   const startDateInput = document.getElementById('start-date');
-//   const endDateInput = document.getElementById('end-date');
+    //     document.addEventListener('DOMContentLoaded', function() {
+    //   const startDateInput = document.getElementById('start-date');
+    //   const endDateInput = document.getElementById('end-date');
 
-//   const startDatePicker = flatpickr(startDateInput, {
-//     dateFormat: "m/d/Y",
-//     allowInput: true
-//   });
+    //   const startDatePicker = flatpickr(startDateInput, {
+    //     dateFormat: "m/d/Y",
+    //     allowInput: true
+    //   });
 
-//   const endDatePicker = flatpickr(endDateInput, {
-//     dateFormat: "m/d/Y",
-//     allowInput: true
-//   });
+    //   const endDatePicker = flatpickr(endDateInput, {
+    //     dateFormat: "m/d/Y",
+    //     allowInput: true
+    //   });
 
 
-// });
-document.querySelector(".service-item-3").addEventListener("click" , ()=>{
-  alert("you can't make vacation request before 3 months of onboarding");
-})
+    // });
+    document.querySelector(".service-item-3").addEventListener("click", () => {
+      alert("you can't make vacation request before 3 months of onboarding");
+    })
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const startDateInput = document.getElementById('start-date');
+      const endDateInput = document.getElementById('end-date');
+      const generateBtn = document.querySelector('.generate-btn');
+
+      const startDatePicker = flatpickr(startDateInput, {
+        dateFormat: "m/d/Y",
+        allowInput: true
+      });
+
+      const endDatePicker = flatpickr(endDateInput, {
+        dateFormat: "m/d/Y",
+        allowInput: true
+      });
+
+
+    });
   </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const startDateInput = document.getElementById('start-date');
-    const endDateInput = document.getElementById('end-date');
-    const generateBtn = document.querySelector('.generate-btn');
+  app.post('/close-request/:requestId', async (req, res) => {
+  try {
+    const requestId = req.params.requestId;
 
-    const startDatePicker = flatpickr(startDateInput, {
-      dateFormat: "m/d/Y",
-      allowInput: true
-    });
+    // Find the service request and remove it from the database
+    const deletedServiceRequest = await ServiceRequest.findByIdAndRemove(requestId);
 
-    const endDatePicker = flatpickr(endDateInput, {
-      dateFormat: "m/d/Y",
-      allowInput: true
-    });
+    if (!deletedServiceRequest) {
+      req.flash('error', 'Request not found');
+      return res.status(404).json({ error: 'Request not found' });
+    }
 
-    
-  });
+    req.flash('success', 'Request closed successfully!');
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error('Error closing service request:', err);
+    req.flash('error', 'Error closing request');
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 </script>
-
-
-
-
-

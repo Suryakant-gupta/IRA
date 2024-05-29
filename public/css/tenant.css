@@ -279,3 +279,60 @@
       width: 90%;
     }
   }
+
+
+  /* open req */
+
+  .open-requests{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    padding-inline: 6vw;
+    margin-bottom: 1rem;
+    
+  }
+
+  .req-headings{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid grey;
+    padding-inline:2vw;
+    padding-bottom: 10px;
+    text-align: center;
+
+  }
+
+  .open-req-detail{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid grey;
+    padding-inline:2vw;
+    padding-bottom: 10px;
+    text-align: center;
+  }
+
+  .open-req-detail button{
+    background-color: #E7991C;
+    border: none;
+    padding: .3rem 1.5rem;
+    border-radius: 5px;
+  }
+
+
+
+
+ .cc{
+     
+    color: #313131;
+    margin-bottom: 1rem;
+    padding-inline:5vw ;
+ }
