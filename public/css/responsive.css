@@ -81,6 +81,9 @@
     .cta-text{
         width: 30%;
     }
+    .ff th, .ff td, .lb {
+        font-size: .7rem;
+    }
 }
 
 @media screen and (max-width:690px) {
@@ -247,12 +250,12 @@
         font-size: 1.2rem !important;
      }
 
-     .sec-3 .c,.sec-3 .filter{
+     /* .sec-3 .c,.sec-3 .filter{
         display: none;
-     }
-     .res-filter{
+     } */
+     /* .res-filter{
         display: flex;
-     }
+     } */
 
    
     .page4 .main-head img{
@@ -423,6 +426,11 @@
     .page2 .filter .form-filter {
        
         padding-block: 0.6rem;
+    }
+
+    .ff th, .ff td, .lb {
+        font-size: .6rem;
+       
     }
    
 

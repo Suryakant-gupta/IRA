@@ -1,0 +1,100 @@
+<%- layout("/layouts/boilerplate") %>
+
+<style>
+    .admin-login-page{
+    width: 450px;
+    height: 100vh;
+    margin: auto;
+    background-color: #fdfafe;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 3rem;
+   
+}
+
+ .admin-login-page .form{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: .3rem;
+ }
+
+ .admin-login-page .form input{
+    width: 100%;
+    padding: .5rem;
+    border: 2px solid #b3b0b0;
+    border-radius: 4px;
+ }
+
+ .admin-login-page .form label{
+    font-size: 1.17rem;
+    font-weight: bold;
+ }
+
+ .admin-login-page .login-method{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.admin-login-page .login-method button{
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.admin-login-page .ch-col{
+    color: #E7991C; 
+   text-decoration: underline;
+   text-decoration-thickness: 2px;
+   text-underline-offset: 7px;
+ }
+</style>
+
+
+<div class="main-page">
+  <div class="admin-login-page">
+    <h2 style="color: #E7991C;">LOG IN</h2>
+    <div class="login-method">
+        <button class="ch-col">Admin</button>
+        <button>Manager</button>
+      </div>
+    
+    
+      <form action="/admin/login" method="post" class="email-form form">
+        <label for="email">Enter Email</label>
+        <input type="email" name="email" id="email" />
+        <label for="pass">Enter Password</label>
+        <input type="password" name="password" id="pass" />
+        <input type="hidden" name="role" id="roleInput" value="admin" /> <!-- Hidden input for role -->
+        <a href="">Forget password</a>
+        <button type="submit">Login</button>
+      </form>
+   
+  </div>
+</div>
+
+<script>
+    const phoneButton = document.querySelector('.login-method button.ch-col');
+const emailButton = document.querySelector('.login-method button:not(.ch-col)');
+const roleInput = document.querySelector('#roleInput'); // Get the role input field
+
+// Add event listeners to buttons
+phoneButton.addEventListener('click', () => {
+  phoneButton.classList.add('ch-col');
+  emailButton.classList.remove('ch-col');
+  roleInput.value = 'admin'; // Set the role to 'admin'
+});
+
+emailButton.addEventListener('click', () => {
+  emailButton.classList.add('ch-col');
+  phoneButton.classList.remove('ch-col');
+  roleInput.value = 'manager'; // Set the role to 'manager'
+});
+</script>

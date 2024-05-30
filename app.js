@@ -7,6 +7,7 @@ const ejsMate = require("ejs-mate");
 const RoomListing = require("./models/roomListing");
 const FormData = require("./models/tenant");
 const User = require("./models/User");
+const AdminUser = require('./models/AdminUser');
 const ServiceRequest = require('./models/serviceRequest');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -17,10 +18,10 @@ const sendEmail = require('./utils/mailsender');
 const { ensureAuthenticated } = require('./middleware/auth');
 const flash = require('connect-flash');
 const puppeteer = require('puppeteer');
-
 const nodemailer = require("nodemailer");
-const { getMaxListeners } = require("events");
-// const axios = require('axios');
+const bcrypt = require('bcrypt');
+const adminPassport = require('./config/adminPassport');
+
 
 
 // making connection with mongodb and checking if any error occured
@@ -61,11 +62,13 @@ app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.set("views", path.join(__dirname, "views"));
+app.locals.loop = [];
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
+require('dotenv').config();
 
 app.use(flash());
 
@@ -233,6 +236,12 @@ app.get("/terms-of-use", (req, res) => {
 })
 
 
+// faq page
+app.get("/faq", (req, res) => {
+  res.render("faq")
+})
+
+
 // contact-us page
 
 app.get("/contact-us", (req, res) => {
@@ -391,7 +400,22 @@ app.post('/tenant_info', async (req, res) => {
 
     const user = await newUser.save();
     formData.user = user._id;
+    formData.room = roomId;
     await formData.save();
+
+
+    // Find the corresponding RoomListing document
+    const roomNumber = formData.roomNumber;
+    const buildingNumber = formData.buildingNumber;
+    const roomListing = await RoomListing.findOne({ roomNumber, buildingNumber });
+
+    // Update the availability of the room to 'unavailable'
+    if (roomListing) {
+      roomListing.availability = 'unavailable';
+      await roomListing.save();
+    }
+
+
 
     req.login(user, async (err) => {
       if (err) {
@@ -1243,6 +1267,9 @@ app.get('/tenant_details/:userId', ensureAuthenticated, async (req, res) => {
 
     const user = await User.findById(userId);
 
+    const formDataDoc = await FormData.findOne({ user: userId });
+  const roomId = formDataDoc.room;
+
     if (!user) {
       return res.status(404).send('User not found');
     }
@@ -1258,13 +1285,19 @@ app.get('/tenant_details/:userId', ensureAuthenticated, async (req, res) => {
 
     console.log("open service requests" , openServiceRequests);
 
+    const rentPayment = await RentPayment.findOne({ user: userId, room: roomId })
+      .sort({ createdAt: -1 })
+      .exec();
+
+
     // Render the tenant view only if the user exists
     res.render('tenant', {
       user,
       userId,
       openServiceRequests,
       successMessage: successMessage.length > 0 ? successMessage : null, // Render success message only if it exists
-      errorMessage: errorMessage.length > 0 ? errorMessage : null, // Render error message only if it exists
+      errorMessage: errorMessage.length > 0 ? errorMessage : null,
+      rentPayment // Render error message only if it exists
     });
   } catch (err) {
     console.error('Error rendering tenant details page:', err);
@@ -1616,13 +1649,15 @@ app.post('/sendd-data', async (req, res) => {
       await userFormData.save();
     }
 
+    const roomId = req.session.roomId;
     // Create a new service request document
     const serviceRequest = new ServiceRequest({
       requestType: formData.requestType,
       roomNumber: formData.roomNumber,
       requestNumber: formData.requestNumber,
       formData: userFormData._id, // Use the formData document ID
-      user: req.user._id
+      user: req.user._id,
+      // room: roomListing._id,
     });
 
     // Save the service request to the database
@@ -1866,6 +1901,254 @@ app.post('/generate-rent-receipt', ensureAuthenticated, async (req, res) => {
 });
 
 
+
+
+
+// admin panel code 
+
+
+// async function createDefaultAdminUsers() {
+//   try {
+//     // Check if any admin users exist
+//     const existingAdminUsers = await AdminUser.find({});
+//     if (existingAdminUsers.length > 0) {
+//       console.log('Admin users already exist');
+//       return;
+//     }
+
+//     // Check if environment variables are set
+//     if (!process.env.MANAGER_PASS || !process.env.ADMIN_PASS || !process.env.ADMIN_EMAIL) {
+//       throw new Error('Environment variables MANAGER_PASS, ADMIN_PASS, and ADMIN_EMAIL must be set');
+//     }
+
+//     // Hash the passwords
+//     const saltRounds = 10;
+//     const managerPassword = await bcrypt.hash(process.env.MANAGER_PASS, saltRounds);
+//     const adminPassword = await bcrypt.hash(process.env.ADMIN_PASS, saltRounds);
+
+//     // Create the default admin users
+//     const managerUser = new AdminUser({
+//       email: process.env.MANAGER_EMAIL,
+//       password: managerPassword,
+//       role: 'manager'
+//     });
+
+//     const adminUser = new AdminUser({
+//       email: process.env.ADMIN_EMAIL,
+//       password: adminPassword,
+//       role: 'admin'
+//     });
+
+//     // Save the admin users to the database
+//     await managerUser.save();
+//     await adminUser.save();
+
+//     console.log('Default admin users created successfully');
+//   } catch (err) {
+//     console.error('Error creating default admin users:', err);
+//   }
+// }
+
+// Call the function to create the default admin users
+// createDefaultAdminUsers();
+
+
+app.get("/manager-panel" , async(req, res)=>{
+  const totalRooms = await RoomListing.countDocuments({ availability: 'available' });
+    const availableRooms = await RoomListing.find({ availability: 'unavailable' });
+
+    // Fetch all service requests
+    const serviceRequests = await ServiceRequest.find({});
+
+    // Count the number of service requests
+    const serviceRequestCount = serviceRequests.length;
+  res.render("managerPanel" , {
+    totalRooms,
+      serviceRequestCount,
+      availableRooms,
+      serviceRequests,
+  });
+})
+
+
+
+const RentPayment = require('./models/rentPayment');
+// const { log } = require("console");
+
+
+
+
+
+app.post('/manager/submit-rent-details', async (req, res) => {
+  try {
+    const { electricityBill, waterBill, monthOfBill, roomNumber } = req.body;
+    const room = await RoomListing.findOne({ roomNumber });
+    console.log("room fromo m - panel", room);
+
+    if (!room) {
+      console.log(`No room found with roomNumber ${roomNumber}`);
+      return res.status(404).send('Room not found');
+    }
+
+    const formDataDoc = await FormData.findOne({ room: room._id });
+
+    if (!formDataDoc) {
+      console.log(`No FormData document found for room with ID ${room._id}`);
+      return res.status(404).send('FormData document not found');
+    }
+
+    const userId = formDataDoc.user;
+    const roomId = formDataDoc.room;
+    const roomRent = room.price;
+
+    let month;
+    if (monthOfBill) {
+      month = parseInt(monthOfBill.split('-')[1], 10);
+    } else {
+      month = new Date().getMonth() + 1; // Use the current month as a fallback
+    }
+
+    const parsedElectricityBill = isNaN(electricityBill) || electricityBill === '' ? 0 : Number(electricityBill);
+    const parsedWaterBill = isNaN(waterBill) || waterBill === '' ? 0 : Number(waterBill);
+    // const parsedRoomRent = isNaN(roomRent) || roomRent === '' ? (room.rentPerMonth || 0) : Number(roomRent);
+    const totalAmount = parsedElectricityBill + parsedWaterBill + roomRent;
+
+    const newRentPayment = new RentPayment({
+      user: userId,
+      room: roomId,
+      electricityBill: parsedElectricityBill,
+      waterBill: parsedWaterBill,
+      roomRent,
+      totalAmount,
+      month,
+      year: new Date().getFullYear(),
+    });
+
+    await newRentPayment.save();
+    console.log('new payment details', newRentPayment);
+    res.status(200).send('Rent payment details saved successfully');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error saving rent payment details');
+  }
+});
+
+
+app.get("/admin-panel" , async(req, res)=>{
+  try {
+    // Count the total number of rooms
+    const totalRooms = await RoomListing.countDocuments({ availability: 'available' });
+    const availableRooms = await RoomListing.find({ availability: 'available' });
+
+    // Fetch all service requests
+    const serviceRequests = await ServiceRequest.find({});
+
+    // Count the number of service requests
+    const serviceRequestCount = serviceRequests.length;
+
+
+
+
+    const groupedServiceRequests = serviceRequests.reduce((acc, request) => {
+      const { roomNumber, requestType } = request;
+      if (!acc[roomNumber]) {
+        acc[roomNumber] = {
+          roomNumber,
+          'Home Cleaning': 0,
+      'Electrical Issue': 0, 
+      'Air Condition':0,
+          carpentry: 0,
+          totalIssues: 0,
+        };
+      }
+    
+      switch (requestType) {
+        case 'Home Cleaning':
+          acc[roomNumber]['Home Cleaning']++;
+          break;
+        case 'Electrical Issue':
+          acc[roomNumber]['Electrical Issue']++;
+          break;
+        case 'Air Condition':
+          acc[roomNumber]['Air Condition']++;
+          break;
+        case 'Carpentry':
+          acc[roomNumber].carpentry++;
+          break;
+        // Add more cases for additional requestTypes if needed
+        default:
+          break;
+      }
+    
+      acc[roomNumber].totalIssues++;
+    
+      return acc;
+    }, {});
+
+
+
+    const serviceRequestData = Object.values(groupedServiceRequests);
+
+    const rentPayments = await RentPayment.find({}).populate('room');
+
+    res.render("adminPanel", {
+      totalRooms,
+      serviceRequestCount,
+      availableRooms,
+      serviceRequests,
+      serviceRequestData,
+      rentPayments,
+    });
+  
+  } catch (err) {
+    console.error("Error fetching room count:", err);
+    res.status(500).send("Error fetching room count");
+  }
+})
+
+
+app.get("/panel-login" , (req, res)=>{
+  res.render("panelLogin");
+})
+
+
+
+// Admin login route
+app.post('/admin/login', (req, res, next) => {
+  console.log('Request Body:', req.body); // Log the request body
+
+  const { role, email, password } = req.body;
+
+  // Determine the authentication strategy based on the role
+  const strategy = role === 'admin' ? 'admin-local' : 'manager-local';
+
+  adminPassport.authenticate(strategy, (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.redirect("/panel-login");
+    }
+
+    // Log in the user
+    req.login(user, (loginErr) => {
+      if (loginErr) {
+        return next(loginErr);
+      }
+
+      // Successful login
+      if (user.role === 'admin') {
+        return res.redirect("/admin-panel");
+      } else if (user.role === 'manager') {
+        return res.redirect("/manager-panel");
+      } else {
+        // Fallback route in case the role is not admin or manager
+        return res.redirect("/panel-login");
+      }
+    });
+  })(req, res, next);
+});
 
 
 

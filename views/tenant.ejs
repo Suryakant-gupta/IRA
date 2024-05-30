@@ -98,13 +98,13 @@
                   </a>
 
 
-                  <a class="item service-item-2">
+                  <!-- <a class="item service-item-2">
                     <div class="res-p2">
                       <img src="/assets/images/req-2.png" alt="">
                     </div>
                     <h3>Download Agreement</h3>
 
-                  </a>
+                  </a> -->
                   <a class="item service-item-3">
                     <div class="res-p2">
                       <img src="/assets/images/vacate.png" alt="">
@@ -157,10 +157,10 @@
             <% if (openServiceRequests.length > 0) { %>
               <div class="open-requests">
                 <div class="req-headings">
-                  <h3>req type</h3>
-                  <h3>room number</h3>
-                  <h3>req number</h3>
-                  <h3>close req</h3>
+                  <h3>Req Type</h3>
+                  <h3>Room Number</h3>
+                  <h3>Req Number</h3>
+                  <h3>Close Req</h3>
                 </div>
             
                 <% openServiceRequests.forEach(function(request) { %>
@@ -176,72 +176,66 @@
                 <% }); %>
               </div>
             <% } else { %>
-              <p>No open service requests</p>
+              <p style="text-align: center; font-weight: bold; margin-bottom: 2rem;">No open service requests</p>
             <% } %>
 
 
-
-            <section class="sec-3">
-              <h2 class="c">RENT PAY</h2>
-              <div class="filter">
-                <div class="lb">
-                  <p>Mothly</p>
-
-                </div>
-                <div class="ff">
-                  <table>
-                    <tr>
-                      <th>Total</th>
-                      <th>Electricit Bill</td>
-                      <th>Room Rent</td>
-                      <th>Water Bill</th>
-                    </tr>
-                    <tr>
-                      <td>0</td>
-                      <td>0</td>
-                      <td>0</td>
-                      <td>0</td>
-                    </tr>
-                  </table>
-
-
-                </div>
-                <div class="search-btn">
-                  <p>Pay now</p>
-                </div>
+           <div class="pay-popup">
+            <div class=" rent-popup">
+              <h2>Payment -</h2>
+              <div class="barcode">
+                  <div class="barcode-img">
+                      <img src="/assets/images/barcode.png" alt="">
+                  </div>
+                  <div class="barcode-text">
+                      <h3>PAY NOW</h3>
+                      <form id="paymentPopupForm" action="/submit-payment" method="post">
+                          <input type="text" name="UTR" id="" placeholder="Enter your UTR no.">
+                          <button type="submit">Save & Continue</button>
+                      </form>
+                  </div>
               </div>
+          </div>
+           </div>
+        
 
 
 
-
-              <div class="res-filter">
-                <div class="res-btn">
-                  <h2>RENT PAY</h2>
-                  <h2>MONTHLY</h2>
-
-                </div>
-                <div class="res-form-filter">
-                  <a href="">Total |</a>
-                  <a href="">Electricity Bill |</a>
-                  <a href="">Water Bill |</a>
-                  <a href="">Payment History </a>
-
-                </div>
-                <div class="ressearch-btn">
-                  <p>Pay now</p>
-                </div>
+           <section class="sec-3">
+            <h2 class="c">RENT PAY</h2>
+            <p style="text-align: center; margin-bottom:1rem; font-weight: bold;">
+              Bill for Month
+              <% if (rentPayment) { %>
+                <%= rentPayment.month %> <%= rentPayment.year %>
+              <% } else { %>
+                (No data available)
+              <% } %>
+            </p>
+            <div class="filter">
+              <div class="lb">
+                <p>Monthly</p>
               </div>
-
-
-
-
-
-
-
-              <h2>Notice</h2>
-              <p class="notice">As your landlord, it is my responsibility to ensure a safe and comfortable living
-                environment for all tenants.</p>
-            </section>
+              <div class="ff">
+                <table>
+                  <tr>
+                    <th>Total</th>
+                    <th>Electricity Bill</th>
+                    <th>Room Rent</th>
+                    <th>Water Bill</th>
+                  </tr>
+                  <tr>
+                    <td><%= rentPayment ? rentPayment.totalAmount : 0 %></td>
+                    <td><%= rentPayment ? rentPayment.electricityBill : 0 %></td>
+                    <td><%= rentPayment ? rentPayment.roomRent : 0 %></td>
+                    <td><%= rentPayment ? rentPayment.waterBill : 0 %></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="lb pay-btn" style="cursor: pointer;">
+                <p>Pay now</p>
+              </div>
+            </div>
+          </section>
 
 
             <section class="sec-4">
@@ -377,22 +371,7 @@
     });
 
 
-    //     document.addEventListener('DOMContentLoaded', function() {
-    //   const startDateInput = document.getElementById('start-date');
-    //   const endDateInput = document.getElementById('end-date');
-
-    //   const startDatePicker = flatpickr(startDateInput, {
-    //     dateFormat: "m/d/Y",
-    //     allowInput: true
-    //   });
-
-    //   const endDatePicker = flatpickr(endDateInput, {
-    //     dateFormat: "m/d/Y",
-    //     allowInput: true
-    //   });
-
-
-    // });
+   
     document.querySelector(".service-item-3").addEventListener("click", () => {
       alert("you can't make vacation request before 3 months of onboarding");
     })
@@ -418,25 +397,28 @@
     });
   </script>
 
-<script>
-  app.post('/close-request/:requestId', async (req, res) => {
-  try {
-    const requestId = req.params.requestId;
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const rentPayButton = document.querySelector('.pay-btn');
+  const rentPopup = document.querySelector('.rent-popup');
+  const payPopup = document.querySelector('.pay-popup');
+  const body = document.querySelector('body');
 
-    // Find the service request and remove it from the database
-    const deletedServiceRequest = await ServiceRequest.findByIdAndRemove(requestId);
+  rentPayButton.addEventListener('click', function() {
+    rentPopup.style.display = 'block';
+    payPopup.style.display = 'flex';
+    body.style.overflow = 'hidden';
+  });
 
-    if (!deletedServiceRequest) {
-      req.flash('error', 'Request not found');
-      return res.status(404).json({ error: 'Request not found' });
+  window.addEventListener('click', function(event) {
+    if (event.target === payPopup) {
+      rentPopup.style.display = 'none';
+      payPopup.style.display = 'none';
+      body.style.overflow = 'auto';
     }
-
-    req.flash('success', 'Request closed successfully!');
-    res.status(200).json({ success: true });
-  } catch (err) {
-    console.error('Error closing service request:', err);
-    req.flash('error', 'Error closing request');
-    res.status(500).json({ error: 'Internal server error' });
-  }
+  });
 });
-</script>
+  </script>
+
+ 
+  

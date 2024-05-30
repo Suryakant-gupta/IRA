@@ -1,0 +1,208 @@
+<% layout("/layouts/boilerplate") %>
+
+
+<style>
+   
+
+.faq-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.faq {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.question {
+    cursor: pointer;
+    background-color: #e9e9e9;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s;
+}
+
+.question:hover {
+    background-color: #d9d9d9;
+}
+
+.question h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.answer {
+    display: none;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+.answer p {
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    h1{
+        font-size: 1.2rem;
+    }
+    .faq-container {
+        padding: 15px;
+    }
+
+    .question h2 {
+        font-size: 16px;
+    }
+
+    .answer p {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width : 600px) {
+    .faq-container{
+        padding-bottom: 5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-container {
+        padding: 10px;
+    }
+
+    .question {
+        padding: 8px;
+    }
+
+    .question h2 {
+        font-size: 14px;
+    }
+
+    .answer {
+        padding: 8px;
+    }
+
+    .answer p {
+        font-size: 14px;
+    }
+}
+
+</style>
+
+
+
+    <div class="main-page">
+        <div class="faq-container">
+            <h1>Frequently Asked Questions</h1>
+            <div class="faq">
+                <div class="question" onclick="toggleAnswer(1)">
+                    <h2>What amenities are included in the rent at IRA Student Living?</h2>
+                </div>
+                <div class="answer" id="answer1">
+                    <p>At IRA Student Living, we provide a wide range of amenities to ensure a comfortable stay. These include fully furnished rooms, high-speed Wi-Fi, housekeeping services, laundry facilities, and 24/7 security with CCTV surveillance. Additionally, we offer nutritious meals and common recreational areas for relaxation and socializing.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="question" onclick="toggleAnswer(2)">
+                    <h2>How do I book a room at IRA Student Living?</h2>
+                </div>
+                <div class="answer" id="answer2">
+                    <p>Booking a room at IRA Student Living is simple. You can visit our website and fill out the inquiry form, or you can contact our admissions team directly via phone or email. Once your application is processed, we'll schedule a visit for you to see the property and complete the necessary formalities.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="question" onclick="toggleAnswer(3)">
+                    <h2>Are there different room options available?</h2>
+                </div>
+                <div class="answer" id="answer3">
+                    <p>Yes, we offer a variety of room options to suit different preferences and budgets. These include single occupancy rooms for those who prefer privacy and AC and Non-AC rooms for those looking to save on costs while enjoying a communal living experience.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="question" onclick="toggleAnswer(4)">
+                    <h2>Is there a minimum stay duration at IRA Student Living?</h2>
+                </div>
+                <div class="answer" id="answer4">
+                    <p>We understand the diverse needs of our residents, so we offer flexible stay options. While there may be a minimum duration, we make sure students are not bothered. Please contact our team for specific details on stay durations and pricing.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="question" onclick="toggleAnswer(5)">
+                    <h2>What safety measures are in place at IRA Student Living?</h2>
+                </div>
+                <div class="answer" id="answer5">
+                    <p>The safety of our residents is our top priority. Our property is equipped with 24/7 security personnel, CCTV surveillance, and secure entry and exit points. Additionally, our staff is trained to handle emergencies, and we have protocols in place for regular safety drills.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="question" onclick="toggleAnswer(6)">
+                    <h2>What is the procedure for maintenance requests?</h2>
+                </div>
+                <div class="answer" id="answer6">
+                    <p>We have a dedicated maintenance team available to address any issues promptly. Residents can log maintenance requests through our mobile app or contact our support desk directly. We ensure that all maintenance requests are handled swiftly to maintain a comfortable living environment.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="question" onclick="toggleAnswer(7)">
+                    <h2>Can I bring my own furniture or appliances?</h2>
+                </div>
+                <div class="answer" id="answer7">
+                    <p>Our rooms are fully furnished with all the essentials you need for a comfortable stay, including a bed, study table, chair, and wardrobe. While we discourage bringing large furniture items to avoid space constraints, you are welcome to bring small personal appliances. Please inform our team beforehand to ensure compliance with safety standards.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="question" onclick="toggleAnswer(8)">
+                    <h2>What is the guest policy at IRA Student Living?</h2>
+                </div>
+                <div class="answer" id="answer8">
+                    <p>Residents are allowed to have guests, but we have a strict guest policy to ensure the safety and comfort of all residents. Guests must be registered at the security desk and are allowed to stay for a limited duration. Overnight stays may require prior approval from the management.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="question" onclick="toggleAnswer(9)">
+                    <h2>Are meals provided at IRA Student Living?</h2>
+                </div>
+                <div class="answer" id="answer9">
+                    <p>Yes, paid meals are provided with healthy and nutritious meals by Tiffin vendors. The meal plan includes breakfast, lunch, and dinner with a variety of menu options to cater to different dietary preferences. We also offer special meals during festivals and other occasions.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="question" onclick="toggleAnswer(10)">
+                    <h2>How do I make a payment for my stay?</h2>
+                </div>
+                <div class="answer" id="answer10">
+                    <p>We offer multiple payment options for your convenience, including online bank transfers, credit/debit card payments, and UPI. Rent is typically collected on a monthly basis, and we provide detailed invoices for transparency. For more information on payment methods, please visit our website or contact our billing department.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleAnswer(id) {
+    const answer = document.getElementById(`answer${id}`);
+    if (answer.style.display === "block") {
+        answer.style.display = "none";
+    } else {
+        answer.style.display = "block";
+    }
+}
+
+    </script>
+
+

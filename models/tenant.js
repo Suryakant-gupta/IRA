@@ -25,6 +25,7 @@ const formDataSchema = new mongoose.Schema({
   rentPerMonth: { type: String },
   roomUnit: { type: String },
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  room: { type: mongoose.Schema.Types.ObjectId, ref: 'roomListing' },
   contactTable: [
     {
       type: { type: String },

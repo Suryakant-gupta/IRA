@@ -25,6 +25,8 @@ const serviceRequestSchema = new Schema({
     required: true
   },
   status: { type: String, default: 'open' },
+  // room: { type: mongoose.Schema.Types.ObjectId, ref: 'roomListing' },
+
   createdAt: {
     type: Date,
     default: Date.now

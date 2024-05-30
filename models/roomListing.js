@@ -12,7 +12,8 @@ const roomListingSchema = new mongoose.Schema({
   image: { type: String, required: true },
   buildingNumber: { type: Number },
   roomNumber: { type: String, required: true },
-  rentPerDay: { type: Number }
+  rentPerDay: { type: Number },
+  createdAt: { type: Date, default: Date.now },
 });
 
 

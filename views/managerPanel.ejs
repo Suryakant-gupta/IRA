@@ -1,0 +1,305 @@
+<%- layout("/layouts/boilerplate") %>
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            border: 1px solid;
+            background: none;
+            height: 3.5vw;
+        }
+
+        th,
+        td {
+            border: none;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .add-button,
+        .input-container {
+            margin-top: 10px;
+        }
+
+        .input-container {
+            display: none;
+        }
+
+        .manager-section table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .manager-section th,
+        td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        .manager-section thead {
+            border: 1px solid #929292;
+            height: 3.5vw;
+        }
+
+        .manager-section th {
+            border: none;
+            background: none;
+            text-align: center;
+        }
+
+        .manager-section td {
+            border: none;
+            text-align: center;
+        }
+    </style>
+
+    <div class="admin-cont">
+        <div class="admin-cont-in">
+            <div class="table-left">
+                <div id="available-rooms">
+                    <span>
+                        <p id="idp1">
+                            <%= totalRooms %>
+                        </p>
+                        <p id="idsp1">Available Rooms</p>
+                    </span>
+                </div>
+                <div id="service-requests">
+                    <span>
+                        <p id="idp2">
+                            <%= serviceRequestCount %>
+                        </p>
+                        <p id="idsp2">Service Requests</p>
+                    </span>
+                </div>
+                <div id="commercials">
+                    <span>
+                        <p id="idp3">Rs.80,000</p>
+                        <p id="idsp3">Commercials</p>
+                    </span>
+                </div>
+                <div id="request-to-vacate">
+                    <span>
+                        <p id="idp4">00</p>
+                        <p id="idsp4">Request To Vacate</p>
+                    </span>
+                </div>
+                <div id="manager-dashboard" class="selected" onclick="updateContent('manager-dashboard')">
+                    <span>
+                        <p id="idp5">Manager</p>
+                        <p style="color: #E7991C; background: none; font-size: 1.3vw;" id="idsp5">Dashboard</p>
+                    </span>
+                </div>
+                <div id="view-profile" onclick="updateContent('view-profile')">
+                    <span>
+                        <p id="idp6">View</p>
+                        <p style="color: #E7991C; background: none; font-size: 1.3vw;" id="idsp6">Profile</p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="table-right manager-dashboard-box">
+                <table id="dynamicTable">
+                    <thead id="tableHeader">
+                        <tr>
+                            <th id="hed1">Build. No</th>
+                            <th id="hed2">Unit No</th>
+                            <th id="hed3">Last Reading</th>
+                            <th id="hed4">Curr reading</th>
+                            <th id="hed5">Elec. Bill</th>
+                            <th id="hed6">Water Bill</th>
+                            <th id="hed6">Month of Bill</th>
+                            <th id="hed6">Paid/Unpaid</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <% availableRooms.forEach((room, index)=> { %>
+                            <tr>
+                                <td id="t1r1c1">
+                                    <%= room.buildingNumber %>
+                                </td>
+                                <td id="t1r1c2">
+                                    <%= room.roomNumber %>
+                                </td>
+                                <form action="/manager/submit-rent-details" method="POST"
+                                   >
+                                    <td id="t1r1c3"><input type="number" id="lastReading_<%= index %>"
+                                            name="lastReading" required></td>
+                                    <td id="t1r1c4"><input type="number" id="currReading_<%= index %>"
+                                            name="currReading" required></td>
+                                    <td id="t1r1c5"><input type="number" name="electricityBill"
+                                            id="electricityBill_<%= index %>" readonly></td>
+                                    <td id="t1r1c5"><input type="number" name="waterBill" id="waterBill_<%= index %>"
+                                            required></td>
+                                    <td id="t1r1c5"><input type="month" name="monthOfBill" id="monthOfBill_<%= index %>"
+                                            style="width: 200px;" required></td>
+                                    <td id="t1r1c6">
+                                        <input type="hidden" name="roomNumber" value="<%= room.roomNumber %>">
+                                        <input type="hidden" name="roomRent" value="<%= room.rentPerMonth %>">
+                                        <input type="hidden" name="index" value="<%= index %>">
+                                        <button type="submit">Submit</button>
+                                    </td>
+                                </form>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-right view-profile-box" style="display: none;">
+                <table id="dynamicTable">
+                    <thead id="tableHeader">
+                        <tr>
+                            <th id="hed1">Building No</th>
+                            <th id="hed2">Unit No</th>
+                            <th id="hed3">Email</th>
+                            <th id="hed4">View Profile</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td id="t1r1c1">121</td>
+                            <td id="t1r1c2">G1</td>
+                            <td id="t1r1c3">01</td>
+                            <td id="t1r1c4"><a style="color: #E7991C;" href="">View Profile</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <section class="page5">
+        <div class="cta-section">
+            <div class="cta-img">
+                <img src="/assets/images/home-vector.png" alt="">
+            </div>
+            <div class="cta-text">
+                <h2>GET IN TOUCH</h2>
+                <p>Our top-tier homes are renting rapidly. Connect with us personally to secure yours.</p>
+                <img src="/assets/images/Arrow 2.png" alt="">
+            </div>
+            <div class="cta-form">
+                <h2>Get personally <span style="color: #E7991C;">connected with us</span></h2>
+                <form action="/send-data" method="post">
+                    <input type="text" name="name" id="name" placeholder="Name*">
+                    <input type="number" name="numer" id="number" placeholder="+91 | Mobile number" class="no-spinner">
+                    <input type="email" name="email" id="email" placeholder="Email*">
+                    <select name="city" id="city">
+                        <option value="Select city">Select city</option>
+                        <option value="Noida">Noida</option>
+                        <option value="Delhi">Delhi</option>
+                    </select>
+                    <select name="location" id="location">
+                        <option value="Select Location">Select Location (optional)</option>
+                        <option value="Noida">Noida</option>
+                        <option value="Delhi">Delhi</option>
+                    </select>
+                    <select name="accommodation" id="accommodation">
+                        <option value="Accommodation Type*">Accommodation Type</option>
+                        <option value="Noida">AC</option>
+                        <option value="Delhi">Non AC</option>
+                    </select>
+                    <input type="submit" value="submit">
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function calculateElectricityBill(lastReading, currReading) {
+            const parsedLastReading = isNaN(lastReading) || lastReading === '' ? 0 : parseFloat(lastReading);
+            const parsedCurrReading = isNaN(currReading) || currReading === '' ? 0 : parseFloat(currReading);
+
+            if (parsedLastReading < 0 || parsedCurrReading < 0) {
+                return "Invalid input";
+            }
+
+            if (parsedLastReading === parsedCurrReading) {
+                return 0;
+            }
+
+            const difference = parsedCurrReading - parsedLastReading;
+
+            if (difference > 0) {
+                return difference * 5.0; // Electricity tariff rate (replace with your own value if needed)
+            } else {
+                return -difference * 4.0; // Electricity tariff rate (replace with your own value if needed)
+            }
+        }
+
+        function updateElectricityBillInput() {
+            const tableRows = document.querySelectorAll('#tableBody tr');
+
+            tableRows.forEach((row, index) => {
+                const lastReadingInput = row.querySelector(`#lastReading_${index}`);
+                const currReadingInput = row.querySelector(`#currReading_${index}`);
+                const electricityBillInput = row.querySelector(`#electricityBill_${index}`);
+
+                const lastReading = parseFloat(lastReadingInput.value) || 0;
+                const currReading = parseFloat(currReadingInput.value) || 0;
+
+                const electricityBill = calculateElectricityBill(lastReading, currReading);
+                electricityBillInput.value = isNaN(electricityBill) ? '' : electricityBill;
+            });
+        }
+
+        // Add event listeners to the lastReading and currReading inputs
+        const lastReadingInputs = document.querySelectorAll('#tableBody input[name="lastReading"]');
+        const currReadingInputs = document.querySelectorAll('#tableBody input[name="currReading"]');
+
+        lastReadingInputs.forEach(input => {
+            input.addEventListener('input', updateElectricityBillInput);
+        });
+
+        currReadingInputs.forEach(input => {
+            input.addEventListener('input', updateElectricityBillInput);
+        });
+
+        // Call updateElectricityBillInput on page load
+        updateElectricityBillInput();
+
+
+        function updateContent(selectedId) {
+            // Hide all right-side boxes
+            const allBoxes = document.querySelectorAll('.table-right');
+            allBoxes.forEach(box => box.style.display = 'none');
+
+            // Show the selected right-side box
+            const selectedBox = document.querySelector(`.${selectedId}-box`);
+            if (selectedBox) {
+                selectedBox.style.display = 'block';
+            }
+
+            // Remove 'selected' class from all left-side boxes
+            const allLeftBoxes = document.querySelectorAll('.table-left > div');
+            allLeftBoxes.forEach(box => box.classList.remove('selected'));
+
+            // Add 'selected' class to the clicked left-side box
+            const clickedBox = document.getElementById(selectedId);
+            if (clickedBox) {
+                clickedBox.classList.add('selected');
+            }
+        }
+
+
+
+        async function submitRentDetails(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const response = await fetch('/manager/submit-rent-details', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error('Error submitting rent details');
+            }
+        }
+    </script>

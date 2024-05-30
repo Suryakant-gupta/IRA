@@ -69,7 +69,7 @@
 
                             <div class="agree">
                                 <p class="s-p">-*Agreement <span>-Rs. 500</span></p>
-                                <p class="s-p">Total</p>
+                                <p class="s-p total-rent">Total</p>
                             </div>
                         </div>
 
@@ -239,6 +239,7 @@
     // Update the rent for remaining days on the form
     document.getElementById('daysRemainingInMonth').innerHTML = daysRemainingInMonth;
     document.getElementById('rentForRemainingDays').innerHTML = rentForRemainingDays.toFixed(2);
+    document.querySelector(".total-rent").innerHTML = `Total  :  ${rentForRemainingDays + 500} `;
 
 
 

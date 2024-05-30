@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Almarai:wght@300;400;700;800&family=Amiko:wght@400;600;700&family=Kumar+One&family=Rampart+One&display=swap');
+.admin-cont{
+    padding: 4vw 5vw 0vw 5vw;
+    font-size: 1.3vw;
+}
+.admin-cont button{
+    background: orange;
+    border: none;
+    padding: 0.6vw 2vw;
+    border-radius: 2vw;
+    font-size: 1vw;
+    font-weight: bold;
+}
+.admin-cont-in{
+    display: flex;
+}
+.table-left{
+    width: 15%;
+    font-family: "Almarai", sans-serif;
+}
+.table-left div{
+    display: grid;
+    border: 1px solid;
+    height: 6vw;
+    justify-content: start;
+    align-items: center;
+}
+.table-left div span{
+    margin-left: 1vw;
+}
+.table-left div span p:nth-child(1){
+    font-size: 1.8vw;
+    font-weight: bold;
+}
+.table-left div span p:nth-child(2){
+    font-size: 1.1vw;
+    color: black;
+    background: #D8D8D8;
+    padding: 0.3vw 1vw 0.3vw 0.1vw;
+}
+.selected {
+    background: #E7991B;
+}
+.table-right{
+    width: 85%;
+    font-family: "Almarai", sans-serif;
+}
+.table-right input{
+    width: 100px;
+    font-size: 1.2vw;
+    padding: 0.6vw;
+    border: 1px solid #ddd;
+    outline: none;
+    text-align: center;
+}
+
+.manager-section{
+    padding: 3vw 5vw 0vw 5vw;
+    text-align: center;
+}
+.manager-section-in{
+    display: block;
+}
+.manager-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.manager-section th, td {
+    padding: 8px;
+    text-align: left;
+}
+.manager-section th {
+    border: 1px solid black;
+}
+.p-sum{
+    color: white;
+    background: #E7991B;
+    height: 1.5vw;
+    width: 7vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2vw;
+}
+
+
+@media only screen and (max-width: 600px){
+    .admin-cont{
+        padding: 4vw 5vw 0vw 5vw;
+        font-size: 2vw;
+    }
+    .table-left{
+        width: 20%;
+    }
+    .table-right{
+        width: 80%;
+    }
+    .table-left div{
+        display: grid;
+        border: 1px solid;
+        height: 8vw;
+        justify-content: start;
+        align-items: center;
+    }
+    .table-left div span p:nth-child(1){
+        font-size: 2.3vw;
+        font-weight: bold;
+    }
+    .table-left div span p:nth-child(2){
+        font-size: 1.5vw;
+        color: black;
+        background: #D8D8D8;
+        padding: 0.3vw 1vw 0.3vw 0.1vw;
+    }
+}
+
+
+.price-column, .yearly-rent-column, .total-issues-column, .request-date-column {
+    font-size: 1.2vw;
+    clip-path: content-box;
+    color: white;
+    background: #E7991B;
+    height: 3vw;
+    width: 9vw;
+    border-radius: 2vw;
+}
+.rent-column, .house-cleaning-column, .last-reading-column {
+    color: #E7991B;
+}
