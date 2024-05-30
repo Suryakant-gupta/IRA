@@ -1962,11 +1962,14 @@ app.get("/manager-panel" , async(req, res)=>{
 
     // Count the number of service requests
     const serviceRequestCount = serviceRequests.length;
+    const rentPayments = await RentPayment.find({});
+    const totalRent = rentPayments.reduce((sum, payment) => sum + payment.totalAmount, 0);
   res.render("managerPanel" , {
     totalRooms,
       serviceRequestCount,
       availableRooms,
       serviceRequests,
+      totalRent
   });
 })
 
@@ -2026,12 +2029,15 @@ app.post('/manager/submit-rent-details', async (req, res) => {
 
     await newRentPayment.save();
     console.log('new payment details', newRentPayment);
-    res.status(200).send('Rent payment details saved successfully');
+
+    
+    res.redirect("/manager-panel");
   } catch (err) {
     console.error(err);
     res.status(500).send('Error saving rent payment details');
   }
 });
+
 
 
 app.get("/admin-panel" , async(req, res)=>{
@@ -2089,7 +2095,7 @@ app.get("/admin-panel" , async(req, res)=>{
 
     const serviceRequestData = Object.values(groupedServiceRequests);
 
-    const rentPayments = await RentPayment.find({}).populate('room');
+const rentPayments = await RentPayment.find({}).populate('room');
 
     res.render("adminPanel", {
       totalRooms,

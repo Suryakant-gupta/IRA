@@ -103,11 +103,23 @@
                         <tr>
                           <td id="t1r1c1"><%= room.buildingNumber %></td>
                           <td id="t1r1c2"><%= room.roomNumber %></td>
-                          <td id="t1r1c3">date</td>
-                          <!-- <td id="t1r1c3"><%= room.vacantSince %></td> -->
+                          <!-- <td id="t1r1c3">date</td> -->
+                          <td id="t1r1c3"><%
+                            const dateObj = new Date(room.createdAt);
+                            const day = dateObj.getDate().toString().padStart(2, '0');
+                            const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                            const year = dateObj.getFullYear().toString().slice(-2);
+                            const formattedDate = `${day}-${month}-${year}`;
+                          %>
+                          <%= formattedDate %></td>
                           <td id="t1r1c4"><%= room.ac ? 'AC' : 'Non-AC' %></td>
                           <td id="t1r1c5" style="display: flex; justify-content: center;"><p class="p-sum"><%= room.price %></p></td>
-                          <td id="t1r1c6">no. of months</td>
+                          <td id="t1r1c6"> <%
+                            const currentDate = new Date();
+                            const monthsDiff = currentDate.getMonth() - dateObj.getMonth() + (currentDate.getFullYear() - dateObj.getFullYear()) * 12;
+                            const monthsToDisplay = monthsDiff >= 0 ? monthsDiff : 0;
+                          %>
+                          <%= monthsToDisplay %></td>
                           <!-- <td id="t1r1c6"><%= room.vacantInAYear %></td> -->
                         </tr>
                       <% }) %>

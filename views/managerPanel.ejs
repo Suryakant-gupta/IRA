@@ -77,7 +77,7 @@
                 </div>
                 <div id="commercials">
                     <span>
-                        <p id="idp3">Rs.80,000</p>
+                        <p id="idp3">Rs.<%= totalRent.toLocaleString() %></p>
                         <p id="idsp3">Commercials</p>
                     </span>
                 </div>
@@ -301,5 +301,18 @@
             } else {
                 console.error('Error submitting rent details');
             }
+
+
         }
+
+        const yearlyRentCells = document.querySelectorAll('.yearly-rent');
+let totalRent = 0;
+
+yearlyRentCells.forEach(cell => {
+  const value = parseInt(cell.textContent.trim());
+  if (!isNaN(value)) {
+    totalRent += value;
+  }
+});
+
     </script>
