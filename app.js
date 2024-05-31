@@ -1062,32 +1062,32 @@ app.post('/tenant_info', async (req, res) => {
         
                             <div class="info-form">
                                 <div class="form1">
-                                  <input type="text" name="name" placeholder="Name" id="" value="${ formData.name}">
-                                  <input type="text" name="dob" placeholder="Date of Birth" id="" value="${ formData.dob}">
-                                  <input type="text" placeholder="age" name="age" value="${ formData.age}">
+                                  <input type="text" name="name" placeholder="Name" id="" value="${formData.name}">
+                                  <input type="text" name="dob" placeholder="Date of Birth" id="" value="${formData.dob}">
+                                  <input type="text" placeholder="age" name="age" value="${formData.age}">
                                 </div>
                         
                                 <div class="form2">
-                                  <input type="text" name="mobileNumber" placeholder="Mobile number" id="" value="${ formData.mobileNumber}">
-                                  <input type="text" name="whatsappNumber" placeholder="Whatsapp number" id="" value="${ formData.whatsappNumber}">
-                                  <input type="text" name="aadharNumber" placeholder="Aadhar card number" id="" value="${ formData.aadharNumber}">
-                                  <input type="text" name="email" placeholder="Email id" id="" value="${ formData.email}">
+                                  <input type="text" name="mobileNumber" placeholder="Mobile number" id="" value="${formData.mobileNumber}">
+                                  <input type="text" name="whatsappNumber" placeholder="Whatsapp number" id="" value="${formData.whatsappNumber}">
+                                  <input type="text" name="aadharNumber" placeholder="Aadhar card number" id="" value="${formData.aadharNumber}">
+                                  <input type="text" name="email" placeholder="Email id" id="" value="${formData.email}">
                                 </div>
                                 <div action="/submit-from" method="post" class="textarea-form">
-                                  <textarea name="address" placeholder="Residential Address" id="">${ formData.address}</textarea>
+                                  <textarea name="address" placeholder="Residential Address" id="">${formData.address}</textarea>
                                 </div>
                         
                                 <div class="form3">
-                                  <input type="text" name="fathersName" placeholder="Father's name" id="" value="${ formData.fathersName}">
-                                  <input type="text" name="fathersOccupation" placeholder="Father's Occupation" id="" value="${ formData.fathersOccupation}">
-                                  <input type="number" name="fathersContactNumber" placeholder="Father's contact number" id="" value="${ formData.fathersContactNumber}">
-                                  <input type="number" name="homePhone" placeholder="Home Phone" id="" value="${ formData.homePhone}">
-                                  <input type="text" name="mothersName" placeholder="Mother's name" id="" value="${ formData.mothersName}">
-                                  <input type="text" name="siblingName" placeholder="Brother's/sister's name" id="" value="${ formData.siblingName}">
-                                  <input type="text" name="propertyDealer" placeholder="Property Dealer" id="" value="${ formData.propertyDealer}">
-                                  <input type="text" name="durationOfStay" placeholder="Duration of stay" id="" value="${ formData.durationOfStay}">
-                                  <input type="number" name="dealersContactNumber" placeholder="Dealer's Contact number" id="" value="${ formData.dealersContactNumber}">
-                                  <input type="text" name="policeStationHomeTown" placeholder="Police station home town" id="" value="${ formData.policeStationHomeTown}">
+                                  <input type="text" name="fathersName" placeholder="Father's name" id="" value="${formData.fathersName}">
+                                  <input type="text" name="fathersOccupation" placeholder="Father's Occupation" id="" value="${formData.fathersOccupation}">
+                                  <input type="number" name="fathersContactNumber" placeholder="Father's contact number" id="" value="${formData.fathersContactNumber}">
+                                  <input type="number" name="homePhone" placeholder="Home Phone" id="" value="${formData.homePhone}">
+                                  <input type="text" name="mothersName" placeholder="Mother's name" id="" value="${formData.mothersName}">
+                                  <input type="text" name="siblingName" placeholder="Brother's/sister's name" id="" value="${formData.siblingName}">
+                                  <input type="text" name="propertyDealer" placeholder="Property Dealer" id="" value="${formData.propertyDealer}">
+                                  <input type="text" name="durationOfStay" placeholder="Duration of stay" id="" value="${formData.durationOfStay}">
+                                  <input type="number" name="dealersContactNumber" placeholder="Dealer's Contact number" id="" value="${formData.dealersContactNumber}">
+                                  <input type="text" name="policeStationHomeTown" placeholder="Police station home town" id="" value="${formData.policeStationHomeTown}">
                                 </div>
                               </div>
         
@@ -1268,7 +1268,7 @@ app.get('/tenant_details/:userId', ensureAuthenticated, async (req, res) => {
     const user = await User.findById(userId);
 
     const formDataDoc = await FormData.findOne({ user: userId });
-  const roomId = formDataDoc.room;
+    const roomId = formDataDoc.room;
 
     if (!user) {
       return res.status(404).send('User not found');
@@ -1283,7 +1283,7 @@ app.get('/tenant_details/:userId', ensureAuthenticated, async (req, res) => {
       status: 'open',
     });
 
-    console.log("open service requests" , openServiceRequests);
+    console.log("open service requests", openServiceRequests);
 
     const rentPayment = await RentPayment.findOne({ user: userId, room: roomId })
       .sort({ createdAt: -1 })
@@ -1663,8 +1663,8 @@ app.post('/sendd-data', async (req, res) => {
     // Save the service request to the database
     await serviceRequest.save();
 
-     // Find all open service requests for the current user
-     const openServiceRequests = await ServiceRequest.find({
+    // Find all open service requests for the current user
+    const openServiceRequests = await ServiceRequest.find({
       user: req.user._id,
       isOpen: true,
     });
@@ -1674,8 +1674,8 @@ app.post('/sendd-data', async (req, res) => {
 
     req.flash('success', 'Request submitted successfully!');
 
-    res.redirect(`/tenant_details/${req.user._id}`); 
-   } catch (err) {
+    res.redirect(`/tenant_details/${req.user._id}`);
+  } catch (err) {
     console.error('Error saving service request:', err);
     req.flash('error', 'Error submitting request');
     res.redirect(`/tenant_details/${req.user._id}`);
@@ -1886,7 +1886,7 @@ app.post('/generate-rent-receipt', ensureAuthenticated, async (req, res) => {
       }
 
       // Send the PDF as an email attachment
-      const recipient = "bgmilelomujhse@gmail.com";
+      const recipient = user.email;
       sendPDFEmail(pdfBuffer, recipient);
 
       // Set a flash message
@@ -1953,26 +1953,30 @@ app.post('/generate-rent-receipt', ensureAuthenticated, async (req, res) => {
 // createDefaultAdminUsers();
 
 
-app.get("/manager-panel" , async(req, res)=>{
-  const totalRooms = await RoomListing.countDocuments({ availability: 'available' });
-    const availableRooms = await RoomListing.find({ availability: 'unavailable' });
-
-    // Fetch all service requests
-    const serviceRequests = await ServiceRequest.find({});
-
-    // Count the number of service requests
-    const serviceRequestCount = serviceRequests.length;
-    const rentPayments = await RentPayment.find({});
-    const totalRent = rentPayments.reduce((sum, payment) => sum + payment.totalAmount, 0);
-  res.render("managerPanel" , {
-    totalRooms,
-      serviceRequestCount,
-      availableRooms,
-      serviceRequests,
-      totalRent
-  });
+app.get("/manager-panel", async (req, res) => {
+  res.redirect("/panel-login")
 })
 
+
+app.get("/manager/manager-panel", async(req, res)=>{
+  const totalRooms = await RoomListing.countDocuments({ availability: 'available' });
+  const availableRooms = await RoomListing.find({ availability: 'unavailable' });
+
+  // Fetch all service requests
+  const serviceRequests = await ServiceRequest.find({});
+
+  // Count the number of service requests
+  const serviceRequestCount = serviceRequests.length;
+  const rentPayments = await RentPayment.find({});
+  const totalRent = rentPayments.reduce((sum, payment) => sum + payment.totalAmount, 0);
+  res.render("managerPanel", {
+    totalRooms,
+    serviceRequestCount,
+    availableRooms,
+    serviceRequests,
+    totalRent
+  });
+})
 
 
 const RentPayment = require('./models/rentPayment');
@@ -2030,7 +2034,7 @@ app.post('/manager/submit-rent-details', async (req, res) => {
     await newRentPayment.save();
     console.log('new payment details', newRentPayment);
 
-    
+
     res.redirect("/manager-panel");
   } catch (err) {
     console.error(err);
@@ -2040,7 +2044,12 @@ app.post('/manager/submit-rent-details', async (req, res) => {
 
 
 
-app.get("/admin-panel" , async(req, res)=>{
+app.get("/admin-panel", async (req, res) => {
+  res.redirect("/panel-login")
+})
+
+
+app.get("/admin/admin-panel", async (req, res) => {
   try {
     // Count the total number of rooms
     const totalRooms = await RoomListing.countDocuments({ availability: 'available' });
@@ -2061,13 +2070,13 @@ app.get("/admin-panel" , async(req, res)=>{
         acc[roomNumber] = {
           roomNumber,
           'Home Cleaning': 0,
-      'Electrical Issue': 0, 
-      'Air Condition':0,
+          'Electrical Issue': 0,
+          'Air Condition': 0,
           carpentry: 0,
           totalIssues: 0,
         };
       }
-    
+
       switch (requestType) {
         case 'Home Cleaning':
           acc[roomNumber]['Home Cleaning']++;
@@ -2085,9 +2094,9 @@ app.get("/admin-panel" , async(req, res)=>{
         default:
           break;
       }
-    
+
       acc[roomNumber].totalIssues++;
-    
+
       return acc;
     }, {});
 
@@ -2095,7 +2104,7 @@ app.get("/admin-panel" , async(req, res)=>{
 
     const serviceRequestData = Object.values(groupedServiceRequests);
 
-const rentPayments = await RentPayment.find({}).populate('room');
+    const rentPayments = await RentPayment.find({}).populate('room');
 
     res.render("adminPanel", {
       totalRooms,
@@ -2105,7 +2114,7 @@ const rentPayments = await RentPayment.find({}).populate('room');
       serviceRequestData,
       rentPayments,
     });
-  
+
   } catch (err) {
     console.error("Error fetching room count:", err);
     res.status(500).send("Error fetching room count");
@@ -2113,7 +2122,7 @@ const rentPayments = await RentPayment.find({}).populate('room');
 })
 
 
-app.get("/panel-login" , (req, res)=>{
+app.get("/panel-login", (req, res) => {
   res.render("panelLogin");
 })
 
@@ -2145,9 +2154,9 @@ app.post('/admin/login', (req, res, next) => {
 
       // Successful login
       if (user.role === 'admin') {
-        return res.redirect("/admin-panel");
+        return res.redirect("/admin/admin-panel");
       } else if (user.role === 'manager') {
-        return res.redirect("/manager-panel");
+        return res.redirect("/manager/manager-panel");
       } else {
         // Fallback route in case the role is not admin or manager
         return res.redirect("/panel-login");
