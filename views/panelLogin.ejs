@@ -57,6 +57,9 @@
  }
 </style>
 
+<% if (errorMessage && errorMessage.length > 0) { %>
+  <div class="alert alert-danger"><%= errorMessage %></div>
+<% } %>
 
 <div class="main-page">
   <div class="admin-login-page">

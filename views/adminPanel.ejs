@@ -69,22 +69,22 @@
             </div>
             <div id="request-to-vacate" onclick="updateContent('request-to-vacate')">
                 <span>
-                    <p id="idp4">00</p>
+                    <p id="idp4"><%= vacateRequestCount %></p>
                     <p id="idsp4">Request To Vacate</p>
                 </span>
             </div>
-            <div id="manager-dashboard" onclick="updateContent('manager-dashboard')">
+            <a href="/manager/manager-panel" id="manager-dashboard" onclick="updateContent('manager-dashboard')">
                 <span>
                     <p id="idp5">Manager</p>
                     <p style="color: #E7991C; background: none; font-size: 1.3vw;" id="idsp5">Dashboard</p>
                 </span>
-            </div>
-            <div id="view-profile" onclick="updateContent('view-profile')">
+            </a>
+            <!-- <div id="view-profile" onclick="updateContent('view-profile')">
                 <span>
                     <p id="idp6">View</p>
                     <p style="color: #E7991C; background: none; font-size: 1.3vw;" id="idsp6">Profile</p>
                 </span>
-            </div>
+            </div> -->
         </div>
         <div class="table-right available-rooms-box">
             <table id="dynamicTable">
@@ -139,7 +139,7 @@
                         <th id="hed3">House Cleaning</th>
                         <th id="hed4">Electrical Issues</th>
                         <th id="hed4">AC Issues</th>
-                        <th id="hed5">Carpentery</th>
+                        <th id="hed5">Carpentry</th>
                         <th id="hed6">Total Issues</th>
                     </tr>
                 </thead>
@@ -147,13 +147,13 @@
                     <tbody id="tableBody">
                         <% serviceRequestData.forEach(request => { %>
                             <tr>
-                              <td id="t1r1c1">121</td> <!-- Replace with the actual building number -->
+                              <td id="t1r1c1"><%= request.buildingNumber %></td> <!-- Replace with the actual building number -->
                               <td id="t1r1c2"><%= request.roomNumber %></td>
                               <td id="t1r1c3"><%= request['Home Cleaning'] %></td> <!-- Update this line -->
                               <td id="t1r1c4"><%= request['Electrical Issue'] %></td> <!-- Update this line -->
                               <td id="t1r1c4"><%= request['Air Condition'] %></td> <!-- Update this line -->
                               <td id="t1r1c5" style="display: flex; justify-content: center;">
-                                <p class="p-sum"><%= request.carpentry %></p>
+                                <p class=""><%= request.carpentry %></p>
                               </td>
                               <td id="t1r1c6"><%= request.totalIssues %></td>
                             </tr>
@@ -173,7 +173,7 @@
                         <th id="hed2">Unit No</th>
                         <th id="hed3">Monthly Rent</th>
                         <th id="hed4">No. of Month</th>
-                        <th id="hed5">Electric Rent</th>
+                        <th id="hed5">Electricity Bill</th>
                         <th id="hed6">Yearly Rent</th>
                     </tr>
                 </thead>
@@ -202,30 +202,33 @@
             <table id="dynamicTable">
                 <thead id="tableHeader">
                     <tr>
-                        <th id="hed1">Student name</th>
+                        <th id="hed1">Student Name</th>
                         <th id="hed2">Unit No</th>
                        
-                        <th id="hed5">Req to vacate</th>
+                        <th id="hed5">Request To Vacate</th>
                         
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tbody id="tableBody">
-                        <tr>
-                            <!-- <td id="t1r1c1">121</td>
-                            <td id="t1r1c2">G1</td>
-                            <td id="t1r1c3">01</td> -->
-                           
-                        </tr>
-                      
-                    </tbody>
-                  
-                </tbody>
+                    <% allVacateRequests.forEach(request => { %>
+                      <tr>
+                        <td id="t1r1c1"><%= request.userId.name %></td>
+                        <td id="t1r1c2"><%= request.buildingNumber %></td>
+                        <td id="t1r1c3">
+                          <form action="/admin/vacate/<%= request._id %>" method="POST">
+                            <input type="hidden" name="roomNumber" value="<%= request.roomNumber %>">
+                            <input type="hidden" name="buildingNumber" value="<%= request.buildingNumber %>">
+                            <input type="submit" value="Vacate Now">
+                          </form>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
             </table>
         </div>
 
 
-        <div class="table-right manager-dashboard-box">
+        <!-- <div class="table-right manager-dashboard-box">
             <table id="dynamicTable">
                 <thead id="tableHeader">
                     <tr>
@@ -252,10 +255,10 @@
                   
                 </tbody>
             </table>
-        </div>
+        </div> -->
 
 
-        <div class="table-right view-profile-box">
+        <!-- <div class="table-right view-profile-box">
             <table id="dynamicTable">
                 <thead id="tableHeader">
                     <tr>
@@ -279,10 +282,14 @@
                   
                 </tbody>
             </table>
-        </div>
+        </div> -->
     </div>
 
    
+</div>
+
+<div class="spb">
+    <button class="dieb" onclick="downloadTableAsCSV('dynamicTable')">Download as Excel</button>
 </div>
 
 
@@ -327,6 +334,9 @@
 
 
 
+
+
+
 <script>
     function updateContent(selectedId) {
         // Hide all right-side boxes
@@ -348,6 +358,8 @@
         if (clickedBox) {
             clickedBox.classList.add('selected');
         }
+
+        window.currentTable = document.querySelector(`.${selectedId}-box table`);
     }
 
     // Initialize by showing only the available rooms box
@@ -369,3 +381,51 @@ document.getElementById('idp3').textContent = `Rs.${totalRent.toLocaleString()}`
 </script>
 
 
+
+
+<script>
+    function downloadTableAsCSV(tableId) {
+  // Get the table element
+  // Get the current table element
+  const table = window.currentTable;
+
+  // Check if the table exists
+  if (!table) {
+    console.error('No table found.');
+    return;
+  }
+
+
+  // Create an array to hold the CSV data
+  const csvData = [];
+
+  // Get the table headers
+  const headers = Array.from(table.querySelectorAll('th')).map(th => th.textContent.trim());
+  csvData.push(headers.join(','));
+
+  // Get the table rows
+  const rows = Array.from(table.querySelectorAll('tbody tr'));
+
+  // Convert each row to a CSV row
+  rows.forEach(row => {
+    const rowData = Array.from(row.querySelectorAll('td')).map(td => td.textContent.trim());
+    csvData.push(rowData.join(','));
+  });
+
+  // Create a CSV string from the data array
+  const csvString = csvData.join('\n');
+
+  // Create a temporary anchor element to trigger the download
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvString);
+  a.download = 'table_data.csv';
+  a.style.display = 'none';
+  document.body.appendChild(a);
+
+  // Trigger the download
+  a.click();
+
+  // Remove the temporary anchor element
+  document.body.removeChild(a);
+}
+</script>

@@ -1,5 +1,4 @@
-// Wait for the DOM to be fully loaded
-// Wait for the DOM to be fully loaded
+
 document.addEventListener("DOMContentLoaded", function() {
   // Room filtration
   const searchBtn = document.querySelector('.search-btn');

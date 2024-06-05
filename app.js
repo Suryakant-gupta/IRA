@@ -2,12 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose")
 const app = express();
 const path = require("path");
+const User = require("./models/User");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const RoomListing = require("./models/roomListing");
+const VacateRequest = require("./models/vacateRequest");
 const FormData = require("./models/tenant");
-const User = require("./models/User");
-const AdminUser = require('./models/AdminUser');
+// const AdminUser = require('./models/AdminUser');
 const ServiceRequest = require('./models/serviceRequest');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -20,7 +21,7 @@ const flash = require('connect-flash');
 const puppeteer = require('puppeteer');
 const nodemailer = require("nodemailer");
 const bcrypt = require('bcrypt');
-const adminPassport = require('./config/adminPassport');
+// const adminPassport = require('./config/adminPassport');
 
 
 
@@ -73,17 +74,23 @@ require('dotenv').config();
 app.use(flash());
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, { id: user.id, role: user.role });
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (data, done) => {
   try {
-    const user = await User.findById(id);
-    done(null, user);
+    const user = await User.findById(data.id);
+    if (user) {
+      user.role = data.role;
+      done(null, user);
+    } else {
+      done(null, false);
+    }
   } catch (err) {
     done(err);
   }
 });
+
 app.use((req, res, next) => {
   res.locals.authenticated = req.user;
   console.log("requested user from middleware", req.user);
@@ -96,6 +103,21 @@ app.use((req, res, next) => {
   next();
 });
 
+
+const isAdmin = (userId) => {
+  return User.findById(userId)
+    .then((user) => {
+      if (user && user.role === 'admin') {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      return false;
+    });
+}
 
 
 
@@ -204,12 +226,21 @@ app.get("/home", async (req, res) => {
   }
 });
 
-
-app.get('/profile', ensureAuthenticated, (req, res) => {
+app.get('/profile', ensureAuthenticated, async (req, res) => {
   const userId = req.user._id;
-  res.redirect(`/tenant_details/${userId}`);
-});
+  const user = await User.findById(userId);
 
+  if (user.role === 'tenant') {
+    res.redirect(`/tenant_details/${userId}`);
+  } else if (user.role === 'admin') {
+    res.redirect('/admin/admin-panel');
+  } else if (user.role === 'manager') {
+    res.redirect('/manager/manager-panel');
+  } else {
+    // Handle any other roles or send an error response
+    res.status(400).send('Invalid user role');
+  }
+});
 
 // policies page route
 app.get("/policies", (req, res) => {
@@ -341,6 +372,8 @@ app.get("/room_details/:id", async (req, res) => {
 // tenant_info page route
 app.get('/tenant_info', async (req, res) => {
   const showPaymentPopup = req.query.showPaymentPopup === 'true';
+  const buildingNumbers = await RoomListing.distinct('buildingNumber');
+  const rooms = await RoomListing.find();
 
   // Retrieve the roomId from the session or query parameter
   const roomId = req.session.roomId || req.query.roomId;
@@ -358,7 +391,7 @@ app.get('/tenant_info', async (req, res) => {
 
   // Render the tenant_info view only if roomDetails is not empty
   if (Object.keys(roomDetails).length > 0) {
-    res.render('tenant_info', { showPaymentPopup, roomDetails });
+    res.render('tenant_info', { showPaymentPopup, roomDetails, buildingNumbers, rooms });
   } else {
     // Handle the case where roomDetails is empty
     // You can redirect to a different page or render an error message
@@ -368,16 +401,37 @@ app.get('/tenant_info', async (req, res) => {
 
 
 
+app.get('/get-room-details', async (req, res) => {
+  const { buildingNumber, roomNumber } = req.query;
+
+  try {
+
+    const roomDetails = await RoomListing.findOne({ buildingNumber, roomNumber });
+
+    if (!roomDetails) {
+      return res.status(404).json({ error: 'Room not found' });
+    }
+
+    res.json(roomDetails);
+  } catch (error) {
+    console.error('Error fetching room details:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
 
 app.post('/tenant_info', async (req, res) => {
   try {
     const formData = new FormData(req.body);
+    const roomId = formData.get('roomId');
 
     // Generate a random password
     const randomPassword = "Welcome@IRA"
 
     // Retrieve the roomId from the session or query parameter
-    const roomId = req.session.roomId || req.query.roomId;
+    // const roomId = req.session.roomId || req.query.roomId;
 
     let roomDetails = {};
     if (roomId) {
@@ -393,13 +447,21 @@ app.post('/tenant_info', async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       mobileNumber: req.body.mobileNumber,
+      role: "tenant",
       password: randomPassword,
+      createdAt: req.body.agreementStartDate,
     });
+
+
 
     console.log(`Random password for ${newUser.name}: ${randomPassword}`);
 
     const user = await newUser.save();
-    formData.user = user._id;
+    if (user.role === 'tenant') {
+      formData.user = user._id;
+    } else {
+      console.log('User role is not tenant, skipping user ID assignment to formData');
+    }
     formData.room = roomId;
     await formData.save();
 
@@ -431,6 +493,7 @@ app.post('/tenant_info', async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         mobileNumber: newUser.mobileNumber,
+        role: newUser.role,
         password: randomPassword
       };
 
@@ -489,9 +552,11 @@ app.post('/tenant_info', async (req, res) => {
       sendEmail(formData.email, htmlTemplate);
 
       console.log('User session:', req.session.passport.user);
+      const buildingNumbers = await RoomListing.distinct('buildingNumber');
+      const rooms = await RoomListing.find();
 
       // Render the tenant_info.ejs view with showPaymentPopup set to true
-      res.render('tenant_info', { showPaymentPopup: true, roomDetails }, async (err, html) => {
+      res.render('tenant_info', { showPaymentPopup: true, roomDetails, buildingNumbers, rooms }, async (err, html) => {
         if (err) {
           console.error('Error rendering HTML:', err);
           return res.redirect('/tenant_info');
@@ -526,7 +591,7 @@ app.post('/tenant_info', async (req, res) => {
         .main-page {
             width: 100%;
             position: relative;
-            font-family: "almarai", sans-serif;
+            font-family: "roboto", sans-serif;
             position: relative;
         }
                 .payment-popup{
@@ -784,7 +849,7 @@ app.post('/tenant_info', async (req, res) => {
         
         .info-form input::placeholder, textarea::placeholder{
            color: #959595;
-           font-family: almarai;
+           font-family: roboto;
            font-weight: 500;
         }
         
@@ -866,7 +931,7 @@ app.post('/tenant_info', async (req, res) => {
             align-items: center;
             justify-content: center;
             color: #7b7b7b;
-            font-family: almarai;
+            font-family: roboto;
             text-align: center;
             /* padding: .5rem 1rem; */
         }
@@ -1297,7 +1362,7 @@ app.get('/tenant_details/:userId', ensureAuthenticated, async (req, res) => {
       openServiceRequests,
       successMessage: successMessage.length > 0 ? successMessage : null, // Render success message only if it exists
       errorMessage: errorMessage.length > 0 ? errorMessage : null,
-      rentPayment // Render error message only if it exists
+      rentPayment, formDataDoc // Render error message only if it exists
     });
   } catch (err) {
     console.error('Error rendering tenant details page:', err);
@@ -1310,9 +1375,51 @@ app.get("/about-us", (req, res) => {
 })
 
 // vacate page route
-app.get("/vacate-request", (req, res) => {
-  res.render("vacate_form");
+app.get("/vacate-request", ensureAuthenticated, (req, res) => {
+  res.render("vacate_form", { user: req.user });
 })
+
+
+app.get('/check-vacate-eligibility', async (req, res) => {
+  const { user } = req;
+
+  if (!user || user.role !== 'tenant') {
+    return res.status(403).json({ eligible: false, message: 'Only tenants can make a vacate request.' });
+  }
+
+  const createdAtDate = user.createdAt;
+  const threeMonthsAgo = new Date(Date.now() - (3 * 30 * 24 * 60 * 60 * 1000));
+
+  if (createdAtDate < threeMonthsAgo) {
+    res.json({ eligible: true });
+  } else {
+    res.json({ eligible: false, message: 'You cannot make a vacate request before 3 months of onboarding.' });
+  }
+});
+
+
+app.post('/submit-vacate-request', ensureAuthenticated, async (req, res) => {
+  const { userId, roomNumber, buildingNumber } = req.body;
+  try {
+    const vacateRequest = new VacateRequest({ userId, roomNumber, buildingNumber });
+    await vacateRequest.save();
+
+    // Set success flash message
+    req.flash('success', 'Vacate request submitted successfully!');
+
+    // Redirect to the tenant_details route with the userId as a query parameter
+    res.redirect('/tenant_details/' + userId);
+  } catch (error) {
+    console.error('Error submitting vacate request:', error);
+
+    // Set error flash message
+    req.flash('error', 'An error occurred while submitting the vacate request.');
+
+    // Redirect to the tenant_details route with the userId as a query parameter
+    res.redirect('/tenant_details/' + userId);
+  }
+});
+
 
 app.post(
   '/login/phone',
@@ -1322,7 +1429,11 @@ app.post(
   }),
   (req, res) => {
     const userId = req.user.id;
-    res.redirect(`/tenant_details/${userId}`);
+    if (req.user.role === 'tenant') {
+      res.redirect(`/tenant_details/${userId}`);
+    } else {
+      res.redirect('/login'); // Redirect to login page if not a tenant
+    }
   }
 );
 
@@ -1334,7 +1445,11 @@ app.post(
   }),
   (req, res) => {
     const userId = req.user.id;
-    res.redirect(`/tenant_details/${userId}`);
+    if (req.user.role === 'tenant') {
+      res.redirect(`/tenant_details/${userId}`);
+    } else {
+      res.redirect('/login'); // Redirect to login page if not a tenant
+    }
   }
 );
 
@@ -1347,13 +1462,27 @@ app.get('/login', (req, res) => {
 
 // logout route
 app.get("/logout", (req, res) => {
-  req.logout(function (err) {
+  if (!req.user) {
+    return res.status(400).send('No user is currently logged in');
+  }
+
+  // Retrieve the user's role
+  const userRole = req.user.role;
+
+  req.logout((err) => {
     if (err) {
       console.error('Error logging out:', err);
       return res.status(500).send('Error logging out');
     }
-    // Redirect or send a response after successful logout
-    res.redirect('/home');
+
+    // Redirect based on user role
+    if (userRole === 'tenant') {
+      res.redirect('/home');
+    } else if (userRole === 'admin' || userRole === 'manager') {
+      res.redirect('/panel-login');
+    } else {
+      res.redirect('/home'); // Default redirection
+    }
   });
 })
 
@@ -1555,6 +1684,7 @@ app.post('/sendd-data', async (req, res) => {
   const notificationData = {
     requestType: formData.requestType,
     roomNumber: formData.roomNumber,
+    buildingNumber: formData.buildingNumber,
     requestNumber: formData.requestNumber,
     userEmail,
   };
@@ -1654,6 +1784,7 @@ app.post('/sendd-data', async (req, res) => {
     const serviceRequest = new ServiceRequest({
       requestType: formData.requestType,
       roomNumber: formData.roomNumber,
+      buildingNumber: formData.buildingNumber,
       requestNumber: formData.requestNumber,
       formData: userFormData._id, // Use the formData document ID
       user: req.user._id,
@@ -1905,52 +2036,56 @@ app.post('/generate-rent-receipt', ensureAuthenticated, async (req, res) => {
 
 
 // admin panel code 
+async function createDefaultAdminUsers() {
+  try {
+    // Check if any admin or manager users exist
+    const existingAdmins = await User.find({ role: 'admin' });
+    const existingManagers = await User.find({ role: 'manager' });
 
+    if (existingAdmins.length > 0 || existingManagers.length > 0) {
+      console.log('Admin and/or manager users already exist');
+      return;
+    }
 
-// async function createDefaultAdminUsers() {
-//   try {
-//     // Check if any admin users exist
-//     const existingAdminUsers = await AdminUser.find({});
-//     if (existingAdminUsers.length > 0) {
-//       console.log('Admin users already exist');
-//       return;
-//     }
+    // Check if environment variables are set
+    if (!process.env.MANAGER_PASS || !process.env.ADMIN_PASS || !process.env.ADMIN_EMAIL) {
+      throw new Error('Environment variables MANAGER_PASS, ADMIN_PASS, and ADMIN_EMAIL must be set');
+    }
 
-//     // Check if environment variables are set
-//     if (!process.env.MANAGER_PASS || !process.env.ADMIN_PASS || !process.env.ADMIN_EMAIL) {
-//       throw new Error('Environment variables MANAGER_PASS, ADMIN_PASS, and ADMIN_EMAIL must be set');
-//     }
+    // // Hash the passwords
+    // const saltRounds = 10;
+    // const managerPassword = await bcrypt.hash(process.env.MANAGER_PASS, saltRounds);
+    // const adminPassword = await bcrypt.hash(process.env.ADMIN_PASS, saltRounds);
 
-//     // Hash the passwords
-//     const saltRounds = 10;
-//     const managerPassword = await bcrypt.hash(process.env.MANAGER_PASS, saltRounds);
-//     const adminPassword = await bcrypt.hash(process.env.ADMIN_PASS, saltRounds);
+    // Create the default admin users
+    const managerUser = new User({
+      name: 'Manager User',
+      mobileNumber: '9876543210',
+      email: process.env.MANAGER_EMAIL,
+      password:  process.env.MANAGER_PASS, // await the hashed password
+      role: 'manager'
+    });
 
-//     // Create the default admin users
-//     const managerUser = new AdminUser({
-//       email: process.env.MANAGER_EMAIL,
-//       password: managerPassword,
-//       role: 'manager'
-//     });
+    const adminUser = new User({
+      name: 'Admin User',
+      mobileNumber: '9876543211',
+      email: process.env.ADMIN_EMAIL,
+      password:  process.env.ADMIN_PASS, // await the hashed password
+      role: 'admin'
+    });
 
-//     const adminUser = new AdminUser({
-//       email: process.env.ADMIN_EMAIL,
-//       password: adminPassword,
-//       role: 'admin'
-//     });
+    // Save the admin users to the database
+    await managerUser.save();
+    await adminUser.save();
 
-//     // Save the admin users to the database
-//     await managerUser.save();
-//     await adminUser.save();
-
-//     console.log('Default admin users created successfully');
-//   } catch (err) {
-//     console.error('Error creating default admin users:', err);
-//   }
-// }
-
+    console.log('Default admin and manager users created successfully');
+  } catch (err) {
+    console.error('Error creating default admin and manager users:', err);
+  }
+}
 // Call the function to create the default admin users
 // createDefaultAdminUsers();
+
 
 
 app.get("/manager-panel", async (req, res) => {
@@ -1958,7 +2093,7 @@ app.get("/manager-panel", async (req, res) => {
 })
 
 
-app.get("/manager/manager-panel", async(req, res)=>{
+app.get("/manager/manager-panel", async (req, res) => {
   const totalRooms = await RoomListing.countDocuments({ availability: 'available' });
   const availableRooms = await RoomListing.find({ availability: 'unavailable' });
 
@@ -2035,7 +2170,7 @@ app.post('/manager/submit-rent-details', async (req, res) => {
     console.log('new payment details', newRentPayment);
 
 
-    res.redirect("/manager-panel");
+    res.redirect("/manager/manager-panel");
   } catch (err) {
     console.error(err);
     res.status(500).send('Error saving rent payment details');
@@ -2054,6 +2189,8 @@ app.get("/admin/admin-panel", async (req, res) => {
     // Count the total number of rooms
     const totalRooms = await RoomListing.countDocuments({ availability: 'available' });
     const availableRooms = await RoomListing.find({ availability: 'available' });
+    const allVacateRequests = await VacateRequest.find({}).populate('userId');
+    const vacateRequestCount = allVacateRequests.length;
 
     // Fetch all service requests
     const serviceRequests = await ServiceRequest.find({});
@@ -2065,10 +2202,11 @@ app.get("/admin/admin-panel", async (req, res) => {
 
 
     const groupedServiceRequests = serviceRequests.reduce((acc, request) => {
-      const { roomNumber, requestType } = request;
+      const { roomNumber, requestType, buildingNumber } = request;
       if (!acc[roomNumber]) {
         acc[roomNumber] = {
           roomNumber,
+          buildingNumber,
           'Home Cleaning': 0,
           'Electrical Issue': 0,
           'Air Condition': 0,
@@ -2113,6 +2251,8 @@ app.get("/admin/admin-panel", async (req, res) => {
       serviceRequests,
       serviceRequestData,
       rentPayments,
+      allVacateRequests,
+      vacateRequestCount
     });
 
   } catch (err) {
@@ -2121,52 +2261,68 @@ app.get("/admin/admin-panel", async (req, res) => {
   }
 })
 
+app.post('/admin/vacate/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { roomNumber, buildingNumber } = req.body;
+
+    // Find the room listing and update the availability
+    const roomListing = await RoomListing.findOneAndUpdate(
+      { roomNumber, buildingNumber },
+      { availability: 'available' },
+      { new: true }
+    );
+
+    console.log(roomListing);
+
+    // Remove the vacate request
+    await VacateRequest.findByIdAndDelete(id);
+
+    res.redirect('/admin/admin-panel');
+  } catch (err) {
+    console.error('Error updating room availability:', err);
+    res.status(500).send('Error updating room availability');
+  }
+});
+
 
 app.get("/panel-login", (req, res) => {
-  res.render("panelLogin");
+  const errorMessage = req.flash('error');
+  res.render('panelLogin', { errorMessage });
 })
 
 
 
 // Admin login route
-app.post('/admin/login', (req, res, next) => {
-  console.log('Request Body:', req.body); // Log the request body
 
-  const { role, email, password } = req.body;
-
-  // Determine the authentication strategy based on the role
-  const strategy = role === 'admin' ? 'admin-local' : 'manager-local';
-
-  adminPassport.authenticate(strategy, (err, user, info) => {
+app.post('/admin/login', async (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) {
       return next(err);
     }
 
     if (!user) {
-      return res.redirect("/panel-login");
+      req.flash('error', info.message);
+      return res.redirect('/panel-login');
     }
 
-    // Log in the user
-    req.login(user, (loginErr) => {
-      if (loginErr) {
-        return next(loginErr);
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
       }
 
-      // Successful login
       if (user.role === 'admin') {
-        return res.redirect("/admin/admin-panel");
+        return res.redirect('/admin/admin-panel');
       } else if (user.role === 'manager') {
-        return res.redirect("/manager/manager-panel");
+        return res.redirect('/manager/manager-panel');
       } else {
-        // Fallback route in case the role is not admin or manager
-        return res.redirect("/panel-login");
+        req.logout();
+        req.flash('error', 'Invalid user role');
+        return res.redirect('/panel-login');
       }
     });
   })(req, res, next);
 });
-
-
-
 
 
 

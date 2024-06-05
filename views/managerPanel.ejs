@@ -93,12 +93,12 @@
                         <p style="color: #E7991C; background: none; font-size: 1.3vw;" id="idsp5">Dashboard</p>
                     </span>
                 </div>
-                <div id="view-profile" onclick="updateContent('view-profile')">
+                <!-- <div id="view-profile" onclick="updateContent('view-profile')">
                     <span>
                         <p id="idp6">View</p>
                         <p style="color: #E7991C; background: none; font-size: 1.3vw;" id="idsp6">Profile</p>
                     </span>
-                </div>
+                </div> -->
             </div>
 
             <div class="table-right manager-dashboard-box">
@@ -112,6 +112,7 @@
                             <th id="hed5">Elec. Bill</th>
                             <th id="hed6">Water Bill</th>
                             <th id="hed6">Month of Bill</th>
+                            <th id="hed6">Submit</th>
                             <th id="hed6">Paid/Unpaid</th>
                         </tr>
                     </thead>
@@ -143,13 +144,14 @@
                                         <button type="submit">Submit</button>
                                     </td>
                                 </form>
+                                <td>Paid / Unpaid</td>
                             </tr>
                             <% }) %>
                     </tbody>
                 </table>
             </div>
 
-            <div class="table-right view-profile-box" style="display: none;">
+            <!-- <div class="table-right view-profile-box" style="display: none;">
                 <table id="dynamicTable">
                     <thead id="tableHeader">
                         <tr>
@@ -161,16 +163,15 @@
                     </thead>
                     <tbody id="tableBody">
                         <tr>
-                            <td id="t1r1c1">121</td>
-                            <td id="t1r1c2">G1</td>
-                            <td id="t1r1c3">01</td>
-                            <td id="t1r1c4"><a style="color: #E7991C;" href="">View Profile</a></td>
+                           
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div> -->
         </div>
     </div>
+
+    
 
     <section class="page5">
         <div class="cta-section">
@@ -225,9 +226,9 @@
             const difference = parsedCurrReading - parsedLastReading;
 
             if (difference > 0) {
-                return difference * 5.0; // Electricity tariff rate (replace with your own value if needed)
+                return difference * 9.5; // Electricity tariff rate (replace with your own value if needed)
             } else {
-                return -difference * 4.0; // Electricity tariff rate (replace with your own value if needed)
+                return -difference * 8.5; // Electricity tariff rate (replace with your own value if needed)
             }
         }
 

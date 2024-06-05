@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Kumar+One&family=Rampart+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Amiko:wght@400;600;700&family=Kumar+One&family=Rampart+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=roboto&family=Kumar+One&family=Rampart+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=roboto&family=Amiko:wght@400;600;700&family=Kumar+One&family=Rampart+One&display=swap');
   .vacate-page {
     padding-inline: 5vw;
     padding-block: 2vw;
@@ -17,7 +17,7 @@
   }
   .nav-head p {
     /* font-weight: bold; */
-    font-family: "Aldrich", sans-serif;
+    font-family: "roboto", sans-serif;
     font-size: 2vw !important;
     margin-bottom: 0 !important;
     color: black !important;
@@ -220,7 +220,7 @@ th, td {
     text-transform: uppercase;
 }
 
-input[type="text"] {
+.v-form input[type="text"] {
   padding: 1vw;
   border: 1px solid #ddd;
   outline: none;
@@ -249,7 +249,7 @@ th, td {
 @media only screen and (max-width: 600px){
   .nav-head p {
     /* font-weight: bold; */
-    font-family: "Aldrich", sans-serif;
+    font-family: "roboto", sans-serif;
     font-size: 3vw !important;
     margin-bottom: 0 !important;
     color: black !important;

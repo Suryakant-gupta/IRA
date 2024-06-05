@@ -36,6 +36,10 @@ const formDataSchema = new mongoose.Schema({
     },
   ],
   paymentInformation: { type: Object },
+  inDate: { type: String, required: true },
+  agreementStartDate: { type: String, required: true },
+  agreementEndDate: { type: String, required: true },
+  lockInDate: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
 

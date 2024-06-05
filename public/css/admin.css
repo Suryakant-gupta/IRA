@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Almarai:wght@300;400;700;800&family=Amiko:wght@400;600;700&family=Kumar+One&family=Rampart+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=roboto&family=roboto:wght@300;400;700;800&family=Amiko:wght@400;600;700&family=Kumar+One&family=Rampart+One&display=swap');
 .admin-cont{
     padding: 4vw 5vw 0vw 5vw;
     font-size: 1.3vw;
@@ -16,7 +16,7 @@
 }
 .table-left{
     width: 15%;
-    font-family: "Almarai", sans-serif;
+    font-family: "roboto", sans-serif;
 }
 .table-left div{
     display: grid;
@@ -38,12 +38,32 @@
     background: #D8D8D8;
     padding: 0.3vw 1vw 0.3vw 0.1vw;
 }
+.table-left a{
+    display: grid;
+    border: 1px solid;
+    height: 6vw;
+    justify-content: start;
+    align-items: center;
+}
+.table-left a span{
+    margin-left: 1vw;
+}
+.table-left a span p:nth-child(1){
+    font-size: 1.8vw;
+    font-weight: bold;
+}
+.table-left a span p:nth-child(2){
+    font-size: 1.1vw;
+    color: black;
+    background: #D8D8D8;
+    padding: 0.3vw 1vw 0.3vw 0.1vw;
+}
 .selected {
     background: #E7991B;
 }
 .table-right{
     width: 85%;
-    font-family: "Almarai", sans-serif;
+    font-family: "roboto", sans-serif;
 }
 .table-right input{
     width: 100px;
@@ -126,4 +146,23 @@
 }
 .rent-column, .house-cleaning-column, .last-reading-column {
     color: #E7991B;
+}
+
+.spb{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dieb{
+   
+    border: none;
+    background-color: #E7991B;
+    font-weight: bold;
+    padding: .7rem 2.5rem;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    margin-block: 2rem;
+   
 }

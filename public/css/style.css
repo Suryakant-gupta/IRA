@@ -1,6 +1,6 @@
 
 
-@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
+
 @import url('https://fonts.googleapis.com/css2?family=roboto&display=swap');
 
 *,
@@ -21,7 +21,7 @@ body {
 .main-page {
     width: 100%;
     position: relative;
-    font-family: "almarai", sans-serif;
+    font-family: "roboto", sans-serif;
     position: relative;
 }
 
@@ -36,7 +36,7 @@ a {
 header {
     width: 100%;
     background-color: #fff;
-    font-family: "almarai";
+    font-family: "roboto";
     
 }
 
@@ -368,15 +368,18 @@ nav .cta a {
             flex: 0 0 auto;
     background-color: #f5f5f5;
     border: 2px solid #7c7c7c;
+    padding: 5px;
 }
 
 .card-board .card .card-image {
     width: 100%;
-    padding: 4px;
+    /* margin: 4px; */
+  
 }
 
 .card-board .card .card-image img {
     width: 100%;
+    border: 3px solid #E7991C;
 }
 
 .card-board .card .price-gender {
@@ -418,6 +421,14 @@ nav .cta a {
     padding: .3vw 1.2vw;
 }
 
+.card-text{
+    width: 100%;
+}
+
+.card-services{
+    width: 100%;
+}
+
 .sr{
     width: 100%;
     display: -webkit-box;
@@ -428,13 +439,14 @@ nav .cta a {
             align-items: flex-start;
     -webkit-box-pack: start;
         -ms-flex-pack: start;
-            justify-content: flex-start;
+            justify-content: space-between;
     padding-inline:1.5vw ;
     gap: 1vw;
     margin-bottom: 1rem;
 }
 
 .si{
+    width: 50%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -443,10 +455,10 @@ nav .cta a {
             align-items: flex-start;
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
-            justify-content: space-between;
+            justify-content: flex-start;
     /* padding-inline:1.5vw ; */
     gap: .5vw;
-    font-size: .7vw;
+    font-size: .9vw;
     font-weight: bold;
 }
 
@@ -740,6 +752,7 @@ select{
 
 
 
+
 footer {
     width: 100%;
     padding-inline: 5vw;
@@ -787,9 +800,6 @@ footer a {
     gap: 2rem;
 }
 
-
-
-
 .footer-top .logo-text {
     width: 32%;
     display: -webkit-box;
@@ -813,10 +823,23 @@ footer a {
 }
 
 .logo-text .logo-img{
-    width: 50%;
+    width: 100%;
 }
 
-
+.footer-top .logo-text .social-icons {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    gap: 3rem;
+    font-size: 2rem;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
 
 .footer-top .menu {
     width: 18%;
@@ -842,34 +865,22 @@ footer a {
 }
 
 .footer-bottom{
-    padding-left: 6rem;
-}
-
-.social-icons{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.icons {
-    width: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    gap: 3rem;
-    font-size: 2rem;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: flex-start;
+    padding-left: 5.5rem;
 }
 
 
+.footer-bottom .rights {
+    width: 50%;
+    margin-top: -3rem;
 
+}
 
+.footer-bottom  {
+    justify-content: flex-end;
+}
+.footer-bottom p {
+    font-size: .9rem;
+}
 
 
 .res-foot{

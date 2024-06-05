@@ -9,10 +9,11 @@
         <img src="/assets/images/Group 55-1.png" alt="">
         
     </div>
-   <form action="">
+   <form action="submit-vacate-request" method="POST" class="v-form">
+    <input type="hidden" name="userId" value="<%= user._id %>">
    <div class="room-build">
-    <label>Room Number</label> <input type="text" name="" id="">
-   <label>Building Number</label><input type="text" name="" id="">
+    <label>Room Number</label><input type="text" id="roomNumber" name="roomNumber" required>
+   <label>Building Number</label><input type="number" name="buildingNumber" id="buildingNumber" required>
    </div>
 
    <div class="declaration">
@@ -98,7 +99,45 @@
     </div>
    </div>
 
+   <input type="submit" value="submit">
+
    </form>
 
    
   </div>
+
+
+  <script>
+    const vacateForm = document.getElementById('vacateForm');
+
+vacateForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(vacateForm);
+  const userId = formData.get('userId');
+  const roomNumber = formData.get('roomNumber');
+
+  try {
+    const response = await fetch('/submit-vacate-request', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId, roomNumber })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      // Vacate request submitted successfully
+      alert(data.message);
+      window.location.href = `/tenant_details/${userId}`; // Redirect to tenant_details page
+    } else {
+      // Error submitting vacate request
+      alert(data.message);
+    }
+  } catch (error) {
+    console.error('Error submitting vacate request:', error);
+  }
+});
+  </script>

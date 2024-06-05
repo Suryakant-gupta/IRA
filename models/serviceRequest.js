@@ -10,6 +10,10 @@ const serviceRequestSchema = new Schema({
     type: String,
     required: true
   },
+  buildingNumber: {
+    type: String,
+    required: true
+  },
   requestNumber: {
     type: String,
     required: true

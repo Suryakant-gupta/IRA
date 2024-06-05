@@ -29,6 +29,7 @@
                 <h2>Welcome</h2>
                 <h2>
                   <%= user.name %>
+                  
                 </h2>
                 <p>Raise A Service Request-</p>
               </div>
@@ -48,6 +49,7 @@
                   </div>
                   <input type="hidden" name="requestType" id="requestType-input">
                   <input type="hidden" name="roomNumber" id="roomNumber-input">
+                  <input type="hidden" name="buildingNumber" id="buildingNumber-input" value="<%= formDataDoc.buildingNumber%>">
                   <input type="hidden" name="requestNumber" id="requestNumber-input">
                   <div class="save">
                     <button type="submit">SUBMIT</button>
@@ -66,7 +68,7 @@
                     <div class="res-p">
                       <img src="/assets/images/req-3.png" alt="">
                     </div>
-                    <h3>House cleaning</h3>
+                    <h3>room cleaning</h3>
 
                   </div>
                   <div class="item service-item-2">
@@ -87,7 +89,7 @@
                     <div class="res-p">
                       <img src="/assets/images/req-8.png" alt="">
                     </div>
-                    <h3>Air Condition</h3>
+                    <h3>Air Conditioner</h3>
 
                   </div>
                   <a href="/profile/<%= userId %>" class="item service-item-1">
@@ -105,11 +107,11 @@
                     <h3>Download Agreement</h3>
 
                   </a> -->
-                  <a class="item service-item-3">
+                  <a class="item service-item-3" id="vacateRequestBtn">
                     <div class="res-p2">
                       <img src="/assets/images/vacate.png" alt="">
                     </div>
-                    <h3>Req. to vacate</h3>
+                    <h3>REQUEST TO VACATE</h3>
 
                   </a>
 
@@ -140,7 +142,7 @@
                     <div class="res-p2">
                       <img src="/assets/images/req-7.png" alt="">
                     </div>
-                    <h3>Rent recipt generate</h3>
+                    <h3>RENT RECEIPT GENERATOR</h3>
 
                   </a>
                 </div>
@@ -284,97 +286,94 @@
 
 
 
-    document.addEventListener('DOMContentLoaded', async function () {
-      const respButtons = document.querySelectorAll('.res-p');
-      const popupSection = document.querySelector('.req-pop');
-      const closePopupBtn = document.querySelector('.cp');
-      const requestTypeElement = document.getElementById('request-type');
-      const roomNumberElement = document.getElementById('room-number');
-      const requestNumberElement = document.getElementById('request-number');
-      const requestTypeInput = document.getElementById('requestType-input');
-      const roomNumberInput = document.getElementById('roomNumber-input');
-      const requestNumberInput = document.getElementById('requestNumber-input');
-      const popupContainer = document.querySelector('.popup-container');
-      const rentReceiptButton = document.querySelector('.service-item-4');
+    document.addEventListener('DOMContentLoaded', function () {
+  const respButtons = document.querySelectorAll('.res-p');
+  const popupSection = document.querySelector('.req-pop');
+  const closePopupBtn = document.querySelector('.cp');
+  const requestTypeElement = document.getElementById('request-type');
+  const roomNumberElement = document.getElementById('room-number');
+  const requestNumberElement = document.getElementById('request-number');
+  const requestTypeInput = document.getElementById('requestType-input');
+  const roomNumberInput = document.getElementById('roomNumber-input');
+  const buildingNumberInput = document.getElementById('buildingNumber-input');
+  const requestNumberInput = document.getElementById('requestNumber-input');
+  const popupContainer = document.querySelector('.popup-container');
+  const rentReceiptButton = document.querySelector('.service-item-4');
 
-      // Function to get request type based on button index
-      function getRequestType(index) {
-        const requestTypes = [
-          'Home Cleaning',
-          'Electrical Issue',
-          'Carpentry',
-          'Air Condition',
-          // Add more request types if needed
-        ];
-        return requestTypes[index];
-      }
+  // Function to get request type based on button index
+  function getRequestType(index) {
+    const requestTypes = [
+      'Home Cleaning',
+      'Electrical Issue',
+      'Carpentry',
+      'Air Condition',
+      // Add more request types if needed
+    ];
+    return requestTypes[index];
+  }
 
-      // Function to get room number from FormData
-      async function getRoomNumber() {
-        try {
-          const response = await fetch('/get-room-number');
-          const formData = await response.json();
-          return formData.roomNumber;
-        } catch (error) {
-          console.error('Error fetching room number:', error);
-          return null;
-        }
-      }
+  // Function to get room number from FormData
+  async function getRoomNumber() {
+    try {
+      const response = await fetch('/get-room-number');
+      const formData = await response.json();
+      return formData.roomNumber;
+    } catch (error) {
+      console.error('Error fetching room number:', error);
+      return null;
+    }
+  }
 
-      // Add event listeners to each res-p button
-      respButtons.forEach((button, index) => {
-        button.addEventListener('click', async () => {
-          const requestType = getRequestType(index);
-          const roomNumber = await getRoomNumber();
-          const requestNumber = getRequestNumber();
+  // Add event listeners to each res-p button
+  respButtons.forEach((button, index) => {
+    button.addEventListener('click', async () => {
+      const requestType = getRequestType(index);
+      const roomNumber = await getRoomNumber();
+      const buildingNumber = document.getElementById('buildingNumber-input').value;
+      const requestNumber = getRequestNumber();
 
-          requestTypeElement.textContent = requestType;
-          roomNumberElement.textContent = roomNumber;
-          requestNumberElement.textContent = getRequestNumber();
+      requestTypeElement.textContent = requestType;
+      roomNumberElement.textContent = roomNumber;
+      requestNumberElement.textContent = getRequestNumber();
 
-          requestTypeInput.value = requestType;
-          roomNumberInput.value = roomNumber;
-          requestNumberInput.value = getRequestNumber();
+      requestTypeInput.value = requestType;
+      roomNumberInput.value = roomNumber;
+      buildingNumberInput.value = buildingNumber;
+      requestNumberInput.value = getRequestNumber();
 
-          popupSection.style.display = 'flex';
-        });
-      });
-
-      // Add click event listener to the close button
-      closePopupBtn.addEventListener('click', () => {
-        popupSection.style.display = 'none';
-      });
-
-
-
-      // Add event listener to close the popup when clicked outside the popup area
-      window.addEventListener('click', (event) => {
-        if (event.target === popupSection) {
-          popupSection.style.display = 'none';
-
-        }
-      });
-
-      // Add event listener to the rent receipt button
-      rentReceiptButton.addEventListener('click', () => {
-        popupContainer.style.display = 'block';
-      });
-
-      // Add event listener to close the popup when clicked outside the popup area
-      window.addEventListener('click', (event) => {
-        if (event.target === popupSection || event.target === popupContainer) {
-          popupSection.style.display = 'none';
-          popupContainer.style.display = 'none';
-        }
-      })
-
+      popupSection.style.display = 'flex';
     });
+  });
+
+  // Add click event listener to the close button
+  closePopupBtn.addEventListener('click', () => {
+    popupSection.style.display = 'none';
+  });
+
+  // Add event listener to close the popup when clicked outside the popup area
+  window.addEventListener('click', (event) => {
+    if (event.target === popupSection) {
+      popupSection.style.display = 'none';
+    }
+  });
+
+  // Add event listener to the rent receipt button
+  rentReceiptButton.addEventListener('click', () => {
+    popupContainer.style.display = 'block';
+  });
+
+  // Add event listener to close the popup when clicked outside the popup area
+  window.addEventListener('click', (event) => {
+    if (event.target === popupSection || event.target === popupContainer) {
+      popupSection.style.display = 'none';
+      popupContainer.style.display = 'none';
+    }
+  })
+});
 
 
    
-    document.querySelector(".service-item-3").addEventListener("click", () => {
-      alert("you can't make vacation request before 3 months of onboarding");
-    })
+    
   </script>
 
   <script>
@@ -419,6 +418,29 @@
   });
 });
   </script>
+
+<script>
+  const vacateRequestBtn = document.getElementById('vacateRequestBtn');
+
+  vacateRequestBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('/check-vacate-eligibility');
+      const data = await response.json();
+
+      if (data.eligible) {
+        // User is eligible to make a vacate request, open the vacate form
+        window.location.href = '/vacate-request';
+      } else {
+        // User is not eligible to make a vacate request, show an alert
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error('Error checking vacate eligibility:', error);
+    }
+  });
+</script>
 
  
   

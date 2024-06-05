@@ -226,7 +226,7 @@
 }
 
 .gender img{
-  width: 2.5vw;
+  width: 1.5vw;
  
 }
 
@@ -420,7 +420,7 @@
     justify-content: center;
     gap: .6rem;
     padding: .3rem 1vw;
-    border-radius: 5px;
+    border-radius: 20px;
     border: 2px solid #959595;
     
   }
@@ -431,7 +431,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-    /* gap: 1.3rem; */
+    gap: .8rem;
   }
   .details h2{
     margin-bottom: 1.3rem;
