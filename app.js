@@ -1005,179 +1005,137 @@ app.post('/tenant_info', async (req, res) => {
         </head>
         <body>
             <div class="main-page info">
-                <h2 class="top-head">TENANT INFORMATION FORM</h2>
-        
-        
-               
-                  
-                  
-        
-        
-                        <form  class="info-pad">
-        
-        
-        
-        
-        
-                            <div class="opt build-num">
-                                <p>Building Number</p>
+            <h2 class="top-head">TENANT INFORMATION FORM</h2>
+
+            <form class="info-pad">
+                <div class="opt build-num">
+                    <p>Building Number</p>
+                    <div>
+                        <input type="text" name="buildingNumber" value="<%= formData.buildingNumber %>" readonly>
+                    </div>
+                </div>
+                <hr class="f-h">
+    
+                <div class="calc-img">
+                    <div class="calc">
+                        <div class="opt room-num rm-1">
+                            <p>Room Number</p>
+                            <div>
+                                <input type="text" name="roomNumber" value="<%= formData.roomNumber %>" readonly>
+                            </div>
+                        </div>
+                        <div class="rent-calc">
+                            <p class="f-c">Rent per dat X days</p>
+                            <div class="sel">
+                                <p><%= formData.rentPerDay %></p>
+                            </div>
+                            <p class="l-c">X &nbsp;&nbsp; <span style="width: 25px;" id="daysRemainingInMonth"><%= formData.daysRemainingInMonth %></span> &nbsp;&nbsp; = &nbsp;&nbsp; <span id="rentForRemainingDays"><%= formData.rentForRemainingDays %></span></p>
+                        </div>
+    
+                        <div class="rent-sec">
+                            <div class="opt room-num">
+                                <p>Rent per month</p>
                                 <div>
-                                    <input type="text" name="buildingNumber" value="<%= roomDetails.buildingNumber}" readonly>
-                                  </div>
-                            </div>
-                            <hr class="f-h">
-        
-        
-                            <div class="calc-img">
-                                <div class="calc">
-                                    <div class="opt room-num rm-1">
-                                        <p>Room Number</p>
-                                        <div>
-                                            <input type="text" name="roomNumber" value="<%= roomDetails.roomNumber}" readonly>
-                                          </div>
-                                    </div>
-                                    <div class="rent-calc">
-                                        <p class="f-c">Rent per dat X days</p>
-                                        
-                                            <div class="sel">
-                                                <p><%= roomDetails.rentPerDay}</p>
-                                              </div>
-                                        
-        
-                                              <p class="l-c">X &nbsp;&nbsp; <span style="width: 25px;" id="daysRemainingInMonth"></span> &nbsp;&nbsp; = &nbsp;&nbsp; <span id="rentForRemainingDays"></span>                                </p>
-                                    </div>
-        
-                                    <div class="rent-sec">
-                                        <div class="opt room-num">
-                                            <p>Rent per month</p>
-                                            <div>
-                                                <input type="text" name="rentPerMonth" value="<%= roomDetails.price}" readonly>
-                                              </div>
-                                        </div>
-                                        <p class="s-p">Security</p>
-                                    </div>
-        
-                                    <div class="agree">
-                                        <p class="s-p">-*Agreement <span>-Rs. 500</span></p>
-                                        <p class="s-p">Total</p>
-                                    </div>
-                                </div>
-        
-        
-        
-        
-                            </div>
-        
-                            <hr class="s-h">
-        
-                            <div class="agree-sheet">
-                                <div class="sheet sheet1">
-                                    <p id="inDate"></p>
-                                    <p id="agreementStartDate"></p>
-                                    <p id="agreementEndDate"></p>
-                                </div>
-                                <div class="sheet sheet2">
-                                    <p id="lockInDate"></p>
-                                    <div class="opt room-unit">
-                                        <p class="bb-n" style="border-bottom: none !important;">Room unit</p>
-                                        <div>
-                                            <input type="text" name="roomUnit" value="<%= roomDetails.roomNumber}" readonly>
-                                          </div>
-                                    </div>
-                                    <p>Bathroom unit</p>
+                                    <input type="text" name="rentPerMonth" value="<%= formData.rentPerMonth %>" readonly>
                                 </div>
                             </div>
-        
-                            <hr class="f-h">
-        
-                            <div class="rules">
-                                <p>
-                                    1. Please refer to the annexure at the back of this page for monthly rent of the rooms and
-                                    per day
-                                    rent.
-        
-                                </p>
-                                <p>
-                                    2. Per day rent is calculated only in case the tenant occupies the room before the start of
-                                    the
-                                    month.
-                                </p>
+                            <p class="s-p">Security</p>
+                        </div>
+    
+                        <div class="agree">
+                            <p class="s-p">-*Agreement <span>-Rs. 500</span></p>
+                            <p class="s-p">Total <%= formData.totalRent %></p>
+                        </div>
+                    </div>
+                </div>
+    
+                <hr class="s-h">
+    
+                <div class="agree-sheet">
+                    <div class="sheet sheet1">
+                        <p id="inDate"><%= formData.inDate %></p>
+                        <p id="agreementStartDate"><%= formData.agreementStartDate %></p>
+                        <p id="agreementEndDate"><%= formData.agreementEndDate %></p>
+                    </div>
+                    <div class="sheet sheet2">
+                        <p id="lockInDate"><%= formData.lockInDate %></p>
+                        <div class="opt room-unit">
+                            <p class="bb-n" style="border-bottom: none !important;">Room unit</p>
+                            <div>
+                                <input type="text" name="roomUnit" value="<%= formData.roomUnit %>" readonly>
                             </div>
-        
-                            <div class="note">
-                                <p><span>Note- </span>SECURITY AMOUNT WILL NOT BE REFUNDED IF THE STAY IS LESS THAN 3 MONTH + 1
-                                    MONTH
-                                    NOTICE RENT ONCE PAID WILL NOT BE REFUNDED UNDER ANY CIRCUMSTANCES</p>
-                               
-                            </div>
-        
-                            <div class="info-form">
-                                <div class="form1">
-                                  <input type="text" name="name" placeholder="Name" id="" value="${formData.name}">
-                                  <input type="text" name="dob" placeholder="Date of Birth" id="" value="${formData.dob}">
-                                  <input type="text" placeholder="age" name="age" value="${formData.age}">
-                                </div>
-                        
-                                <div class="form2">
-                                  <input type="text" name="mobileNumber" placeholder="Mobile number" id="" value="${formData.mobileNumber}">
-                                  <input type="text" name="whatsappNumber" placeholder="Whatsapp number" id="" value="${formData.whatsappNumber}">
-                                  <input type="text" name="aadharNumber" placeholder="Aadhar card number" id="" value="${formData.aadharNumber}">
-                                  <input type="text" name="email" placeholder="Email id" id="" value="${formData.email}">
-                                </div>
-                                <div action="/submit-from" method="post" class="textarea-form">
-                                  <textarea name="address" placeholder="Residential Address" id="">${formData.address}</textarea>
-                                </div>
-                        
-                                <div class="form3">
-                                  <input type="text" name="fathersName" placeholder="Father's name" id="" value="${formData.fathersName}">
-                                  <input type="text" name="fathersOccupation" placeholder="Father's Occupation" id="" value="${formData.fathersOccupation}">
-                                  <input type="number" name="fathersContactNumber" placeholder="Father's contact number" id="" value="${formData.fathersContactNumber}">
-                                  <input type="number" name="homePhone" placeholder="Home Phone" id="" value="${formData.homePhone}">
-                                  <input type="text" name="mothersName" placeholder="Mother's name" id="" value="${formData.mothersName}">
-                                  <input type="text" name="siblingName" placeholder="Brother's/sister's name" id="" value="${formData.siblingName}">
-                                  <input type="text" name="propertyDealer" placeholder="Property Dealer" id="" value="${formData.propertyDealer}">
-                                  <input type="text" name="durationOfStay" placeholder="Duration of stay" id="" value="${formData.durationOfStay}">
-                                  <input type="number" name="dealersContactNumber" placeholder="Dealer's Contact number" id="" value="${formData.dealersContactNumber}">
-                                  <input type="text" name="policeStationHomeTown" placeholder="Police station home town" id="" value="${formData.policeStationHomeTown}">
-                                </div>
-                              </div>
+                        </div>
+                        <p>Bathroom unit</p>
+                    </div>
+                </div>
+    
+                <hr class="f-h">
+    
+                <div class="rules">
+                    <p>
+                        1. Please refer to the annexure at the back of this page for monthly rent of the rooms and per day rent.
+                    </p>
+                    <p>
+                        2. Per day rent is calculated only in case the tenant occupies the room before the start of the month.
+                    </p>
+                </div>
+    
+                <div class="note">
+                    <p><span>Note- </span>SECURITY AMOUNT WILL NOT BE REFUNDED IF THE STAY IS LESS THAN 3 MONTH + 1 MONTH NOTICE RENT ONCE PAID WILL NOT BE REFUNDED UNDER ANY CIRCUMSTANCES</p>
+                </div>
+    
+                <div class="info-form">
+                    <div class="form1">
+                        <input type="text" name="name" placeholder="Name" id="" value="<%= formData.name %>">
+                        <input type="text" name="dob" placeholder="Date of Birth" id="" value="<%= formData.dob %>">
+                        <input type="text" placeholder="age" name="age" value="<%= formData.age %>">
+                    </div>
+    
+                    <div class="form2">
+                        <input type="text" name="mobileNumber" placeholder="Mobile number" id="" value="<%= formData.mobileNumber %>">
+                        <input type="text" name="whatsappNumber" placeholder="Whatsapp number" id="" value="<%= formData.whatsappNumber %>">
+                        <input type="text" name="aadharNumber" placeholder="Aadhar card number" id="" value="<%= formData.aadharNumber %>">
+                        <input type="text" name="email" placeholder="Email id" id="" value="<%= formData.email %>">
+                    </div>
+                    <div action="/submit-from" method="post" class="textarea-form">
+                        <textarea name="address" placeholder="Residential Address" id=""><%= formData.address %></textarea>
+                    </div>
+    
+                    <div class="form3">
+                        <input type="text" name="fathersName" placeholder="Father's name" id="" value="<%= formData.fathersName %>">
+                        <input type="text" name="fathersOccupation" placeholder="Father's Occupation" id="" value="<%= formData.fathersOccupation %>">
+                        <input type="number" name="fathersContactNumber" placeholder="Father's contact number" id="" value="<%= formData.fathersContactNumber %>">
+                        <input type="number" name="homePhone" placeholder="Home Phone" id="" value="<%= formData.homePhone %>">
+                        <input type="text" name="mothersName" placeholder="Mother's name" id="" value="<%= formData.mothersName %>">
+                        <input type="text" name="siblingName" placeholder="Brother's/sister's name" id="" value="<%= formData.siblingName %>">
+                        <input type="text" name="propertyDealer" placeholder="Property Dealer" id="" value="<%= formData.propertyDealer %>">
+                        <input type="text" name="durationOfStay" placeholder="Duration of stay" id="" value="<%= formData.durationOfStay %>">
+                        <input type="number" name="dealersContactNumber" placeholder="Dealer's Contact number" id="" value="<%= formData.dealersContactNumber %>">
+                        <input type="text" name="policeStationHomeTown" placeholder="Police station home town" id="" value="<%= formData.policeStationHomeTown %>">
+                    </div>
+                </div>
+    
         
                             <h3 class="emer">People to Contact In Case of Emergency</h3>
         
                             <div action="" id="contactTableForm">
-                                <div class="contact-table">
-                                    <div class="row r-1">
-                                        <p class="col c-1"></p>
-                                        <p class="col c-2">NAME</p>
-                                        <p class="col c-3">CONTACT NUMBER</p>
-                                        <p class="col c-4">RELATION</p>
-                                    </div>
-                                    <div class="row r-2">
-                                        <p class="col c-1">LOCAL</p>
-                                        <p class="col c-2"><input type="text" name="local1Name" id=""></p>
-                                        <p class="col c-3"><input type="text" name="local1Contact" id=""></p>
-                                        <p class="col c-4"><input type="text" name="local1Relation" id=""></p>
-                                    </div>
-                                    <div class="row r-3">
-                                        <p class="col c-1">LOCAL</p>
-                                        <p class="col c-2"><input type="text" name="local2Name" id=""></p>
-                                        <p class="col c-3"><input type="text" name="local2Contact" id=""></p>
-                                        <p class="col c-4"><input type="text" name="local2Relation" id=""></p>
-                                    </div>
-                                    <div class="row r-4">
-                                        <p class="col c-1">HOME TOWN</p>
-                                        <p class="col c-2"><input type="text" name="homeTown1Name" id=""></p>
-                                        <p class="col c-3"><input type="text" name="homeTown1Contact" id=""></p>
-                                        <p class="col c-4"><input type="text" name="homeTown1Relation" id=""></p>
-                                    </div>
-                                    <div class="row r-5">
-                                        <p class="col c-1">HOME TOWN</p>
-                                        <p class="col c-2"><input type="text" name="homeTown2Name" id=""></p>
-                                        <p class="col c-3"><input type="text" name="homeTown2Contact" id=""></p>
-                                        <p class="col c-4"><input type="text" name="homeTown2Relation" id=""></p>
-                                    </div>
+                            <div class="contact-table">
+                                <div class="row r-1">
+                                    <p class="col c-1"></p>
+                                    <p class="col c-2">NAME</p>
+                                    <p class="col c-3">CONTACT NUMBER</p>
+                                    <p class="col c-4">RELATION</p>
                                 </div>
+                                <% formData.contactTable.forEach(function(contact, index) { %>
+                                <div class="row">
+                                    <p class="col c-1"><%= contact.type %></p>
+                                    <p class="col c-2"><input type="text" name="contactTable[<%= index %>][name]" value="<%= contact.name %>"></p>
+                                    <p class="col c-3"><input type="text" name="contactTable[<%= index %>][contactNumber]" value="<%= contact.contactNumber %>"></p>
+                                    <p class="col c-4"><input type="text" name="contactTable[<%= index %>][relation]" value="<%= contact.relation %>"></p>
+                                </div>
+                                <% }); %>
                             </div>
+                        </div>
         
                             <h3 class="dec">DECLARATION-</h3>
         

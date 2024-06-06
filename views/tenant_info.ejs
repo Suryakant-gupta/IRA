@@ -44,21 +44,21 @@
                     <div class="opt room-num rm-1">
                         <p>Room Number</p>
                         <div>
-                            <input type="text" name="roomNumber" value="<%= roomDetails.roomNumber %>" >
+                            <input type="text"  name="roomNumber" value="<%= roomDetails.roomNumber %>" >
                         </div>
                     </div>
                     <div class="rent-calc">
                         <p class="f-c">Rent per day X days</p>
 
                         <div class="sel">
-                            <p>
-                                <%= roomDetails.rentPerDay %>
-                            </p>
+                            <input type="text" name="rentPerDay" id="rentPerDay" readonly value="<%= roomDetails.rentPerDay %>">
+                                
+                            
                         </div>
 
 
-                        <p class="l-c">X &nbsp;&nbsp; <span style="width: 25px;" id="daysRemainingInMonth"></span>
-                            &nbsp;&nbsp; = &nbsp;&nbsp; <span id="rentForRemainingDays"></span> </p>
+                        <p class="l-c">X &nbsp;&nbsp; <input readonly style="width: 25px;" id="daysRemainingInMonth" name="daysRemainingInMonth" value="" >
+                            &nbsp;&nbsp; = &nbsp;&nbsp; <input readonly name="rentForRemainingDays" id="rentForRemainingDays" value=""> </p>
                     </div>
 
                     <div class="rent-sec">
@@ -73,7 +73,7 @@
 
                     <div class="agree">
                         <p class="s-p">-*Agreement <span>-Rs. 500</span></p>
-                        <p class="s-p total-rent">Total</p>
+                        <input name="totalRent" value="" readonly class="s-p total-rent">
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@
                     <div class="opt room-unit">
                         <p class="bb-n" style="border-bottom: none !important;">Room unit</p>
                         <div>
-                            <input style="border: none;" type="text" name="roomUnit" value="<%= roomDetails.roomNumber %>" readonly>
+                            <input style="border: none; color: black;" type="text" name="roomUnit" value="<%= roomDetails.roomNumber %>" readonly>
                         </div>
                     </div>
                     <p>Bathroom unit</p>
@@ -237,7 +237,7 @@
         console.log(daysRemainingInMonth);
 
         // Get the rent per day from the form
-        const rentPerDay = parseFloat(document.querySelector('.sel p').innerHTML);
+        const rentPerDay = parseFloat(document.querySelector('.sel input').value);
         console.log(rentPerDay);
 
         // Calculate the rent for the remaining days
@@ -246,9 +246,9 @@
         console.log(rentForRemainingDays);
 
         // Update the rent for remaining days on the form
-        document.getElementById('daysRemainingInMonth').innerHTML = daysRemainingInMonth;
-        document.getElementById('rentForRemainingDays').innerHTML = rentForRemainingDays.toFixed(2);
-        document.querySelector(".total-rent").innerHTML = `Total  :  ${rentForRemainingDays + 500} `;
+        document.getElementById('daysRemainingInMonth').value = daysRemainingInMonth;
+        document.getElementById('rentForRemainingDays').value = rentForRemainingDays.toFixed(2);
+        document.querySelector(".total-rent").value = `Total  :  ${rentForRemainingDays + 500} `;
 
         // Get the date input fields
         const inDateInput = document.getElementById('inDate');

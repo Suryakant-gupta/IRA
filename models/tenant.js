@@ -21,7 +21,7 @@ const formDataSchema = new mongoose.Schema({
   policeStationHomeTown: { type: String },
   buildingNumber: { type: String },
   roomNumber: { type: String },
-  rentPerDayXDays: { type: String },
+  rentPerDay: { type: String },
   rentPerMonth: { type: String },
   roomUnit: { type: String },
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -41,6 +41,9 @@ const formDataSchema = new mongoose.Schema({
   agreementEndDate: { type: String, required: true },
   lockInDate: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
+  rentForRemainingDays: { type: Number },
+  daysRemainingInMonth: { type: Number },
+  totalRent: { type: Number },
 });
 
 const FormData = mongoose.model('FormData', formDataSchema);
