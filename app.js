@@ -21,6 +21,7 @@ const flash = require('connect-flash');
 const puppeteer = require('puppeteer');
 const nodemailer = require("nodemailer");
 const bcrypt = require('bcrypt');
+
 // const adminPassport = require('./config/adminPassport');
 
 
@@ -32,7 +33,7 @@ main().then(() => {
   console.log(err);
 })
 async function main() {
-  await mongoose.connect("mongodb+srv://suryakantgupta:LtuEm9hUCyI022AR@cluster0.vfa8ubc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+  await mongoose.connect("mongodb://iraUser:IralivingDB%402604@93.127.195.9:27017/admin");
 }
 
 
@@ -42,7 +43,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl: 'mongodb+srv://suryakantgupta:LtuEm9hUCyI022AR@cluster0.vfa8ubc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', // Replace with your MongoDB connection string
+      mongoUrl: 'mongodb://iraUser:IralivingDB%402604@93.127.195.9:27017/admin', // Replace with your MongoDB connection string
       collectionName: 'sessions', // Optional, default: 'sessions'
     }),
     cookie: {
@@ -1369,6 +1370,97 @@ app.get('/tenant_details/:userId', ensureAuthenticated, async (req, res) => {
     res.status(500).send('Error rendering tenant details page');
   }
 });
+
+
+app.post('/tenant-payment', ensureAuthenticated, async (req, res) => {
+  
+    const user = req.user;
+    const userEmail = req.user.email;
+    const formData = await FormData.findOne({ user: user._id });
+    const UTR = req.body.UTR;
+    try {
+    if (!formData) {
+      return res.status(404).send('Form data not found');
+    }
+
+    formData.paymentInformation = req.body;
+    await formData.save();
+
+    // Email address where you want to send the form data
+    const email = 'irastudentliving@gmail.com';
+
+    const htmlTemplate = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>UTR Notification</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          color: #333;
+          margin: 0;
+          padding: 0;
+        }
+
+        .container {
+          max-width: 400px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #f8f8f8;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+          font-size: 24px;
+          font-weight: bold;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+
+        .info {
+          margin-bottom: 10px;
+        }
+
+        .info label {
+          font-weight: bold;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>UTR Notification</h1>
+        <div class="info">
+          <label>User Email:</label>
+          <span>${userEmail}</span>
+        </div>
+        <div class="info">
+          <label>UTR:</label>
+          <span>${UTR}</span>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+
+
+    // Call the mailSender function with the email address and form data
+    sendEmail(email, htmlTemplate);
+
+    req.flash('success', 'Payment submitted successfully');
+
+    return res.redirect('/tenant_details/' + user._id);
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'There is some error please try after some time');
+    res.redirect('/tenant_details/' + user._id);
+  }
+});
+
+
 // about us page route
 app.get("/about-us", (req, res) => {
   res.render("about");
@@ -2093,7 +2185,7 @@ app.get("/manager-panel", async (req, res) => {
 })
 
 
-app.get("/manager/manager-panel", async (req, res) => {
+app.get("/manager/manager-panel", ensureAuthenticated,  async (req, res) => {
   const totalRooms = await RoomListing.countDocuments({ availability: 'available' });
   const availableRooms = await RoomListing.find({ availability: 'unavailable' });
 
@@ -2184,7 +2276,7 @@ app.get("/admin-panel", async (req, res) => {
 })
 
 
-app.get("/admin/admin-panel", async (req, res) => {
+app.get("/admin/admin-panel", ensureAuthenticated, async (req, res) => {
   try {
     // Count the total number of rooms
     const totalRooms = await RoomListing.countDocuments({ availability: 'available' });
