@@ -10,7 +10,7 @@ module.exports = {
         return res.redirect('/manager/manager-panel');
       } else if (req.user.role === 'tenant') {
         // Redirect to tenant panel or desired route
-        return res.redirect('/tenant/tenant-panel');
+        return next();
       } else {
         // Redirect to login page or handle invalid role
         return res.redirect('/login');

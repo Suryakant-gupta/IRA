@@ -32,11 +32,7 @@
             <div class="opt build-num">
                 <p>Building Number</p>
                 <div>
-                    <select name="buildingNumber">
-                        <% buildingNumbers.forEach(buildingNumber => { %>
-                          <option value="<%= buildingNumber %>"><%= buildingNumber %></option>
-                        <% }) %>
-                      </select>
+                    <input type="text" name="buildingNumber" value="<%= roomDetails.buildingNumber %>" >
                     <input type="hidden" name="roomId" value="<%= roomDetails._id %>">
                 </div>
             </div>
@@ -48,11 +44,7 @@
                     <div class="opt room-num rm-1">
                         <p>Room Number</p>
                         <div>
-                            <select name="roomNumber">
-                                <% rooms.forEach(room => { %>
-                                  <option value="<%= room.roomNumber %>"><%= room.roomNumber %></option>
-                                <% }) %>
-                              </select>
+                            <input type="text" name="roomNumber" value="<%= roomDetails.roomNumber %>" >
                         </div>
                     </div>
                     <div class="rent-calc">
@@ -270,9 +262,9 @@
         // Update the other date fields when the inDate is changed
         inDateInput.addEventListener('change', () => {
             const inDate = new Date(inDateInput.value);
-            agreementStartDateInput.value = `Agreement Start - ${inDate.toLocaleDateString()}`;
-            agreementEndDateInput.value = `Agreement Ends - ${new Date(inDate.getFullYear(), inDate.getMonth() + 11, inDate.getDate()).toLocaleDateString()}`;
-            lockInDateInput.value = `Lock-in - ${new Date(inDate.getFullYear(), inDate.getMonth() + 6, inDate.getDate()).toLocaleDateString()}`;
+            agreementStartDateInput.value = inDate.toLocaleDateString();
+            agreementEndDateInput.value = new Date(inDate.getFullYear(), inDate.getMonth() + 11, inDate.getDate()).toLocaleDateString();
+            lockInDateInput.value = new Date(inDate.getFullYear(), inDate.getMonth() + 6, inDate.getDate()).toLocaleDateString();
         });
 
         // Trigger the initial update of the other date fields
@@ -297,8 +289,8 @@ sameAsMobileCheckbox.addEventListener('change', () => {
 
     
 <script>
-    const buildingNumberInput = document.querySelector('select[name="buildingNumber"]');
-    const roomNumberInput = document.querySelector('select[name="roomNumber"]');
+    const buildingNumberInput = document.querySelector('input[name="buildingNumber"]');
+    const roomNumberInput = document.querySelector('input[name="roomNumber"]');
   
     function updateRoomDetails() {
       const buildingNumber = buildingNumberInput.value;
