@@ -14,7 +14,7 @@ const sendEmail = (recipient, htmlTemplate) => {
   const mailOptions = {
     from: 'irastudentliving@gmail.com', // Replace with your Gmail email
     to: recipient,
-    subject: 'New Form Submission',
+    subject: 'Notification from Ira Student Living',
     html: htmlTemplate,
   };
 

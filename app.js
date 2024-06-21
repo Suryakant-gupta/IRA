@@ -138,7 +138,7 @@ const sendPDFEmail = async (pdfBuffer, recipient) => {
   const mailOptions = {
     from: 'irastudentliving@gmail.com', // Replace with your Gmail email
     to: recipient,
-    subject: 'New Form Submission',
+    subject: 'Notification from Ira Student Living',
     text: 'Please find attached the form submission in PDF format.',
     attachments: [
       {
