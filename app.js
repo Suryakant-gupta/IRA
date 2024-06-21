@@ -8,20 +8,19 @@ const ejsMate = require("ejs-mate");
 const RoomListing = require("./models/roomListing");
 const VacateRequest = require("./models/vacateRequest");
 const FormData = require("./models/tenant");
-// const AdminUser = require('./models/AdminUser');
 const ServiceRequest = require('./models/serviceRequest');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const sendEmail = require('./utils/mailsender');
-// const sendWhatsappMessage = require('./utils/whatsappSender');
+const sendWhatsappMessage = require('./utils/whatsappSender');
 const { ensureAuthenticated } = require('./middleware/auth');
 const flash = require('connect-flash');
 const puppeteer = require('puppeteer');
 const nodemailer = require("nodemailer");
 const bcrypt = require('bcrypt');
-// const adminPassport = require('./config/adminPassport');
+const ownerNumber = 8595606089;
 
 
 
@@ -38,15 +37,15 @@ async function main() {
 
 app.use(
   session({
-    secret: 'irastudentliving', // Replace with a strong secret key
+    secret: 'irastudentliving', 
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl: 'mongodb://iraUser:IralivingDB%402604@93.127.195.9:27017/admin', // Replace with your MongoDB connection string
-      collectionName: 'sessions', // Optional, default: 'sessions'
+      mongoUrl: 'mongodb://iraUser:IralivingDB%402604@93.127.195.9:27017/admin', 
+      collectionName: 'sessions', 
     }),
     cookie: {
-      maxAge: 48 * 60 * 60 * 1000, // 24 hours (adjust as needed)
+      maxAge: 48 * 60 * 60 * 1000, // 48 hours (adjust as needed)
     },
   })
 );
@@ -156,7 +155,7 @@ const sendPDFEmail = async (pdfBuffer, recipient) => {
   }
 };
 
-
+// sendWhatsappMessage('7084992604', 'amc_due', 'This is a default message.');
 
 app.get("/", (req, res) => {
   res.redirect("/home");
@@ -407,7 +406,7 @@ app.get('/get-room-details', async (req, res) => {
 
 
 
-
+// sendWhatsappMessage(7084992604);
 app.post('/tenant_info', async (req, res) => {
   try {
     const formData = new FormData(req.body);
@@ -1175,10 +1174,12 @@ app.post('/tenant_info', async (req, res) => {
 });
 
 
+// sendWhatsappMessage(7084992604);
 app.post('/submit-payment', ensureAuthenticated, async (req, res) => {
   try {
     const user = req.user;
     const userEmail = req.user.email;
+    const userMobile = req.user.mobileNumber;
     const formData = await FormData.findOne({ user: user._id });
     const UTR = req.body.UTR;
 
@@ -1252,6 +1253,7 @@ app.post('/submit-payment', ensureAuthenticated, async (req, res) => {
 
     // Call the mailSender function with the email address and form data
     sendEmail(email, htmlTemplate);
+    sendWhatsappMessage(userMobile , "payment_notification_to_tenant" ,"Thank you for attempting to make the payment. Please reply with screenshot of the receipt or payment successful page for confirmation. Thank you for your prompt attention to this matter." );
 
     return res.redirect('/tenant_details/' + user._id);
   } catch (err) {
@@ -1341,12 +1343,16 @@ app.get('/check-vacate-eligibility', async (req, res) => {
   }
 });
 
-
+// sendWhatsappMessage(7084992604);
 app.post('/submit-vacate-request', ensureAuthenticated, async (req, res) => {
   const { userId, roomNumber, buildingNumber } = req.body;
+  const formData = await FormData.findOne({ user: userId });
   try {
     const vacateRequest = new VacateRequest({ userId, roomNumber, buildingNumber });
     await vacateRequest.save();
+    const bodyValues = [formData.name,roomNumber];
+    sendWhatsappMessage(ownerNumber , "vacate_request_notification_for_owner" , "Tenant {{1}} from Room {{2}} has submitted a request to vacate. Please take necessary actions.", bodyValues)
+    sendWhatsappMessage(formData.mobileNumber , "vacate_request" , "Your vacate request has been received. Our team will contact you soon to discuss the next steps with clearing the dues and schedule any necessary inspections. Thank you.")
 
     // Set success flash message
     req.flash('success', 'Vacate request submitted successfully!');
@@ -1430,6 +1436,8 @@ app.get("/logout", (req, res) => {
   });
 })
 
+
+// sendWhatsappMessage(7084992604); /owner getting leads
 app.post('/send-data', (req, res) => {
   // Extract form data from the request body
   console.log(req.body);
@@ -1500,6 +1508,11 @@ app.post('/send-data', (req, res) => {
 
   // Call the mailSender function with the email address and form data
   sendEmail(email, htmlTemplate);
+  sendWhatsappMessage('8744906520', 'lead_notification_to_manager', 'You have a new lead for Ira Student Living. Please check your email for the details.');
+  const ackmsg = `Hi {{1}}, Thank you for showing interest in Ira Student Living. Someone will get back to you soon, and proactively you may also reply to this message for any questions or concerns.`;
+  const bodyValues = [formData.name];
+  sendWhatsappMessage(formData.numer, 'inquiry_acknowledge_to_tenant', ackmsg, bodyValues);
+
 
   // Set a flash message
   req.flash('success', 'Form data sent successfully!');
@@ -1508,6 +1521,7 @@ app.post('/send-data', (req, res) => {
   res.redirect('/'); // Replace '/some-route' with the route you want to redirect to after setting the flash message
 });
 
+// sendWhatsappMessage(7084992604);
 app.post('/send-contact-data', (req, res) => {
   // Extract form data from the request body
   console.log(req.body);
@@ -1612,7 +1626,7 @@ app.get('/get-room-number', ensureAuthenticated, async (req, res) => {
 
 
 
-
+// sendWhatsappMessage(7084992604); to send request info
 app.post('/sendd-data', async (req, res) => {
   // Extract form data from the request body
   const formData = req.body;
@@ -1620,6 +1634,7 @@ app.post('/sendd-data', async (req, res) => {
 
   // Get the user's email from the session
   const userEmail = req.user.email;
+  const userNumber = req.user.mobileNumber;
 
   // Email address where you want to send the form data (owner's email)
   const ownerEmail = 'irastudentliving@gmail.com';
@@ -1714,6 +1729,11 @@ app.post('/sendd-data', async (req, res) => {
 
   // Call the mailSender function with the notification data
   sendEmail([ownerEmail, userEmail], htmlTemplate);
+  // const bodyValues = [formData.requestType,formData.requestNumber,formData.roomNumber];
+  sendWhatsappMessage(ownerNumber, "sr_for_owner" , "A new {{1}} service request has been submitted. Ticket number: {{2}} from Room {{3}} . Please review the details and arrange for the cleaning team to contact the tenant to confirm the schedule." , [formData.requestType,formData.requestNumber,formData.roomNumber]);
+
+  sendWhatsappMessage(userNumber, "sr_for_tenant" , "Your **{{1}} service request has been submitted successfully. Ticket number: {{2}} . Our team will contact you shortly to confirm the schedule. Thank you for choosing our service!" , [formData.requestType,formData.requestNumber])
+
 
   try {
     // Find or create a FormData document for the current user
@@ -1914,7 +1934,7 @@ function convertNumberToWords(number) {
 }
 
 
-
+// sendWhatsappMessage(7084992604); rent recipt generated
 
 app.post('/generate-rent-receipt', ensureAuthenticated, async (req, res) => {
   const user = req.user;
@@ -1963,6 +1983,7 @@ app.post('/generate-rent-receipt', ensureAuthenticated, async (req, res) => {
       // Send the PDF as an email attachment
       const recipient = user.email;
       sendPDFEmail(pdfBuffer, recipient);
+      sendWhatsappMessage(user.mobileNumber, "rent_receipt_for_tenant" , "You request to generate rent receipt has been submitted. Please check your email.")
 
       // Set a flash message
       req.flash('success', 'Rent receipt sent successfully!');

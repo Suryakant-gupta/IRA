@@ -32,7 +32,7 @@
             <div class="opt build-num">
                 <p>Building Number</p>
                 <div>
-                    <input type="text" name="buildingNumber" value="<%= roomDetails.buildingNumber %>" >
+                    <input type="text" name="buildingNumber" value="<%= roomDetails.buildingNumber %>">
                     <input type="hidden" name="roomId" value="<%= roomDetails._id %>">
                 </div>
             </div>
@@ -44,21 +44,24 @@
                     <div class="opt room-num rm-1">
                         <p>Room Number</p>
                         <div>
-                            <input type="text"  name="roomNumber" value="<%= roomDetails.roomNumber %>" >
+                            <input type="text" name="roomNumber" value="<%= roomDetails.roomNumber %>">
                         </div>
                     </div>
                     <div class="rent-calc">
                         <p class="f-c">Rent per day X days</p>
 
                         <div class="sel">
-                            <input type="text" name="rentPerDay" id="rentPerDay" readonly value="<%= roomDetails.rentPerDay %>">
-                                
-                            
+                            <input type="text" name="rentPerDay" id="rentPerDay" readonly
+                                value="<%= roomDetails.rentPerDay %>">
+
+
                         </div>
 
 
-                        <p class="l-c">X &nbsp;&nbsp; <input readonly style="width: 25px;" id="daysRemainingInMonth" name="daysRemainingInMonth" value="" >
-                            &nbsp;&nbsp; = &nbsp;&nbsp; <input readonly name="rentForRemainingDays" id="rentForRemainingDays" value=""> </p>
+                        <p class="l-c">X &nbsp;&nbsp; <input readonly style="width: 25px;" id="daysRemainingInMonth"
+                                name="daysRemainingInMonth" value="">
+                            &nbsp;&nbsp; = &nbsp;&nbsp; <input readonly name="rentForRemainingDays"
+                                id="rentForRemainingDays" value=""> </p>
                     </div>
 
                     <div class="rent-sec">
@@ -73,6 +76,7 @@
 
                     <div class="agree">
                         <p class="s-p">-*Agreement <span>-Rs. 500</span></p>
+                        <div class="total-rent-display"></div>
                         <input name="totalRent" value="" readonly class="s-p total-rent">
                     </div>
                 </div>
@@ -106,7 +110,8 @@
                     <div class="opt room-unit">
                         <p class="bb-n" style="border-bottom: none !important;">Room unit</p>
                         <div>
-                            <input style="border: none; color: black;" type="text" name="roomUnit" value="<%= roomDetails.roomNumber %>" readonly>
+                            <input style="border: none; color: black;" type="text" name="roomUnit"
+                                value="<%= roomDetails.roomNumber %>" readonly>
                         </div>
                     </div>
                     <p>Bathroom unit</p>
@@ -150,7 +155,7 @@
                         <input type="text" name="what-num" placeholder="WhatsApp number" id="whatsAppNumber">
                         <label for="sameAsMobile" class="same-as-mobile-label">
                             <input type="checkbox" id="sameAsMobile">
-                           <p> Same as Mobile No.</p>
+                            <p> Same as Mobile No.</p>
                         </label>
                     </div>
 
@@ -230,8 +235,8 @@
 
     </div>
 
-   <script>
-    const today = new Date();
+    <script>
+        const today = new Date();
         const daysInCurrentMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
         const daysRemainingInMonth = daysInCurrentMonth - today.getDate() + 1;
         console.log(daysRemainingInMonth);
@@ -248,7 +253,17 @@
         // Update the rent for remaining days on the form
         document.getElementById('daysRemainingInMonth').value = daysRemainingInMonth;
         document.getElementById('rentForRemainingDays').value = rentForRemainingDays.toFixed(2);
-        document.querySelector(".total-rent").value = `Total  :  ${rentForRemainingDays + 500} `;
+
+
+        // Calculate total rent
+        const totalRent = rentForRemainingDays + 500;
+
+        // Update the total rent input field with only the numeric value
+        document.querySelector("input[name='totalRent']").value = totalRent.toFixed(2);
+
+        // If you want to display the formatted text separately, you can add another element for this
+        // document.querySelector(".total-rent-display").textContent = `Total: ${totalRent.toFixed(2)}`;
+
 
         // Get the date input fields
         const inDateInput = document.getElementById('inDate');
@@ -269,48 +284,48 @@
 
         // Trigger the initial update of the other date fields
         inDateInput.dispatchEvent(new Event('change'));
-   </script>
+    </script>
 
     <script>
         const mobileNumberInput = document.getElementById('mobileNumber');
-const whatsAppNumberInput = document.getElementById('whatsAppNumber');
-const sameAsMobileCheckbox = document.getElementById('sameAsMobile');
+        const whatsAppNumberInput = document.getElementById('whatsAppNumber');
+        const sameAsMobileCheckbox = document.getElementById('sameAsMobile');
 
-sameAsMobileCheckbox.addEventListener('change', () => {
-    if (sameAsMobileCheckbox.checked) {
-        whatsAppNumberInput.value = mobileNumberInput.value;
-        whatsAppNumberInput.disabled = true;
-    } else {
-        whatsAppNumberInput.value = '';
-        whatsAppNumberInput.disabled = false;
-    }
-});
+        sameAsMobileCheckbox.addEventListener('change', () => {
+            if (sameAsMobileCheckbox.checked) {
+                whatsAppNumberInput.value = mobileNumberInput.value;
+                whatsAppNumberInput.disabled = true;
+            } else {
+                whatsAppNumberInput.value = '';
+                whatsAppNumberInput.disabled = false;
+            }
+        });
     </script>
 
-    
-<script>
-    const buildingNumberInput = document.querySelector('input[name="buildingNumber"]');
-    const roomNumberInput = document.querySelector('input[name="roomNumber"]');
-  
-    function updateRoomDetails() {
-      const buildingNumber = buildingNumberInput.value;
-      const roomNumber = roomNumberInput.value;
-  
-      // Make a fetch request to the server to get the new room details
-      fetch(`/get-room-details?buildingNumber=${buildingNumber}&roomNumber=${roomNumber}`)
-        .then(response => response.json())
-        .then(newRoomDetails => {
-          // Update the page with the new room details
-          // Replace the existing values with the new values from newRoomDetails
-          document.querySelector('input[name="rentPerMonth"]').value = newRoomDetails.price;
-          document.querySelector('.sel p').textContent = newRoomDetails.rentPerDay;
-          // Update any other fields as needed
-        })
-        .catch(error => {
-          console.error('Error fetching room details:', error);
-        });
-    }
-  
-    buildingNumberInput.addEventListener('input', updateRoomDetails);
-    roomNumberInput.addEventListener('input', updateRoomDetails);
-  </script>
+
+    <script>
+        const buildingNumberInput = document.querySelector('input[name="buildingNumber"]');
+        const roomNumberInput = document.querySelector('input[name="roomNumber"]');
+
+        function updateRoomDetails() {
+            const buildingNumber = buildingNumberInput.value;
+            const roomNumber = roomNumberInput.value;
+
+            // Make a fetch request to the server to get the new room details
+            fetch(`/get-room-details?buildingNumber=${buildingNumber}&roomNumber=${roomNumber}`)
+                .then(response => response.json())
+                .then(newRoomDetails => {
+                    // Update the page with the new room details
+                    // Replace the existing values with the new values from newRoomDetails
+                    document.querySelector('input[name="rentPerMonth"]').value = newRoomDetails.price;
+                    document.querySelector('.sel p').textContent = newRoomDetails.rentPerDay;
+                    // Update any other fields as needed
+                })
+                .catch(error => {
+                    console.error('Error fetching room details:', error);
+                });
+        }
+
+        buildingNumberInput.addEventListener('input', updateRoomDetails);
+        roomNumberInput.addEventListener('input', updateRoomDetails);
+    </script>

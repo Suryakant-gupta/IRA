@@ -1,25 +1,23 @@
 const axios = require('axios');
 
 // Replace with your API key
-const apiKey = 'OXBwWEJJbEl2Q1ppR2ZnQjNqZmRzdmM1T1NVVkp3VnFQdl9JRmJLX0ZaWTo=';
+const apiKey = 'Nkp1Z2x2bF9GajBaMzlNM3ZCZFRDcjJVNnFaMFZ5LWxSOW1PWHlOMXJkYzo=';
 
-// Default message to be sent
-const defaultMessage = 'This is a default message.';
-
-// Function to send WhatsApp message
-const sendWhatsappMessage = (mobileNumber) => {
+const sendWhatsappMessage = (mobileNumber, templateName, messageBody, bodyValues) => {
   const phoneNumber = `+91${mobileNumber}`; // Add country code +91
-
   const data = {
     fullPhoneNumber: phoneNumber,
     callbackData: 'some_callback_data',
     type: 'Template',
     template: {
-      name: 'amc_due',
-      body: defaultMessage,
-      languageCode: 'en'
+      name: templateName,
+      body: messageBody,
+      languageCode: 'en',
+      bodyValues: bodyValues || [],
     }
   };
+
+  console.log('Data being sent:', data); // Log the data object here
 
   const config = {
     method: 'post',
@@ -37,7 +35,7 @@ const sendWhatsappMessage = (mobileNumber) => {
       console.log('WhatsApp message sent successfully:', response.data);
     })
     .catch(function (error) {
-      console.error('Error sending WhatsApp message:', error);
+      console.error('Error sending WhatsApp message:', error.response.data);
     });
 };
 
