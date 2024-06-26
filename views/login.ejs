@@ -8,30 +8,30 @@
     </div>
     <form action="/login/phone" method="post" class="phone-form form">
       <label for="phone">Enter Phone Number</label>
-      <input type="number" name="username" id="phone" />
+      <input required type="number" name="username" id="phone" />
       <label for="pass">Enter Password</label>
-      <input type="password" name="password" id="pass" />
+      <input required type="password" name="password" id="pass" />
       <button type="submit">Login</button>
     </form>
     <form action="/login/email" method="post" class="email-form form">
       <label for="email">Enter Email</label>
-      <input type="email" name="username" id="email" />
+      <input required type="email" name="username" id="email" />
       <label for="pass">Enter Password</label>
-      <input type="password" name="password" id="pass" />
+      <input required type="password" name="password" id="pass" />
       <button type="submit">Login</button>
     </form>
     <form action="/login/otp/phone" method="post" class="otp-phone-form form">
       <label for="phone">Enter Phone Number</label>
-      <input type="number" name="username" id="phone" />
+      <input required type="number" name="username" id="phone" />
       <label for="pass">Enter OTP</label>
-      <input type="number" name="otp" id="otp" class="o" />
+      <input required type="number" name="otp" id="otp" class="o" />
       <button type="submit">Login with OTP</button>
     </form>
     <form action="/login/otp/email" method="post" class="otp-email-form form">
       <label for="email">Enter Email</label>
-      <input type="email" name="username" id="email" />
+      <input required type="email" name="username" id="email" />
       <label for="pass">Enter OTP</label>
-      <input type="number" name="otp" id="otp" class="o" />
+      <input required type="number" name="otp" id="otp" class="o" />
       <button type="submit">Login with OTP</button>
     </form>
   </div>

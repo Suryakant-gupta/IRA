@@ -123,12 +123,12 @@
                       <form action="/generate-rent-receipt" method="POST">
                         <div class="date-input">
                           <label for="start-date">Receipt Start Date</label>
-                          <input type="text" id="start-date" placeholder="mm/dd/yy">
+                          <input required type="text" id="start-date" placeholder="mm/dd/yy">
                           <span class="date-icon">&#128197;</span>
                         </div>
                         <div class="date-input">
                           <label for="end-date">Receipt End Date</label>
-                          <input type="text" id="end-date" placeholder="mm/dd/yy">
+                          <input required type="text" id="end-date" placeholder="mm/dd/yy">
                           <span class="date-icon">&#128197;</span>
                         </div>
                         <button class="generate-btn">GENERATE</button>
@@ -192,7 +192,7 @@
                   <div class="barcode-text">
                       <h3>PAY NOW</h3>
                       <form id="paymentPopupForm" action="/submit-payment" method="post">
-                          <input type="text" name="UTR" id="" placeholder="Enter your UTR no.">
+                          <input type="text" required name="UTR" id="" placeholder="Enter your UTR no.">
                           <button type="submit">Save & Continue</button>
                       </form>
                   </div>

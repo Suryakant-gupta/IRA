@@ -46,8 +46,8 @@
             
 
             <form action="/details" method="post" class="first-f">
-                <input type="text" name="name" id="" placeholder="Rahul">
-                <input type="number" name="mobileNumber" id="" placeholder="+91 | 9876543210">
+                <input required type="text" name="name" id="" placeholder="Rahul">
+                <input required type="number" name="mobileNumber" id="" placeholder="+91 | 9876543210">
             </form>
 
             <a href="" class="whats">
@@ -65,10 +65,10 @@
            <button class="close-popup">X</button>
         <h2 style="font-size: 1.2rem; margin-bottom: 1rem;  text-align: center;">Connect   <span style="color: #E7991C;  ">With Us</span></h2>
         <form action="/send-data" method="post">
-            <input type="text" name="name" id="name" placeholder="Name*">
-            <input type="number" name="numer" id="number" placeholder="+91 | Mobile number " class="no-spinner">
-            <input type="email" name="email" id="email" placeholder="Email*">
-            <select name="city" id="city">
+            <input required type="text" name="name" id="name" placeholder="Name*">
+            <input required type="number" name="numer" id="number" placeholder="+91 | Mobile number " class="no-spinner">
+            <input required type="email" name="email" id="email" placeholder="Email*">
+            <select required name="city" id="city">
                 <option value="Select city">Select city</option>
                 <option value="Noida">Noida</option>
                 <option value="Delhi">Delhi</option>
@@ -78,7 +78,7 @@
                 <option value="Noida">Noida</option>
                 <option value="Delhi">Delhi</option>
             </select>
-            <select name="accommodation" id="accommodation">
+            <select required name="accommodation" id="accommodation">
                 <option value="Accommodation Type*">Accommodation Type</option>
                 <option value="Noida">AC</option>
                 <option value="Delhi">Non AC</option>
@@ -318,10 +318,10 @@
             <div class="cta-form">
                 <h2>Get personally <span style="color: #E7991C;">connected with us</span></h2>
                 <form action="/send-data" method="post">
-                    <input type="text" name="name" id="name" placeholder="Name*">
-                    <input type="number" name="numer" id="number" placeholder="+91 | Mobile number " class="no-spinner">
-                    <input type="email" name="email" id="email" placeholder="Email*">
-                    <select name="city" id="city">
+                    <input required type="text" name="name" id="name" placeholder="Name*">
+                    <input required type="number" name="numer" id="number" placeholder="+91 | Mobile number " class="no-spinner">
+                    <input required type="email" name="email" id="email" placeholder="Email*">
+                    <select required name="city" id="city">
                         <option value="Select city">Select city</option>
                         <option value="Noida">Noida</option>
                         <option value="Delhi">Delhi</option>
@@ -331,7 +331,7 @@
                         <option value="Noida">Noida</option>
                         <option value="Delhi">Delhi</option>
                     </select>
-                    <select name="accommodation" id="accommodation">
+                    <select required name="accommodation" id="accommodation">
                         <option value="Accommodation Type*">Accommodation Type</option>
                         <option value="Noida">AC</option>
                         <option value="Delhi">Non AC</option>
