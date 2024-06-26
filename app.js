@@ -20,7 +20,7 @@ const flash = require('connect-flash');
 const puppeteer = require('puppeteer');
 const nodemailer = require("nodemailer");
 const bcrypt = require('bcrypt');
-const ownerNumber = 8595606089;
+
 
 
 
@@ -156,6 +156,8 @@ const sendPDFEmail = async (pdfBuffer, recipient) => {
 };
 
 // sendWhatsappMessage('7084992604', 'amc_due', 'This is a default message.');
+
+const ownerNumber = process.env.OWNER_NO;
 
 app.get("/", (req, res) => {
   res.redirect("/home");
@@ -1508,7 +1510,7 @@ app.post('/send-data', (req, res) => {
 
   // Call the mailSender function with the email address and form data
   sendEmail(email, htmlTemplate);
-  sendWhatsappMessage('8744906520', 'lead_notification_to_manager', 'You have a new lead for Ira Student Living. Please check your email for the details.');
+  sendWhatsappMessage(ownerNumber, 'lead_notification_to_manager', 'You have a new lead for Ira Student Living. Please check your email for the details.');
   const ackmsg = `Hi {{1}}, Thank you for showing interest in Ira Student Living. Someone will get back to you soon, and proactively you may also reply to this message for any questions or concerns.`;
   const bodyValues = [formData.name];
   sendWhatsappMessage(formData.numer, 'inquiry_acknowledge_to_tenant', ackmsg, bodyValues);
