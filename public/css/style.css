@@ -885,7 +885,7 @@ footer a {
 
 .res-foot{
     width: 100%;
-    padding-inline: 2vw;
+    padding-inline: 10vw;
     padding-block: .3rem;
     display: none;
     -webkit-box-align: center;
@@ -921,6 +921,7 @@ footer a {
 }
 .fi i{
     font-size: 1.5rem;
+    color: #E7991C;
 }
 .fi p{
     font-size: .8rem;

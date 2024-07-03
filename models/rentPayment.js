@@ -38,6 +38,11 @@ const rentPaymentSchema = new Schema({
     type: Number,
     required: true
   },
+  paymentStatus: {
+    type: String,
+    enum: ['paid', 'unpaid'],
+    default: 'unpaid'
+  },
   createdAt: {
     type: Date,
     default: Date.now

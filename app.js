@@ -412,7 +412,15 @@ app.get('/get-room-details', async (req, res) => {
 app.post('/tenant_info', async (req, res) => {
   try {
     const formData = new FormData(req.body);
-    const roomId = formData.get('roomId');
+  const roomNumber = formData.get('roomNumber');
+    const buildingNumber = formData.get('buildingNumber');
+
+    // Find the room based on roomNumber and buildingNumber
+    let room = await RoomListing.findOne({ roomNumber, buildingNumber });
+    if (!room) {
+      throw new Error('Room not found');
+    }
+    const roomId = room._id;
 
     // Generate a random password
     const randomPassword = "Welcome@IRA"
@@ -454,8 +462,7 @@ app.post('/tenant_info', async (req, res) => {
 
 
     // Find the corresponding RoomListing document
-    const roomNumber = formData.roomNumber;
-    const buildingNumber = formData.buildingNumber;
+    
     const roomListing = await RoomListing.findOne({ roomNumber, buildingNumber });
 
     // Update the availability of the room to 'unavailable'
@@ -2090,8 +2097,8 @@ const RentPayment = require('./models/rentPayment');
 
 app.post('/manager/submit-rent-details', async (req, res) => {
   try {
-    const { electricityBill, waterBill, monthOfBill, roomNumber } = req.body;
-    const room = await RoomListing.findOne({ roomNumber });
+    const { electricityBill, waterBill, monthOfBill, roomNumber, buildingNumber } = req.body;
+    const room = await RoomListing.findOne({ roomNumber, buildingNumber });
     console.log("room fromo m - panel", room);
 
     if (!room) {
@@ -2131,6 +2138,7 @@ app.post('/manager/submit-rent-details', async (req, res) => {
       totalAmount,
       month,
       year: new Date().getFullYear(),
+      paymentStatus: 'unpaid'  // Set default status
     });
 
     await newRentPayment.save();
@@ -2141,6 +2149,36 @@ app.post('/manager/submit-rent-details', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send('Error saving rent payment details');
+  }
+});
+
+app.post('/manager/update-payment-status', async (req, res) => {
+  try {
+    const { roomNumber, buildingNumber } = req.body;
+    
+    const room = await RoomListing.findOne({ roomNumber, buildingNumber });
+    if (!room) {
+      return res.status(404).send('Room not found');
+    }
+
+    
+
+    const rentPayment = await RentPayment.findOneAndUpdate(
+      {
+        room: room._id,
+      },
+      { paymentStatus: 'paid' },
+      { new: true }
+    );
+
+    if (!rentPayment) {
+      return res.status(404).send('Rent payment record not found');
+    }
+
+    res.redirect('/manager/manager-panel');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error updating payment status');
   }
 });
 

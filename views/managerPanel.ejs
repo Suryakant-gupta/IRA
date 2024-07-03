@@ -127,24 +127,36 @@
                                 </td>
                                 <form action="/manager/submit-rent-details" method="POST"
                                    >
-                                    <td id="t1r1c3"><input type="number" id="lastReading_<%= index %>"
+                                    <td id="t1r1c3">
+                                        <input type="number" id="lastReading_<%= index %>"
                                             name="lastReading" required></td>
-                                    <td id="t1r1c4"><input type="number" id="currReading_<%= index %>"
+                                    <td id="t1r1c4">
+                                        <input type="number" id="currReading_<%= index %>"
                                             name="currReading" required></td>
-                                    <td id="t1r1c5"><input type="number" name="electricityBill"
+                                    <td id="t1r1c5">
+                                        <input type="number" name="electricityBill"
                                             id="electricityBill_<%= index %>" readonly></td>
-                                    <td id="t1r1c5"><input type="number" name="waterBill" id="waterBill_<%= index %>"
+                                    <td id="t1r1c5">
+                                        <input type="number" name="waterBill" id="waterBill_<%= index %>"
                                             required></td>
-                                    <td id="t1r1c5"><input type="month" name="monthOfBill" id="monthOfBill_<%= index %>"
+                                    <td id="t1r1c5">
+                                        <input type="month" name="monthOfBill" id="monthOfBill_<%= index %>"
                                             style="width: 200px;" required></td>
                                     <td id="t1r1c6">
                                         <input type="hidden" name="roomNumber" value="<%= room.roomNumber %>">
+                                        <input type="hidden" name="buildingNumber" value="<%= room.buildingNumber%>">
                                         <input type="hidden" name="roomRent" value="<%= room.rentPerMonth %>">
                                         <input type="hidden" name="index" value="<%= index %>">
                                         <button type="submit">Submit</button>
                                     </td>
                                 </form>
-                                <td>Paid / Unpaid</td>
+                                <td>
+                                    <form action="/manager/update-payment-status" method="POST">
+                                      <input type="hidden" name="roomNumber" value="<%= room.roomNumber %>">
+                                      <input type="hidden" name="buildingNumber" value="<%= room.buildingNumber %>">
+                                      <button type="submit" class="payment-status-btn">Paid</button>
+                                    </form>
+                                  </td>
                             </tr>
                             <% }) %>
                     </tbody>
