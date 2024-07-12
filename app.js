@@ -344,11 +344,12 @@ app.get("/room_details/:id", async (req, res) => {
 
     // Query the database for suggested room units based on the user-selected location
     const suggestedRoomListings = await RoomListing.find({ location: roomLocation });
-
+    const successMessage = req.flash('success');
+    const errorMessage = req.flash('error');
     // console.log(suggestedRoomListings);
 
     // Pass room details, room location, user-selected location, and suggested room units to the room details page
-    res.render("room", { roomDetails, suggestedRoomListings });
+    res.render("room", { roomDetails, suggestedRoomListings , successMessage: successMessage.length > 0 ? successMessage : null , errorMessage: errorMessage.length > 0 ? errorMessage : null });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error retrieving room details");
@@ -1446,7 +1447,28 @@ app.get("/logout", (req, res) => {
 })
 
 
-// sendWhatsappMessage(7084992604); /owner getting leads
+app.post('/send-details', (req, res) => {
+  // Extract form data from the request body
+  console.log(req.body);
+  const formData = req.body;
+  console.log(formData);
+
+  sendWhatsappMessage(7084992604, "schedule_a_visit", "You have got a new lead to attend. Name: {{1}} Number: {{2}} Kindly call right away.", [formData.name, formData.mobileNumber]);
+
+  const ackmsg = `Hi {{1}}, Thank you for showing interest in Ira Student Living. Someone will get back to you soon, and proactively you may also reply to this message for any questions or concerns.`;
+  const bodyValues = [formData.name];
+  sendWhatsappMessage(formData.mobileNumber, 'inquiry_acknowledge_to_tenant', ackmsg, bodyValues);
+
+  // Set a flash message
+  req.flash('success', 'Form data sent successfully!');
+
+  // Redirect to the same page
+  res.redirect(req.get('Referrer'));
+});
+
+
+
+
 app.post('/send-data', (req, res) => {
   // Extract form data from the request body
   console.log(req.body);
@@ -1601,6 +1623,11 @@ app.post('/send-contact-data', (req, res) => {
 
   // Call the mailSender function with the email address and form data
   sendEmail(email, htmlTemplate);
+
+  sendWhatsappMessage(ownerNumber, 'lead_notification_to_manager', 'You have a new lead for Ira Student Living. Please check your email for the details.');
+  const ackmsg = `Hi {{1}}, Thank you for showing interest in Ira Student Living. Someone will get back to you soon, and proactively you may also reply to this message for any questions or concerns.`;
+  const bodyValues = [formData.name];
+  sendWhatsappMessage(formData.numer, 'inquiry_acknowledge_to_tenant', ackmsg, bodyValues);
 
   // Set a flash message
   req.flash('success', 'Form data sent successfully!');

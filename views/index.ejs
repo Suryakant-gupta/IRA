@@ -40,23 +40,23 @@
 
             <div class="schedule">
                 <a href="" class="schedule-btn">schedule a visit</a>
-                <!-- <a href="" class="reserve-btn">reserve now</a> -->
+               
             </div>
 
             
 
-            <form action="/details" method="post" class="first-f">
+            <form action="/send-details" method="post" class="first-f">
                 <input required type="text" name="name" id="" placeholder="Rahul">
                 <input required type="number" name="mobileNumber" id="" placeholder="+91 | 9876543210">
+                
+                <a  class="whats">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Get updates over whatsapp
+                </a>
+                
+                
+                <input  type="submit" class="visit-btn vb" value="schedule a visit">
             </form>
-
-            <a href="" class="whats">
-                <i class="fa-brands fa-whatsapp"></i>
-                Get updates over whatsapp
-            </a>
-
-            
-            <a href="" type="submit" class="visit-btn">schedule a visit</a>
 
         </div>
     </div>
@@ -439,30 +439,6 @@ ctaForm.addEventListener('submit', async (event) => {
 });
 
 
-document.addEventListener('DOMContentLoaded', function () {
-        const visitBtn = document.querySelector('.visit-btn');
-        const form = document.querySelector('.first-f');
-
-        visitBtn.addEventListener('click', function (event) {
-            event.preventDefault();
-
-            const formData = new FormData(form);
-            fetch('/send-whastapp', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert('Form submitted successfully!');
-                } else {
-                    alert('Error in form submission. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-    });
 
 
 

@@ -1,347 +1,276 @@
 <% layout("/layouts/boilerplate") %>
 
+<% if (successMessage) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= successMessage %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" >&times;</span>
+        </button>
+    </div>
+<% } %>
 
-    <div class="main-page room-d">
+<% if (errorMessage) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= errorMessage %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<% } %>
 
-        <div class="room-page">
-            <div class="room-page-1">
+<div class="main-page room-d">
 
-                <section class="room-1">
-                    <div class="slider-text">
-                        <!-- <h3>Ira student living | <%= roomDetails.location %> | building- <%= roomDetails.name %>
-                        </h3> -->
-                        <div class="sl-text-btn">
-                            <div class="sl-text">
-                               <div class="name-gender">
-                                <h2>
-                                    <%= roomDetails.name %>
-                                </h2>
+    <div class="room-page">
+        <div class="room-page-1">
+
+            <section class="room-1">
+                <div class="slider-text">
+                    <!-- <h3>Ira student living | <%= roomDetails.location %> | building- <%= roomDetails.name %> </h3> -->
+                    <div class="sl-text-btn">
+                        <div class="sl-text">
+                            <div class="name-gender">
+                                <h2><%= roomDetails.name %></h2>
                                 <div class="sl-btn">
-                                    <div class="" >
+                                    <div class="">
                                         <img style="width: 100px;" src="/assets/images/male-symbol.png" alt="">
-                                       
                                     </div>
-                                   
-    
                                 </div>
-                               </div>
-                                <p>
-                                    <%= roomDetails.location %>
-                                </p>
                             </div>
-                            
-                        </div>
-                        <div class="slider-container">
-                            <div class="slider">
-                                <div class="slide"><img src="/assets/images/room1.png" alt="Image 1"></div>
-                                <div class="slide"><img src="/assets/images/room22.jpg" alt="Image 2"></div>
-                                <div class="slide"><img src="/assets/images/room23.jpg" alt="Image 3"></div>
-                            </div>
-                            <div class="nav-arrows">
-                                <div class="arrow prev"><i class="fa-solid fa-angle-left"></i></div>
-                                <div class="arrow next"><i class="fa-solid fa-angle-right"></i></div>
-                            </div>
-                            <div class="nav-dots"></div>
+                            <p><%= roomDetails.location %></p>
                         </div>
                     </div>
-
-                </section>
-
-                <div class="starting-from">
-                    <p>starting from*</p>
-                    <h1>&#8377; <%= roomDetails.price %>/ month</h1>
-                    <p>*Denotes starting price exclusive of GST. Final prices may vary based on room occupancy,
-                        customized
-                        services, and additional attributes.</p>
-                </div>
-<!-- 
-                <div class="room-options">
-                    <div class="option-tabs">
-                        <a>OCCUPANCY</a>
-                        <a>AMENITIES</a>
-                        <a>DETAILS</a>
-                    </div>
-                    <div class="beds">
-                        <div class="first box">
-                            <div class="vector-bed">
-                                <img src="/assets/images/bed.png" alt="">
-                                <p>X1</p>
-                            </div>
-                            <p>Single occupancy</p>
-                            <h3>&#8377; 12,000/ month</h3>
+                    <div class="slider-container">
+                        <div class="slider">
+                            <div class="slide"><img src="/assets/images/room1.png" alt="Image 1"></div>
+                            <div class="slide"><img src="/assets/images/room22.jpg" alt="Image 2"></div>
+                            <div class="slide"><img src="/assets/images/room23.jpg" alt="Image 3"></div>
                         </div>
-                        <div class="second box">
-                            <div class="vector-bed">
-                                <img src="/assets/images/bed.png" alt="">
-                                <p>X2</p>
-                            </div>
-                            <p>Double occupancy</p>
-                            <h3>&#8377; 12,000/ month</h3>
+                        <div class="nav-arrows">
+                            <div class="arrow prev"><i class="fa-solid fa-angle-left"></i></div>
+                            <div class="arrow next"><i class="fa-solid fa-angle-right"></i></div>
                         </div>
-                        <div class="third box">
-                            <div class="vector-bed">
-                                <img src="/assets/images/bed.png" alt="">
-                                <p>X3</p>
-                            </div>
-                            <p>Tripple occupancy</p>
-                            <h3>&#8377; 12,000/ month</h3>
-                        </div>
-                    </div>
-                </div> -->
-
-                <div class="amenity">
-                    <h2>AMENITIES</h2>
-                    <div class="ac-wash">
-                        <div class="comb">
-                            <img src="/assets/images/washroom.png" alt="">
-                            <a >Shared Washrooms</a>
-                        </div>
-                        <div class="comb">
-                            <img src="/assets/images/AC.png" alt="">
-                            <% if (roomDetails.ac) { %>
-                                <a>Air Condition</a>
-                            <% } else { %>
-                                <a>Non-AC</a>
-                            <% } %>
-                        </div>
+                        <div class="nav-dots"></div>
                     </div>
                 </div>
+            </section>
 
-                <div class="room-services">
-                    <h2>SERVICES</h2>
-                    <div class="wi-meal">
-                        <div class="comb">
-                            <img src="/assets/images/meals.png" alt="">
-                            <a > Drinking Water</a>
-                        </div>
-                        <div class="comb">
-                            <img src="/assets/images/wifi.png" alt="">
-                            <a > High-Speed WI FI</a>
-                        </div>
-                        <div class="comb">
-                            <img src="/assets/images/housekeeping.png" alt="">
-                            <a >Housekeeping</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="details">
-                    <h2>Details</h2>
-                    <p>Our facility has 50 independent furnished AC and Non-AC rooms, each equipped with a bed and mattress, study table, chair, bookshelf, and wardrobe. On each floor, there are four independent rooms and two bathrooms, with two residents sharing one bathroom. The bathrooms are well-equipped with geysers and other basic amenities.
-                        
-                    </p>
-                    <div class="more-content">
-                        <p>At Ira Student Living, we offer more than just accommodation; we provide a nurturing environment that truly feels like a second home. Step into our fully-furnished residence designed specifically for girls, where all the comforts of home await you. From cozy living spaces to well-equipped amenities, Ira Student Living ensures a comfortable and welcoming atmosphere for residents. Discover a place where you can thrive academically and socially, surrounded by like-minded individuals who become more than just housemates—they become family.</p>
-                    </div>
-                    <a href="#" id="read-more-link" class="show-more">Read more</a>
-                    <a href="#" id="read-less-link" class="show-less">Read less</a>
-
-                </div>
-
-                <div class="policy">
-                    <p>police and house rules </p>
-                    <a href="/policies"><img src="/assets/images/Arrow 3.png" alt=""></a>
-                </div>
-
+            <div class="starting-from">
+                <p>starting from*</p>
+                <h1>&#8377; <%= roomDetails.price %>/ month</h1>
+                <p>*Denotes starting price exclusive of GST. Final prices may vary based on room occupancy, customized
+                    services, and additional attributes.</p>
             </div>
 
-            <div class="room-page-2">
-                <div class="visit">
-                    <div class="schedule">
-                        <a  class="schedule-btn">schedule a visit</a>
-                        <a  class="reserve-btn">reserve now</a>
+            <div class="amenity">
+                <h2>AMENITIES</h2>
+                <div class="ac-wash">
+                    <div class="comb">
+                        <img src="/assets/images/washroom.png" alt="">
+                        <a>Shared Washrooms</a>
                     </div>
-
-                    <div class="reserve rs">
-                        <div class="icon-para">
-                            <img src="/assets/images/res-1.png" alt="">
-                            <p>If you like a residence or apartment, make an initialpayment of just 21,000/- to reserve
-                                a bed
-                            </p>
-                        </div>
-                        <div class="icon-para">
-                            <img src="/assets/images/res-3.png" alt="">
-                            <p>This will unlock a 21,000/- discount that you can avail oncompleting your booking
-
-                            </p>
-                        </div>
-                        <div class="icon-para">
-                            <img src="/assets/images/res-2.png" alt="">
-                            <p>But if you change your mind anytime, you can get your money back (no questions asked)
-                            </p>
-                        </div>
-
-                        <a href="/tenant_info" class="visit-btn">Reserve now</a>
+                    <div class="comb">
+                        <img src="/assets/images/AC.png" alt="">
+                        <% if (roomDetails.ac) { %>
+                            <a>Air Condition</a>
+                        <% } else { %>
+                            <a>Non-AC</a>
+                        <% } %>
                     </div>
+                </div>
+            </div>
 
-                    <form action="/details" method="post" class="first-f">
-                        <input required type="text" name="name" id="" placeholder="Rahul">
-                        <input required type="number" name="mobileNumber" id="" placeholder="+91 | 9876543210">
-                    </form>
+            <div class="room-services">
+                <h2>SERVICES</h2>
+                <div class="wi-meal">
+                    <div class="comb">
+                        <img src="/assets/images/meals.png" alt="">
+                        <a> Drinking Water</a>
+                    </div>
+                    <div class="comb">
+                        <img src="/assets/images/wifi.png" alt="">
+                        <a> High-Speed WI FI</a>
+                    </div>
+                    <div class="comb">
+                        <img src="/assets/images/housekeeping.png" alt="">
+                        <a>Housekeeping</a>
+                    </div>
+                </div>
+            </div>
 
-                    <a  class="whats">
+            <div class="details">
+                <h2>Details</h2>
+                <p>Our facility has 50 independent furnished AC and Non-AC rooms, each equipped with a bed and mattress, study table, chair, bookshelf, and wardrobe. On each floor, there are four independent rooms and two bathrooms, with two residents sharing one bathroom. The bathrooms are well-equipped with geysers and other basic amenities.</p>
+                <div class="more-content">
+                    <p>At Ira Student Living, we offer more than just accommodation; we provide a nurturing environment that truly feels like a second home. Step into our fully-furnished residence designed specifically for girls, where all the comforts of home await you. From cozy living spaces to well-equipped amenities, Ira Student Living ensures a comfortable and welcoming atmosphere for residents. Discover a place where you can thrive academically and socially, surrounded by like-minded individuals who become more than just housemates—they become family.</p>
+                </div>
+                <a href="#" id="read-more-link" class="show-more">Read more</a>
+                <a href="#" id="read-less-link" class="show-less">Read less</a>
+            </div>
+
+            <div class="policy">
+                <p>police and house rules </p>
+                <a href="/policies"><img src="/assets/images/Arrow 3.png" alt=""></a>
+            </div>
+
+        </div>
+
+        <div class="room-page-2">
+            <div class="visit">
+                <div class="schedule">
+                    <a class="schedule-btn">schedule a visit</a>
+                    <a class="reserve-btn">reserve now</a>
+                </div>
+
+                <div class="reserve rs">
+                    <div class="icon-para">
+                        <img src="/assets/images/res-1.png" alt="">
+                        <p>If you like a residence or apartment, make an initial payment of just 21,000/- to reserve a bed</p>
+                    </div>
+                    <div class="icon-para">
+                        <img src="/assets/images/res-3.png" alt="">
+                        <p>This will unlock a 21,000/- discount that you can avail on completing your booking</p>
+                    </div>
+                    <div class="icon-para">
+                        <img src="/assets/images/res-2.png" alt="">
+                        <p>But if you change your mind anytime, you can get your money back (no questions asked)</p>
+                    </div>
+                    <a href="/tenant_info" class="visit-btn">Reserve now</a>
+                </div>
+
+                <form action="/send-details" method="post" class="first-f">
+                    <input required type="text" name="name" id="" placeholder="Rahul">
+                    <input required type="number" name="mobileNumber" id="" placeholder="+91 | 9876543210">
+                    <a class="whats">
                         <i class="fa-brands fa-whatsapp"></i>
                         Get updates over Whatsapp
                     </a>
-
-                    <form action="" class="second-f">
+                    <div class="second-f">
                         <input required type="checkbox" name="" id="terms">
-                        <label for="terms">I agree to the <a >terms and conditions</a> </label>
-                    </form>
-                    <a  type="submit" class="visit-btn vb">schedule a visit</a>
-
-                </div>
-
-
-
-
-            </div>
-
-
-        </div>
-
-        <h2 style="padding-inline:5vw ; text-transform: uppercase; margin-bottom: 1.2rem;">Suggested Room Units</h2>
-        <section class="suggest">
-            <div class="room-c card-board">
-                <% suggestedRoomListings.forEach(room=> { %>
-                    <div class="card card1">
-                        <div class="card-image">
-                            <img src="<%= room.image %>" alt="">
-                        </div>
-                        <div class="card-text">
-                            <div class="price-gender">
-                                <div class="price">
-                                    <a href="/room_details/<%= room.id %>">IRA STUDENT LIVING</a>
-                                    <p>From &#8377; <% if (room.ac) { %>
-                                        <span>10,500</span>
-                                    <% } else { %>
-                                        <span>8500</span>
-                                    <% } %>/month </p>
-                                </div>
-                                <div class="" >
-                                    <img style="width: 100px;" src="/assets/images/male-symbol.png" alt="">
-                                   
-                                </div>
-                            </div>
-    
-                            <div class="card-services">
-                                <div class=" sr sr1">
-                                    <div class="si1 si">
-                                        <img src="/assets/images/ci1.png" alt="">
-                                        <p>Single Occupancy</p>
-                                    </div>
-                                    <div class="si2 si">
-                                        <img src="/assets/images/ci2.png" alt="">
-                                        <p>Fully Furnished</p>
-                                    </div>
-                                </div>
-                                <div class= "sr sr2">
-                                    <div class="si3 si">
-                                        <img src="/assets/images/ventilated.png" alt="">
-                                        <% if (room.ac) { %>
-                                            <p>Airconditioner</p>
-                                        <% } else { %>
-                                            <p>Ventilated/Non-AC</p>
-                                        <% } %>
-                                    </div>
-    
-                                </div>
-                            </div>
-    
-                            <div class="cta-btns">
-                                <a href="" class="open-popup1">SCHEDULE A VISIT</a>
-                                <a href="" class="open-popup2">CONNECT WITH US</a>
-                            </div>
-                        </div>
+                        <label for="terms">I agree to the <a>terms and conditions</a> </label>
                     </div>
-                    <% }); %>
-            </div>
-        </section>
-
-        <div class="call-back-popup p1">
-            <div class="visit vb">
-                <button class="close-popup">X</button>
-
-                <div class="schedule">
-                    <a  class="schedule-btn">schedule a visit</a>
-                    <!-- <a  class="reserve-btn">reserve now</a> -->
-                </div>
-
-
-
-                <form action="/details" method="post" class="first-f">
-                    <input type="text" required name="name" id="" placeholder="Rahul">
-                    <input type="number" required name="mobileNumber" id="" placeholder="+91 | 9876543210">
+                    <input type="submit" class="visit-btn vb" value="schedule a visit">
                 </form>
-
-                <a  class="whats">
-                    <i class="fa-brands fa-whatsapp"></i>
-                    Get updates over whatsapp
-                </a>
-
-                <form action="" class="second-f">
-                    <input required type="checkbox" name="" id="terms">
-                    <label for="terms">I agree to the <a >terms and conditions</a> </label>
-                </form>
-
-
-                <a  type="submit" class="visit-btn">schedule a visit</a>
-
             </div>
         </div>
 
-
-
-        <div class="bottom-btn">
-            <a  class="open-schedule">Schedule a visit</a>
-            <a href="/tenant_info">Reserve now</a>
-        </div>
-
-    
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const visitBtn = document.querySelector('.vb');
-            const form = document.querySelector('.first-f');
-            const checkbox = document.querySelector('.second-f input[type="checkbox"]'); // Select the checkbox input inside the form
+    <h2 style="padding-inline:5vw; text-transform: uppercase; margin-bottom: 1.2rem;">Suggested Room Units</h2>
+    <section class="suggest">
+        <div class="room-c card-board">
+            <% suggestedRoomListings.forEach(room => { %>
+                <div class="card card1">
+                    <div class="card-image">
+                        <img src="<%= room.image %>" alt="">
+                    </div>
+                    <div class="card-text">
+                        <div class="price-gender">
+                            <div class="price">
+                                <a href="/room_details/<%= room.id %>">IRA STUDENT LIVING</a>
+                                <p>From &#8377; <% if (room.ac) { %><span>10,500</span><% } else { %><span>8500</span><% } %>/month </p>
+                            </div>
+                            <div class="">
+                                <img style="width: 100px;" src="/assets/images/male-symbol.png" alt="">
+                            </div>
+                        </div>
+                        <div class="card-services">
+                            <div class="sr sr1">
+                                <div class="si1 si">
+                                    <img src="/assets/images/ci1.png" alt="">
+                                    <p>Single Occupancy</p>
+                                </div>
+                                <div class="si2 si">
+                                    <img src="/assets/images/ci2.png" alt="">
+                                    <p>Fully Furnished</p>
+                                </div>
+                            </div>
+                            <div class="sr sr2">
+                                <div class="si3 si">
+                                    <img src="/assets/images/ventilated.png" alt="">
+                                    <% if (room.ac) { %>
+                                        <p>Airconditioner</p>
+                                    <% } else { %>
+                                        <p>Ventilated/Non-AC</p>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cta-btns">
+                            <a href="" class="open-popup1">SCHEDULE A VISIT</a>
+                            <a href="" class="open-popup2">CONNECT WITH US</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </section>
 
-            visitBtn.addEventListener('click', function (event) {
-                event.preventDefault();
-                console.log('Button clicked!');
+    <div class="call-back-popup p1">
+        <div class="visit vb">
+            <button class="close-popup">X</button>
+            <div class="schedule">
+                <a class="schedule-btn">schedule a visit</a>
+            </div>
+            <form action="/details" method="post" class="first-f">
+                <input type="text" required name="name" id="" placeholder="Rahul">
+                <input type="number" required name="mobileNumber" id="" placeholder="+91 | 9876543210">
+            </form>
+            <a class="whats">
+                <i class="fa-brands fa-whatsapp"></i>
+                Get updates over whatsapp
+            </a>
+            <form action="" class="second-f">
+                <input required type="checkbox" name="" id="terms">
+                <label for="terms">I agree to the <a>terms and conditions</a> </label>
+            </form>
+            <a type="submit" class="visit-btn">schedule a visit</a>
+        </div>
+    </div>
 
-                if (checkbox && checkbox.checked) { // Ensure checkbox is not null before checking its checked property
-                    const formData = new FormData(form);
-                    fetch('/send-whatsapp', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(Object.fromEntries(formData))
-                    })
-                        .then(response => {
-                            if (response.ok) {
-                                return response.json();
-                            } else {
-                                throw new Error('Error in form submission');
-                            }
-                        })
-                        .then(data => {
-                            console.log('Response data:', data);
-                            alert(data.message);
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Error in form submission. Please try again.');
-                        });
-                } else {
-                    alert('Please agree to the terms and conditions.');
-                }
-            });
+    <div class="bottom-btn">
+        <a class="open-schedule">Schedule a visit</a>
+        <a href="/tenant_info">Reserve now</a>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const visitBtn = document.querySelector('.vb');
+        const form = document.querySelector('.first-f');
+        const checkbox = document.querySelector('.second-f input[type="checkbox"]'); // Select the checkbox input inside the form
+
+        visitBtn.addEventListener('click', function (event) {
+           
+            console.log('Button clicked!');
+
+            if (checkbox && checkbox.checked) { // Ensure checkbox is not null before checking its checked property
+                const formData = new FormData(form);
+                fetch('/send-details', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                })
+                .then(response => {
+                   
+                })
+                .then(data => {
+                    console.log('Response data:', data);
+                    location.reload(); // Reload the page to display flash message
+                    alert("we will get back you soon")
+                   
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error in form submission. Please try again.');
+                });
+            } else {
+                alert('Please agree to the terms and conditions.');
+            }
         });
 
-
-        document.addEventListener('DOMContentLoaded', function () {
         const openPopup1 = document.querySelector('.open-schedule');
         const callBackPopup = document.querySelector('.call-back-popup');
         const closePopupBtn = document.querySelector('.close-popup');
@@ -371,6 +300,5 @@
             }
         });
     });
-    </script>
+</script>
 
-    
