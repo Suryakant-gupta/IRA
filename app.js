@@ -1453,7 +1453,7 @@ app.post('/send-details', (req, res) => {
   const formData = req.body;
   console.log(formData);
 
-  sendWhatsappMessage(7084992604, "schedule_a_visit", "You have got a new lead to attend. Name: {{1}} Number: {{2}} Kindly call right away.", [formData.name, formData.mobileNumber]);
+  sendWhatsappMessage(ownerNumber, "schedule_a_visit", "You have got a new lead to attend. Name: {{1}} Number: {{2}} Kindly call right away.", [formData.name, formData.mobileNumber]);
 
   const ackmsg = `Hi {{1}}, Thank you for showing interest in Ira Student Living. Someone will get back to you soon, and proactively you may also reply to this message for any questions or concerns.`;
   const bodyValues = [formData.name];
