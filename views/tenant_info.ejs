@@ -254,6 +254,15 @@
             document.querySelector(".second-part").style.display = "none";
             document.querySelector(".first-part").style.display = "block";
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+    const roomNumberInput = document.getElementById('roomNumber');
+    const roomUnitInput = document.getElementById('ru');
+
+    roomNumberInput.addEventListener('input', function() {
+        roomUnitInput.value = this.value;
+    });
+});
     </script>
 
     <script>
