@@ -460,8 +460,27 @@
     border: none;
 }
 
+.go, .go-b{
+    
+    background-color: #E7991C;
+    padding-inline: 2rem;
+    padding-block: .5rem;
+    border-radius: 5px;
+    text-transform: uppercase;
+    border: none;
+    
+}
+.go{
+margin-block:1rem;
+}
+
 .sign a:last-child{
     font-weight: normal;
     color: blue;
     text-transform: capitalize;
+}
+
+
+.second-part{
+    display: none;
 }
