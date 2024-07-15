@@ -191,6 +191,18 @@
 }
 
 @media screen and (max-width:585px) {
+
+    .build-num{
+        flex-direction: column;
+    }
+    .opt{
+        width: 100%;
+    }
+    .go{
+        margin-bottom: 3rem;
+    }
+
+
     nav .cta  {
         
         font-size: .5rem !important;

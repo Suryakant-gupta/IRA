@@ -30,86 +30,96 @@
 
             <div class="first-part">
 
-                <div class="opt build-num">
-                    <p>Building Number</p>
-                    <div>
-                        <input type="text" name="buildingNumber" value="<%= roomDetails.buildingNumber %>">
+                <div class=" build-num">
+                    <!-- <p>Building Number</p> -->
+
+                    <div class="opt">
+                        <label for="buildingNumber">Building Number</label>
+                        <input type="text" id="buildingNumber" name="buildingNumber"
+                            value="<%= roomDetails.buildingNumber %>">
                         <input type="hidden" name="roomId" value="<%= roomDetails._id %>">
+
                     </div>
-                </div>
-                <hr class="f-h">
-
-
-                <div class="calc-img">
-                    <div class="calc">
-                        <div class="opt room-num rm-1">
-                            <p>Room Number</p>
-                            <div>
-                                <input type="text" name="roomNumber" value="<%= roomDetails.roomNumber %>">
-                            </div>
-                        </div>
-                        <div class="rent-calc">
-                            <p class="f-c">Rent per day X days</p>
-
-                            <div class="sel">
-                                <input type="text" name="rentPerDay" id="rentPerDay" readonly
-                                    value="<%= roomDetails.rentPerDay %>">
-
-
-                            </div>
-
-
-                            <p class="l-c">X &nbsp;&nbsp; <input readonly style="width: 25px;" id="daysRemainingInMonth"
-                                    name="daysRemainingInMonth" value="">
-                                &nbsp;&nbsp; = &nbsp;&nbsp; <input readonly name="rentForRemainingDays"
-                                    id="rentForRemainingDays" value=""> </p>
-                        </div>
-
-                        <div class="rent-sec">
-                            <div class="opt room-num">
-                                <p>Rent per month</p>
-                                <div>
-                                    <input type="text" name="rentPerMonth" value="<%= roomDetails.price %>" readonly>
-                                </div>
-                            </div>
-                            <p class="s-p">Security</p>
-                        </div>
-
-                        <div class="agree">
-                            <p class="s-p">-*Agreement <span>-Rs. 500</span></p>
-                            <div class="total-rent-display"></div>
-                            <input name="totalRent" value="" readonly class="s-p total-rent">
-                        </div>
+                    <div class="opt">
+                        <label for="roomNumber">Room Number</label>
+                        <input type="text" id="roomNumber" name="roomNumber" value="<%= roomDetails.roomNumber %>">
                     </div>
-
-                  
-
-
 
                 </div>
 
-                <hr class="s-h">
+                <div class="sel">
+                    <label for="rentPerDay">Rent per day X days</label> <br>
+                    <input type="text" name="rentPerDay" id="rentPerDay" style=" margin-top: 5px;  width: calc(45% - 50px)" readonly
+                        value="<%= roomDetails.rentPerDay %>">
 
-                <div class="agree-sheet">
-                    <div class="sheet sheet1">
+                    <p class="l-c"> X  <input readonly style="width: 40px;"
+                            id="daysRemainingInMonth" name="daysRemainingInMonth" value="">
+                         =  <input style="width: 45%;" readonly name="rentForRemainingDays"
+                            id="rentForRemainingDays" value=""> </p>
+                </div>
+
+
+                <div class="build-num">
+                    <!-- <p>Rent per month</p> -->
+                    <div class="opt">
+                        <label for="rpm">Rent per month</label>
+                        <input type="text" id="rpm" name="rentPerMonth" value="<%= roomDetails.price %>" readonly>
+                    </div>
+
+                    <div class="opt">
+                        <label for="security">Security </label>
+                        <input type="number" id="security" value="<%= roomDetails.price %>" class="s-p">
+                    </div>
+                </div>
+
+
+
+                <div class="build-num">
+                    <div class="opt">
+                        <label for="ag">*Agreement</label>
+                        <input type="number" readonly id="ag" value="500">
+                    </div>
+                    <!-- <div class="total-rent-display"></div> -->
+                    <div class="opt">
+                        <label for="tr">Total Rent</label>
+                        <input name="totalRent" id="tr" value="" readonly class="s-p total-rent">
+                    </div>
+                </div>
+
+
+                <div class="build-num">
+                    <div class="opt">
+                        <label for="inDate">IN Date</label>
                         <input type="date" name="inDate" id="inDate">
+                    </div>
+                    <div class="opt">
+                        <label for="agreementStartDate"> Agreement Start Date</label>
                         <input type="text" name="agreementStartDate" id="agreementStartDate" readonly>
+                    </div>
+
+                </div>
+                <div class="build-num">
+                    <div class="opt">
+                        <label for="lockInDate">Lock InDate</label>
+                        <input type="text" name="lockInDate" id="lockInDate" readonly>
+                    </div>
+                    <div class="opt">
+                        <label for="agreementEndDate">Agreement End Date</label>
                         <input type="text" name="agreementEndDate" id="agreementEndDate" readonly>
                     </div>
-                    <div class="sheet sheet2">
-                        <input type="text" name="lockInDate" id="lockInDate" readonly>
-                        <div class="opt room-unit">
-                            <p class="bb-n" style="border-bottom: none !important;">Room unit</p>
-                            <div>
-                                <input style="border: none; color: black;" type="text" name="roomUnit"
-                                    value="<%= roomDetails.roomNumber %>" readonly>
-                            </div>
-                        </div>
-                        <p>Bathroom unit</p>
+
+                </div>
+                <div class="build-num">
+                    <div class="opt">
+                        <label for="ru">Room Unit</label>
+                        <input id="ru" type="text" name="roomUnit" value="<%= roomDetails.roomNumber %>" readonly>
+                    </div>
+
+                    <div class="opt">
+                        <label for="bu">Bathroom unit</label>
+                        <input id="bu" type="text" placeholder="Filled by the owner" readonly>
                     </div>
                 </div>
-
-                <hr class="f-h">
 
                 <div class="rules">
                     <p>
@@ -141,9 +151,9 @@
                         <input type="text" name="name" placeholder="Name" id="">
                         <input type="text" name="dob" placeholder="Date of Birth" id="">
                         <input type="text" placeholder="age" name="age">
-    
+
                     </div>
-    
+
                     <div class="form2">
                         <input type="text" name="mobileNumber" placeholder="Mobile number" id="mobileNumber">
                         <div class="whatsapp-input-group">
@@ -153,16 +163,16 @@
                                 <p> Same as Mobile No.</p>
                             </label>
                         </div>
-    
+
                         <input type="text" name="aadhar" placeholder="Aadhar card number" id="">
                         <input type="text" name="email" placeholder="Email id" id="">
-    
+
                     </div>
                     <div action="/submit-from" method="post" class="textarea-form">
                         <textarea name="address" placeholder="Residential Address" id=""></textarea>
-    
+
                     </div>
-    
+
                     <div class="form3">
                         <input type="text" name="f-name" placeholder="Father's name" id="">
                         <input type="text" name="f-work" placeholder="Father's Occupation" id="">
@@ -174,12 +184,12 @@
                         <input type="text" name="stay-d" placeholder="Duration of stay" id="">
                         <input type="number" name="d-num" placeholder="Dealer's Contact number" id="">
                         <input type="text" name="p-home" placeholder="Police station home town" id="">
-    
+
                     </div>
                 </div>
-    
+
                 <h3 class="emer">People to Contact In Case of Emergency</h3>
-    
+
                 <div action="" id="contactTableForm">
                     <div class="contact-table">
                         <div class="row r-1">
@@ -214,13 +224,13 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <h3 class="dec">DECLARATION-</h3>
-    
+
                 <p class="dec-p">i hereby declare that above particulars of information and facts started are true ,
                     correct
                     and complete to the best of my knowledge and belief.</p>
-    
+
                 <div class="verify">
                     <button class="go-b">Previous</button>
                     <input type="submit" value="save & continue" id="saveAndContinue" class="c-b">
@@ -234,16 +244,16 @@
 
     <script>
         document.querySelector(".go").addEventListener("click", (e) => {
-    e.preventDefault();
-    document.querySelector(".second-part").style.display = "block";
-    document.querySelector(".first-part").style.display = "none";
-});
+            e.preventDefault();
+            document.querySelector(".second-part").style.display = "block";
+            document.querySelector(".first-part").style.display = "none";
+        });
 
         document.querySelector(".go-b").addEventListener("click", (e) => {
-    e.preventDefault();
-    document.querySelector(".second-part").style.display = "none";
-    document.querySelector(".first-part").style.display = "block";
-});
+            e.preventDefault();
+            document.querySelector(".second-part").style.display = "none";
+            document.querySelector(".first-part").style.display = "block";
+        });
     </script>
 
     <script>
@@ -264,10 +274,11 @@
         // Update the rent for remaining days on the form
         document.getElementById('daysRemainingInMonth').value = daysRemainingInMonth;
         document.getElementById('rentForRemainingDays').value = rentForRemainingDays.toFixed(2);
+        // Get the security amount
+        const securityAmount = parseFloat(document.getElementById('security').value);
 
-
-        // Calculate total rent
-        const totalRent = rentForRemainingDays + 500;
+        // Calculate total rent (including security and agreement fee)
+        const totalRent = rentForRemainingDays + 500 + securityAmount;
 
         // Update the total rent input field with only the numeric value
         document.querySelector("input[name='totalRent']").value = totalRent.toFixed(2);
